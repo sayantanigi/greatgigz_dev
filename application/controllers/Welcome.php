@@ -297,7 +297,7 @@ class Welcome extends CI_Controller {
 		$this->Crud_model->SaveData('postjob',$data);
 		$this->session->set_flashdata('message', 'Post Job Created Successfull !');
 		$insert_id = $this->db->insert_id();
-		redirect(base_url("postdetail/".base64_encode($insert_id)));
+		redirect(base_url("projects/postdetail/".base64_encode($insert_id)));
 	}
 
 	function post_jobinfo($id) {

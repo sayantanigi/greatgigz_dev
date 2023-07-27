@@ -31,7 +31,7 @@
 	<div class="user-dashboard">
 		<div class="row row-sm">
 			<div class="col-xl-12 col-lg-12 col-md-12" style="text-align: right;">
-				<a href="<?php echo base_url('add-education')?>" class="btn btn-primary Education_Btn" style="border-radius: 40px; letter-spacing: 0;">Add Education</a>
+				<a href="<?php echo base_url('projects/add-education')?>" class="btn btn-primary Education_Btn" style="border-radius: 40px; letter-spacing: 0;">Add Education</a>
 			</div>
 			<div class="col-xl-12 col-lg-12 col-md-12">
 				<div class="cardak custom-cardak">
@@ -54,7 +54,7 @@
 								  		<td class="heading"><?= ucfirst($row->education); ?> <div>in</div> <?= $row->department; ?></td>
 								  		<td class="heading"><?= $row->college_name; ?></td>
 									  	<td class="btn-option">
-									   		<a href="<?= base_url('update-education/'.base64_encode($row->id));?>"><i class="fa fa-edit" aria-hidden="true"></i></a>
+									   		<a href="<?= base_url('projects/update-education/'.base64_encode($row->id));?>"><i class="fa fa-edit" aria-hidden="true"></i></a>
 									   		<!-- <a href="<?= base_url('user/Dashboard/delete_education/'.$row->id);?>" onclick="if(confirm('Are you sure you want to Delete?')) commentDelete(1); return false"><i class="fa fa-trash-o" aria-hidden="true"></i></a> -->
 											<a href="javascript:void(0)" onclick="deleteEducation(<?= $row->id?>)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								  		</td>

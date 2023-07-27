@@ -28,7 +28,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
             <div class="row">
                 <div class="col-lg-12">
                     <div class="heading">
-                        <h2>Become an AfreBay Partner Today!</h2>
+                        <h2>Become an GreatGigz Partner Today!</h2>
                         <span>Find the most appropriate freelancers for your job from a varity of resources and global workforce.</span>
                     </div>
                     <div id="subscription-messages" class="text-success-msg f-20">
@@ -113,7 +113,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                         <?php $this->session->set_userdata('subid', $key['id'])?>
                                         <input type="hidden" name="sub_id" value="<?php echo $this->session->userdata('subid');?>">
                                     <?php } } else { ?>
-                                    <a class="btn btn-info" href="<?= base_url('login')?>">Choose</a>
+                                    <a class="btn btn-info" href="<?= base_url('projects/login')?>">Choose</a>
                                     <?php } ?>
                                 </div>
                             </div>

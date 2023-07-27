@@ -113,7 +113,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                         <?php $this->session->set_userdata('subid', $key['id'])?>
                                         <input type="hidden" name="sub_id" value="<?php echo $this->session->userdata('subid');?>">
                                     <?php } } else { ?>
-                                    <a class="btn btn-info" href="<?= base_url('login')?>">Choose</a>
+                                    <a class="btn btn-info" href="<?= base_url('projects/login')?>">Choose</a>
                                     <?php } ?>
                                 </div>
                             </div>

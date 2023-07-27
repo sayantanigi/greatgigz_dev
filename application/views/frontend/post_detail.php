@@ -67,7 +67,7 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                 <ul>
                                     <li>
                                         <span>Job Title </span>
-                                        <a href="<?= base_url('postdetail/' . base64_encode($post_data->id)) ?>" style="text-transform: uppercase;">
+                                        <a href="<?= base_url('projects/postdetail/' . base64_encode($post_data->id)) ?>" style="text-transform: uppercase;">
                                         <?php if (!empty($post_data->post_title)) {
                                             echo $post_data->post_title;
                                         } ?>
@@ -116,7 +116,7 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                     <?php } ?>
                                 </ul>
                                 <?php $postedBy = $this->db->query("SELECT * FROM users WHERE userId = '" . $post_data->user_id . "'")->result_array(); ?>
-                                <a class="btn btn-info" href="<?= base_url('employerdetail/' . base64_encode($post_data->user_id)) ?>">
+                                <a class="btn btn-info" href="<?= base_url('projects/employerdetail/' . base64_encode($post_data->user_id)) ?>">
                                     <?php
                                     if ($postedBy[0]['userType'] == 1) {
                                         echo $postedBy[0]['firstname'] . ' ' . $postedBy[0]['lastname'];
@@ -161,7 +161,7 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                         <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12">
                             <?php $userBidData = $this->db->query("SELECT * FROM `job_bid` WHERE postjob_id = '".$post_data->id."' and user_id = '".@$_SESSION['commonUser']['userId']."'")->result_array();
                             if(!empty($userBidData)) { ?>
-                            <div class="bd-form"><a href="<?= base_url()?>jobbid" class="cstm_viewbid_btn"> View Bid</a></div>
+                            <div class="bd-form"><a href="<?= base_url()?>projects/jobbid" class="cstm_viewbid_btn"> View Bid</a></div>
                             <?php } else { ?>
                             <form class="bd-form" action="<?= base_url('user/dashboard/save_postbid') ?>" method="post">
                                 <h3 class="job-bid">Job Bidding</h3>
@@ -211,7 +211,7 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                             <?php }
                                             } else { ?>
                                                 <br />
-                                                <a href="<?= base_url('login') ?>" class="btn btn-info postdetail">Submit Query</a>
+                                                <a href="<?= base_url('projects/login') ?>" class="btn btn-info postdetail">Submit Query</a>
                                             <?php } ?>
                                         </div>
                                     </div>

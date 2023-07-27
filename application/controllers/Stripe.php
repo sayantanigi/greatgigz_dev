@@ -129,7 +129,7 @@ class Stripe extends CI_Controller {
                     	$this->email->message($htmlContent);
                     	$this->email->send();
                        // $this->load->view('stripe/payment_success', $data);
-                        redirect(base_url('subscription'));
+                        redirect(base_url('projects/subscription'));
                     } else {
                     	$this->session->set_flashdata('message', 'Transaction has been failed');
                         redirect(base_url('stripe/'.base64_encode($_POST['subscription_id'])));

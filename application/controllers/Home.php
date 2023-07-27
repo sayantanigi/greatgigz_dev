@@ -103,10 +103,10 @@ class Home extends MY_Controller {
 			}
 			//$msg = "An email has been sent to your email address containing an activation link. Please click on the link to activate your account. If you do not click the link your account will remain inactive and you will not receive further emails. If you do not receive the email within a few minutes, please check your spam folder.";
 			$this->session->set_flashdata('message', 'Thank you for your message. Our team will connect you soon!');
-			redirect('contact-us');
+			redirect('projects/contact-us');
 		} else {
 			$this->session->set_flashdata('message', 'Something went wrong. Please try again later!');
-			redirect('contact-us');
+			redirect('projects/contact-us');
 		}
 	}
 

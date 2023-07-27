@@ -93,7 +93,7 @@
                                     <p><i class="la la-map-marker"></i><?= $row->complete_address; ?></p>
                                 </div>
                                 <div class="shortlists" style="width:50px;">
-                                    <a href="<?= base_url('postdetail/'.base64_encode($row->id))?>" title="">View Details <i class="la la-plus"></i></a>
+                                    <a href="<?= base_url('projects/postdetail/'.base64_encode($row->id))?>" title="">View Details <i class="la la-plus"></i></a>
                                 </div>
                             </div>
                             <?php } } else{?>

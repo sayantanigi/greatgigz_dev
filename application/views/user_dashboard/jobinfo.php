@@ -40,7 +40,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                   <a href="<?php echo base_url('myjob')?>" class="btn btn-primary" style="float:right;">Back</a>
+                                                   <a href="<?php echo base_url('projects/myjob')?>" class="btn btn-primary" style="float:right;">Back</a>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <label for="first_name"><h4>Job Title</h4></label>

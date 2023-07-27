@@ -46,7 +46,7 @@
     <div class="user-dashboard">
         <div class="row row-sm">
             <div class="col-xl-12 col-lg-12 col-md-12" style="margin-bottom: 10px; text-align: right;">
-                <a href="<?php echo base_url('add-product')?>" class="btn btn-primary Education_Btn" style="border-radius: 40px; letter-spacing: 0;">Add Product</a>
+                <a href="<?php echo base_url('projects/add-product')?>" class="btn btn-primary Education_Btn" style="border-radius: 40px; letter-spacing: 0;">Add Product</a>
             </div>
             <div class="col-xl-12 col-lg-12 col-md-12">
                 <div class="cardak custom-cardak">
@@ -71,7 +71,7 @@
                                             <td class="heading"><?php echo $value->prod_name;?></td>
                                             <td class="btn-option">
                                                 <a href="javascript:void(0)" id="View1_<?php echo $value->id;?>" data-toggle="tooltip" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                                <a href="<?= base_url('update-product/'.base64_encode($value->id));?>" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true" style="padding-left: 10px;"></i></a>
+                                                <a href="<?= base_url('projects/update-product/'.base64_encode($value->id));?>" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true" style="padding-left: 10px;"></i></a>
                                                 <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" onclick="productDelete(<?php echo $value->id;?>)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>

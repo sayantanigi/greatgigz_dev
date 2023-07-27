@@ -296,7 +296,7 @@ class Dashboard extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('employer_services', $data);
 		$this->session->set_flashdata('message', 'Services Created Successfull !');
-		redirect(base_url('myservice'));
+		redirect(base_url('projects/myservice'));
 	}
 
 	public function update_service() {
@@ -309,14 +309,14 @@ class Dashboard extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('employer_services', $data, "id='" . $id . "'");
 		$this->session->set_flashdata('message', 'Services Updated Successfully !');
-		redirect(base_url('myservice'));
+		redirect(base_url('projects/myservice'));
 	}
 
 	function delete_service($id) {
 
 		$this->Crud_model->DeleteData('employer_services', "id='" . $id . "'");
 		$this->session->set_flashdata('message', 'Service Deleted successfully !');
-		redirect(base_url('myservice'));
+		redirect(base_url('projects/myservice'));
 	}
 
 	public function myjob() {
@@ -372,10 +372,10 @@ class Dashboard extends CI_Controller {
 		$insert_id = $this->db->insert_id();
 		if(!empty($insert_id)) {
 			$this->session->set_flashdata('message', 'Bid Submitted Successfully! You will be notified once the Vendor has approved your bid');
-			redirect(base_url("postdetail/".base64_encode($_POST['postjob_id'])), "refresh");
+			redirect(base_url("projects/postdetail/".base64_encode($_POST['postjob_id'])), "refresh");
 		} else {
 			$this->session->set_flashdata('message', 'Something went wrong. Please try again later.');
-			redirect(base_url("postdetail/".base64_encode($_POST['postjob_id'])), "refresh");
+			redirect(base_url("projects/postdetail/".base64_encode($_POST['postjob_id'])), "refresh");
 		}
 
 	}
@@ -646,7 +646,7 @@ class Dashboard extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('appointment_scheduling', $data);
 		$this->session->set_flashdata('message', 'Appointment Created Successfully !');
-		redirect(base_url('calender'));
+		redirect(base_url('projects/calender'));
 	}
 
 	public function get_events() {
@@ -704,7 +704,7 @@ class Dashboard extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('message', 'Something went wrong. Please try again later!');
 		}
-		redirect(base_url('worker-detail/' . base64_encode($_POST['user_id'])));
+		redirect(base_url('projects/worker-detail/' . base64_encode($_POST['user_id'])));
 	}
 	////////////////////////////////// end rating /////////////////////////////////////
 
@@ -757,7 +757,7 @@ class Dashboard extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('user_education', $data);
 		$this->session->set_flashdata('message', 'Education Created Successfully !');
-		redirect(base_url('education-list'));
+		redirect(base_url('projects/education-list'));
 	}
 
 
@@ -806,7 +806,7 @@ class Dashboard extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('user_education', $data, "id='" . $id . "'");
 		$this->session->set_flashdata('message', 'Education Updated Successfully !');
-		redirect(base_url('education-list'));
+		redirect(base_url('projects/education-list'));
 	}
 
 	function delete_education(){
@@ -868,7 +868,7 @@ class Dashboard extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('user_workexperience', $data);
 		$this->session->set_flashdata('message', 'Work Experience Created Successfully !');
-		redirect(base_url('workexperience-list'));
+		redirect(base_url('projects/workexperience-list'));
 	}
 
 	public function update_workexperience($id) {
@@ -910,7 +910,7 @@ class Dashboard extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('user_workexperience', $data, "id='" . $id . "'");
 		$this->session->set_flashdata('message', 'Work experience updated successfully !');
-		redirect(base_url('workexperience-list'));
+		redirect(base_url('projects/workexperience-list'));
 	}
 
 	function delete_workexperience() {
@@ -1065,7 +1065,7 @@ class Dashboard extends CI_Controller {
 					}
 				}
 			}
-			redirect(base_url('product'));
+			redirect(base_url('projects/product'));
 		}
 
 		$this->load->view('header');
@@ -1127,7 +1127,7 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		$this->session->set_flashdata('message', 'Product Updated Successfully !');
-		redirect(base_url('product'));
+		redirect(base_url('projects/product'));
 	}
 
 	function delete_product() {

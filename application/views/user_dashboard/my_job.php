@@ -64,8 +64,8 @@
                                             ?>
                                             </td>
                                             <td class="btn-option">
-                                                <a href="<?php echo base_url('postdetail/'.base64_encode($key->id))?>" target="_blank"><i  class="fa fa-eye" aria-hidden="true"></i></a>
-                                                <a href="<?php echo base_url('update-postjob/'.base64_encode($key->id))?>"><i class="fa fa-edit" aria-hidden="true" style="padding-left: 10px;"></i></a>
+                                                <a href="<?php echo base_url('projects/postdetail/'.base64_encode($key->id))?>" target="_blank"><i  class="fa fa-eye" aria-hidden="true"></i></a>
+                                                <a href="<?php echo base_url('projects/update-postjob/'.base64_encode($key->id))?>"><i class="fa fa-edit" aria-hidden="true" style="padding-left: 10px;"></i></a>
                                                 <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" onclick="jobDelete(<?php echo $key->id;?>)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
@@ -101,7 +101,7 @@
                                         if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio'])) { ?>
                                         <button class="post-job-btn pull-right" type="submit" style=" background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border: 0 !important; "><a href="javascript:void(0)" onclick="completeSub()">Post Jobs</a></button>
                                         <?php } else { ?>
-                                        <button class="post-job-btn pull-right" type="submit" style=" background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border: 0 !important; "><a href="<?= base_url('postjob')?>" title="" target="_blank">Post Jobs</a></button>
+                                        <button class="post-job-btn pull-right" type="submit" style=" background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border: 0 !important; "><a href="<?= base_url('projects/postjob')?>" title="" target="_blank">Post Jobs</a></button>
                                         <?php } } else { ?>
                                         <button class="post-job-btn pull-right" type="submit" style=" background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border: 0 !important; "><a href="javascript:void(0)" onclick="completeSub()">Post Jobs</a></button>
                                         <?php } } ?>

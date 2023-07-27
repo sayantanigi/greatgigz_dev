@@ -236,7 +236,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                                             ?>
                                                             </span>
                                                         </p>
-                                                        <a href="<?php echo base_url()?>productdetail/<?php echo base64_encode($value['id'])?>" type="button" class="btn btn-info">Contact Seller</a>
+                                                        <a href="<?php echo base_url()?>projects/productdetail/<?php echo base64_encode($value['id'])?>" type="button" class="btn btn-info">Contact Seller</a>
                                                     </div>
                                                 </div>
                                             </div>
