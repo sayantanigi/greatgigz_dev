@@ -299,10 +299,10 @@ class Welcome extends AI_Controller {
         }
         $this->data['title'] = 'Prosearchghana | Edit Profile';
         $this->data['load'] = 'edit_profile';
-        $this->data['city'] = $this->db->get_where('city',array('parent_city'=>0,'status'=>1))->result();
-
+        //$this->data['city'] = $this->db->get_where('city',array('parent_city'=>0,'status'=>1))->result();
+        $this->data['city'] = $this->db->query("SELECT id, name FROM city")->result();
+        //$this->data['neigh'] = $this->db->get_where('states')->result();
         $this->data['neigh'] = $this->db->get_where('states')->result();
-
         //print_r($_POST);die;
         $this->form_validation->set_rules('frm[owner_type]', '"Do you own a business or are you a service provider/Artisan"', 'required');
         $this->form_validation->set_rules('frm[service_type]', 'Business/Service type', 'required');
