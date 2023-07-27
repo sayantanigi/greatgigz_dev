@@ -36,7 +36,7 @@ class Chat extends MY_Controller {
 		$no=0;
 		$data = array();
 		foreach ($GetData as $row) {
-			$btn = '<span class="btn btn-sm bg-success-light mr-2" data-toggle="modal" data-target="#viewModal" onclick="view_data(3)" data-placement="right"><i class="far fa-eye mr-1"></i><a href="'.admin_url('chat_details/'.$row['userfrom_id'].'/'.$row['userto_id']).'">View Chat</a></span>';
+			$btn = '<span class="btn btn-sm bg-success-light mr-2" data-toggle="modal" data-target="#viewModal" onclick="view_data(3)" data-placement="right"><i class="far fa-eye mr-1"></i><a href="'.base_url('projects/admin/chat_details/'.$row['userfrom_id'].'/'.$row['userto_id']).'">View Chat</a></span>';
 
 			$getFromUser = $this->db->query("SELECT * FROM `users` WHERE userId = '".$row['userfrom_id']."'")->result_array();
 			//if($getFromUser[0]['userType'] == '1') {
