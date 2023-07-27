@@ -1,0 +1,16 @@
+==============dollardiscount==========
+
+https://dev.goigi.biz/phpmyadmin/
+DB:bizdevgo_dollardiscount
+Username: bizdevgo_discoun
+Password: wk*gwX{r9Z5k
+
+
+https://dev.goigi.biz/dollardiscount/
+
+FTP Username: dollar@dev.goigi.biz
+FTP server: ftp.dev.goigi.biz
+FTP & explicit FTPS port:  21
+FTP Password: ye#P5i$=m9Zs
+
+https://sharethis.com/
