@@ -33,10 +33,10 @@ class Login extends MY_Controller {
 				);
 				$this->session->set_userdata($sess);
 				$this->session->set_flashdata('message', 'Successfully logged in.');
-				redirect(base_url('projects/admin/dashboard'));
+				redirect(base_url('admin/dashboard'));
 			} else {
 				$this->session->set_flashdata('message', 'Incorrect email address and password.');
-				redirect(base_url('projects/admin'));
+				redirect(base_url('admin'));
 			}
 		}
 	}
@@ -68,7 +68,7 @@ class Login extends MY_Controller {
 
 	public function logOut() {
 		unset($_SESSION['afrebay_admin']);
-		redirect(base_url('projects/admin'));
+		redirect(base_url('admin'));
 	}
 
 	function profile() {
@@ -112,7 +112,7 @@ class Login extends MY_Controller {
 		);
        	$this->Crud_model->SaveData('admin',$data,"userId='".$_POST['id']."'");
         $this->session->set_flashdata('message', 'Profile updated successfully.');
-        redirect(base_url('projects/admin/profile'));
+        redirect(base_url('admin/profile'));
 	}
 
 	function change_password() {

@@ -201,6 +201,5 @@ $('.datepicker_date1').datepicker({
     autoclose: true
 });
 </script>
-
 </body>
 </html>

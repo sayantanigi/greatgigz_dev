@@ -98,7 +98,7 @@ $route['projects/add-workexperience'] = "user/dashboard/add_workexperience";
 $route['projects/update-workexperience/(:any)'] = "user/dashboard/update_workexperience/$1";
 
 //ADMIN URL
-$route['projects/admin'] = 'admin/login/index';
+/*$route['projects/admin'] = 'admin/login/index';
 $route['projects/admin/logout'] = 'admin/login/logout';
 $route['projects/admin/dashboard'] = 'admin/login/dashboard';
 $route['projects/admin/profile'] = 'admin/login/profile';
@@ -116,4 +116,24 @@ $route['projects/admin/users'] = 'admin/users/index';
 $route['projects/admin/our-services'] = 'admin/manage_home/Our_services/index';
 $route['projects/admin/company-logo'] = 'admin/manage_home/Company_logo/index';
 $route['projects/admin/career'] = 'admin/manage_home/Career_tips/index';
-$route['projects/admin/email-template'] = 'admin/Email_template/index';
+$route['projects/admin/email-template'] = 'admin/Email_template/index';*/
+
+$route['admin'] = 'admin/login/index';
+$route['admin/logout'] = 'admin/login/logout';
+$route['admin/dashboard'] = 'admin/login/dashboard';
+$route['admin/profile'] = 'admin/login/profile';
+$route['admin/category'] = 'admin/category';
+$route['admin/sub_category'] = 'admin/sub_category';
+$route['admin/specialist'] = 'admin/specialist';
+$route['admin/banner'] = 'admin/manage_home/Banner/index';
+$route['admin/manage_cms'] = 'admin/manage_cms/index';
+$route['admin/post_job'] = 'admin/post_job/index';
+$route['admin/chat'] = 'admin/chat/index';
+$route['admin/payment'] = 'admin/payment/index';
+$route['admin/jobsbidding'] = 'admin/jobsbidding/index';
+$route['admin/subscription'] = 'admin/subscription/index';
+$route['admin/users'] = 'admin/users/index';
+$route['admin/our-services'] = 'admin/manage_home/Our_services/index';
+$route['admin/company-logo'] = 'admin/manage_home/Company_logo/index';
+$route['admin/career'] = 'admin/manage_home/Career_tips/index';
+$route['admin/email-template'] = 'admin/Email_template/index';

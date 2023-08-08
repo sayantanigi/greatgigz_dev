@@ -14,7 +14,7 @@ class Home extends MY_Controller {
 	{
 		$data['setting']=$this->Crud_model->get_single('setting');
 		$data['list_featuredjob']=$this->Crud_model->GetData('postjob',"","is_delete='0'",'','(id)desc','8');
-		$data['list_services']=$this->Crud_model->GetData('featured_service');
+		$data['list_services']=$this->Crud_model->GetData('our_service');
 		$data['list_category']=$this->Crud_model->GetData('category','',"status='1'");
     $data['list_company']=$this->Crud_model->GetData('postjob','id,post_slug_url,company_name',"is_delete='0'","company_name",'(id) desc');
     // $data['list_location']=$this->Crud_model->GetData('postjob','AVG(location) as local',"is_delete='0'","location",'(location) desc');

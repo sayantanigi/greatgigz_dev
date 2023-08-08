@@ -4,7 +4,7 @@
 ?>
 <div class="sidebar" id="sidebar">
 	<div class="sidebar-logo">
-		<a href="<?php echo base_url('projects/admin/dashboard');?>">
+		<a href="<?php echo base_url('admin/dashboard');?>">
 			<img src="<?=base_url(); ?>uploads/logo/<?= $get_setting->logo?>" class="img-fluid" alt="">
 		</a>
 </div>
@@ -12,74 +12,100 @@
 	<div id="sidebar-menu" class="sidebar-menu">
 		<ul>
 			<li <?php if ($seg2 =='dashboard') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/dashboard')?>"><i class="fas fa-columns"></i> <span>Dashboard</span></a>
+				<a href="<?= base_url('admin/dashboard')?>"><i class="fas fa-columns"></i> <span>Dashboard</span></a>
 			</li>
 			<li <?php if ($seg2 =='category') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/category')?>"><i class="fas fa-layer-group"></i> <span>Categories</span></a>
+				<a href="<?= base_url('admin/category')?>"><i class="fas fa-layer-group"></i> <span>Categories</span></a>
 			</li>
 			<li <?php if ($seg2 =='sub_category') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/sub_category')?>"><i class="fab fa-buffer"></i> <span>Subcategories</span></a>
+				<a href="<?= base_url('admin/sub_category')?>"><i class="fab fa-buffer"></i> <span>Subcategories</span></a>
 			</li>
 			<li <?php if ($seg2 =='specialist') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/specialist')?>"><i class="fa fa-puzzle-piece"></i> <span>Skill Set</span></a>
+				<a href="<?= base_url('admin/specialist')?>"><i class="fa fa-puzzle-piece"></i> <span>List of skills</span></a>
+			</li>
+			<li <?php if ($seg2 =='featured_services') {?>class="active"<?php }?>>
+				<a href="<?= base_url('admin/featured_services')?>"><i class="fa fa-puzzle-piece"></i> <span>Featured Services</span></a>
 			</li>
 			<li <?php if ($seg2 =='banner') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/banner')?>"><i class="fas fa-image"></i> <span>Sliders and Banners</span></a>
+				<a href="<?= base_url('admin/banner')?>"><i class="fas fa-image"></i> <span>Sliders and Banners</span></a>
 			</li>
 			<li <?php if ($seg2 =='manage_cms') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/manage_cms')?>"><i class="fas fa-circle"></i> <span>Content Management</span></a>
+				<a href="<?= base_url('admin/manage_cms')?>"><i class="fas fa-circle"></i> <span>Content Management</span></a>
 			</li>
 			<li <?php if ($seg2 =='post_job') {?>class="active"<?php }?>>
-				<a href="<?=base_url('projects/admin/post_job'); ?>"><i class="fas fa-star"></i> <span>Job Posts</span></a>
+				<a href="<?=base_url('admin/post_job'); ?>"><i class="fas fa-star"></i> <span>Job Posts</span></a>
 			</li>
 			<li <?php if ($seg2 =='chat') {?>class="active"<?php }?>>
-				<a href="<?=base_url('projects/admin/chat'); ?>"><i class="fab fa-rocketchat"></i> <span>Messages</span></a>
+				<a href="<?=base_url('admin/chat'); ?>"><i class="fab fa-rocketchat"></i> <span>Messages</span></a>
 			</li>
-			<!-- <li <?php if ($seg2 =='services') {?>class="active"<?php }?>>
-				<a href="<?=base_url('projects/admin/services'); ?>"><i class="fas fa-bullhorn"></i> <span> Services</span></a>
-			</li> -->
 			<li <?php if ($seg2 =='jobsbidding') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/jobsbidding')?>"><i class="far fa-calendar-check"></i> <span> Jobs Bidding</span></a>
+				<a href="<?= base_url('admin/jobsbidding')?>"><i class="far fa-calendar-check"></i> <span> Jobs Bidding</span></a>
 			</li>
 			<li <?php if ($seg2 =='payment') {?>class="active"<?php }?>>
-				<!-- <a href="<?= base_url('payment')?>"><i class="fas fa-hashtag"></i> <span>Vendors Subscription</span></a> -->
-				<a href="<?= base_url('projects/admin/payment')?>"><i class="fas fa-hashtag"></i><span>List of Subscriptions</span></a>
+				<a href="<?= base_url('admin/payment')?>"><i class="fas fa-hashtag"></i><span>List of Subscriptions</span></a>
 			</li>
-			<!-- <li <?php if ($seg2 =='rating_type') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/rating_type')?>"><i class="fas fa-star-half-alt"></i> <span>Rating Type</span></a>
-			</li>
-			<li <?php if ($seg2 =='Ratings') {?>class="active"<?php }?>>
-				<a href="#"><i class="fas fa-star"></i> <span>Ratings</span></a>
-			</li> -->
 			<li <?php if ($seg2 =='subscription') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/subscription')?>"><i class="far fa-calendar-alt"></i>
-					<span>Subscription Plans</span>
-					<!-- <span>Freelancer Subscriptions</span> -->
-				</a>
+				<a href="<?= base_url('admin/subscription')?>"><i class="far fa-calendar-alt"></i><span>Subscription Plans</span></a>
 			</li>
-			<!-- <li <?php if ($seg2 =='Wallet') {?>class="active"<?php }?>>
-				<a href="#"><i class="fas fa-wallet"></i> <span> Wallet</span></a>
-			</li>
-			<li <?php if ($seg2 =='Service_provider') {?>class="active"<?php }?>>
-				<a href="#"><i class="fas fa-user-tie"></i> <span> Service Providers</span></a>
-			</li> -->
 			<li <?php if ($seg2 =='users') {?>class="active"<?php }?>>
-				<a href="<?=base_url('projects/admin/'); ?>users"><i class="fas fa-user"></i> <span>Users</span></a>
+				<a href="<?=base_url('admin/'); ?>users"><i class="fas fa-user"></i> <span>Users</span></a>
 			</li>
 			<li <?php if ($seg2 =='our-services') {?>class="active"<?php }?>>
-				<a href="<?=base_url('projects/admin/'); ?>our-services"><i class="fas fa-bullhorn"></i> <span>Our Services</span></a>
+				<a href="<?=base_url('admin/'); ?>our-services"><i class="fas fa-bullhorn"></i> <span>Our Services</span></a>
 			</li>
 			<li <?php if ($seg2 =='company-logo') {?>class="active"<?php }?>>
-				<a href="<?=base_url('projects/admin/'); ?>company-logo"><i class="fas fa-image"></i> <span>Partner Companies</span></a>
+				<a href="<?=base_url('admin/'); ?>company-logo"><i class="fas fa-image"></i> <span>Partner Companies</span></a>
 			</li>
 			<li <?php if ($seg2 =='career') {?>class="active"<?php }?>>
-				<a href="<?=base_url('projects/admin/'); ?>career"><i class="fa fa-graduation-cap"></i> <span>Career Tips</span></a>
+				<a href="<?=base_url('admin/'); ?>career"><i class="fa fa-graduation-cap"></i> <span>Career Tips</span></a>
 			</li>
-			<!-- <li <?php if ($seg2 =='email-template') {?>class="active"<?php }?>>
-				<a href="<?=base_url('projects/admin/'); ?>email-template"><i class="fa fa-envelope"></i> <span>Email Templates</span></a>
-			</li> -->
+			<li <?php if ($seg2 =='faq') {?>class="active"<?php }?>>
+				<a href="<?=base_url('admin/'); ?>faq"><i class="fa fa-question-circle"></i> <span>FAQ</span></a>
+			</li>
+			<li <?php if ($seg2 =='career') {?>class="active"<?php }?>>
+				<a href="<?=base_url('admin/'); ?>testimonial"><i class="fa fa-comments"></i> <span>Testimonial</span></a>
+			</li>
 			<li <?php if ($seg2 =='setting') {?>class="active"<?php }?>>
-				<a href="<?= base_url('projects/admin/setting')?>"><i class="fas fa-cog"></i> <span>Site Settings</span></a>
+				<a href="<?= base_url('admin/setting')?>"><i class="fas fa-cog"></i> <span>Site Settings</span></a>
+			</li>
+			<li class="treeview <?=($seg2=='srch_msg' || $seg2=='members' || $seg2=='add_srchmsg')?'active':'' ;?>">
+            	<a href="#">
+              		<i class="fa fa-users"></i>
+              		<span>Providers Management</span>
+              		<span class="pull-right-container">
+                		<span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span>
+              		</span>
+            	</a>
+				<ul class="treeview-menu">
+					<li class="<?=($seg2=='members')?'active':'' ;?>"><a href="<?=admin_url('members')?>"><i class="fa fa-circle"></i> Provider Lists</a></li>
+					<li class="<?=($seg2=='srch_msg' || $seg2=='add_srchmsg')?'active':'' ;?>"><a href="<?=admin_url('searchmsg')?>"><i class="fa fa-circle"></i>Set Search Message & Time</a></li>
+				</ul>
+          	</li>
+			<li class="treeview <?=($seg2=='add_service' || $seg2=='service'|| $seg2=='add_sub_service'|| $seg2=='sub_service')?'active':'' ;?>">
+				<a href="#">
+					<i class="fa fa-list"></i>
+					<span>Service Management</span> 
+					<span class="pull-right-container">
+						<span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span>
+					</span>
+				</a>
+				<ul class="treeview-menu">
+					<li class="<?=($seg2=='sub_service')?'active':'' ;?>"><a href="<?=admin_url('subservice')?>"><i class="fa fa-circle"></i> Sub-Service List</a></li>
+					<li class="<?=($seg2=='service')?'active':'' ;?>"><a href="<?=admin_url('service')?>"><i class="fa fa-circle"></i> Service List</a></li>
+				</ul>
+			</li>
+			<li class="<?=($seg2=='enquiry')?'active':'' ;?> ">
+				<a href="<?=admin_url('contacts')?>">
+					<i class="fa fa-question-circle"></i> <span>Enquiry Management</span>
+				</a>
+			</li>
+			<li class="<?=($seg2=='contacts')?'active':'' ;?> ">
+				<a href="<?=admin_url('contacts/number_list')?>">
+					<i class="fa fa-question-circle"></i> <span>Authenticated Number</span>
+				</a>
+			</li>
+			<li class="<?=($seg2=='option')?'active':'' ;?>">
+				<a href="<?=admin_url('option')?>"><i class="fa fa-bolt"></i> How It Works</a>
 			</li>
 		</ul>
 	</div>
