@@ -1,12 +1,20 @@
-function create_service() {
+function create_testimonial() {
 	var admin_url=$('#admin_url').val();
-	var title=$('#title').val();
-	var service_image=$('#fservice_image')[0].files[0];
+	var fname=$('#fname').val();
+	var designation=$('#designation').val();
+	var testimonial_image=$('#testimonial_image')[0].files[0];
 	var description=CKEDITOR.instances['description'].getData();
-	if(title=="") {
-		$("#title_err").fadeIn().html("Required").css("color","red");
-		setTimeout(function(){$("#title_err").fadeOut("&nbsp;");},2000)
-		$("#title").focus();
+	if(fname=="") {
+		$("#fname_err").fadeIn().html("Required").css("color","red");
+		setTimeout(function(){$("#fname_err").fadeOut("&nbsp;");},2000)
+		$("#fname").focus();
+		return false;
+	}
+
+	if(designation=="") {
+		$("#designation_err").fadeIn().html("Required").css("color","red");
+		setTimeout(function(){$("#designation_err").fadeOut("&nbsp;");},2000)
+		$("#designation").focus();
 		return false;
 	}
 
@@ -18,12 +26,13 @@ function create_service() {
 	}
 
 	var form_data= new FormData();
-	form_data.append('title',title);
-	form_data.append('service_image',service_image);
+	form_data.append('fname',fname);
+	form_data.append('designation',designation);
+	form_data.append('testimonial_image',testimonial_image);
 	form_data.append('description',description);
 	$.ajax({
 		type:"post",
-		url:admin_url+"featured_services/create_action",
+		url:admin_url+"Testimonial/create_action",
 		cache:false,
 		contentType: false,
 		processData:false,
@@ -32,11 +41,11 @@ function create_service() {
 		success:function(returndata) {
 			if(returndata==1) {
 				var title=$('#title').val('');
-				var service_image=$('#service_image').val('');
+				var testimonial_image=$('#testimonial_image').val('');
 				var description=$('#description').val('');
 				location.reload();
 			} else {
-				$("#title_err").fadeIn().html("This category already exits").css("color","red");
+				$("#title_err").fadeIn().html("This title already exits").css("color","red");
 				setTimeout(function(){$("#title_err").fadeOut("&nbsp;");},2000)
 				$("#title").focus();
 				return false;
@@ -45,19 +54,20 @@ function create_service() {
 	});
 }
 
-function getfeaturedValue(id) {
+function getTestimonialValue (id) {
 	var admin_url = $("#admin_url").val();
 	$.ajax({
 		type:'post',
 		cache:false,
-		url:admin_url+'featured_services/get_value',
+		url:admin_url+'Testimonial/get_value',
 		data:{
 			id:id,
 		},
 		success:function(returndata) {
 			var obj=$.parseJSON(returndata);
 			//console.log(obj);
-			$("#edit_title").val(obj.title);
+			$("#edit_fname").val(obj.fname);
+			$("#edit_designation").val(obj.designation);
 			$("#id").val(obj.id);
 			$("#show_img").html(obj.image);
 			$("#old_image").val(obj.old_image);
@@ -66,18 +76,26 @@ function getfeaturedValue(id) {
 	})
 }
 
-function update_featured_service() {
+function update_testimonial_service() {
 	var admin_url = $("#admin_url").val();
-	var title=$("#edit_title").val().trim();
-	var featuredservice_image=$('#edit_featuredservice_image')[0].files[0];
+	var fname=$("#edit_fname").val().trim();
+	var designation=$("#edit_designation").val().trim();
+	var testimonial_image=$('#edit_testimonial_image')[0].files[0];
 	var old_image=$("#old_image").val();
 	var description=CKEDITOR.instances['edit_description'].getData();
 	var id=$("#id").val();
 	var icon=$("#edit_icon").val();
-	if(title=="") {
-		$("#edit_title_err").fadeIn().html("Required").css('color','red');
-		setTimeout(function(){$("#edit_title_err").html("&nbsp;");},3000);
-		$("#edit_title").focus();
+	if(fname=="") {
+		$("#edit_fname_err").fadeIn().html("Required").css('color','red');
+		setTimeout(function(){$("#edit_fname_err").html("&nbsp;");},3000);
+		$("#edit_fname").focus();
+		return false;
+	}
+
+	if(designation=="") {
+		$("#edit_designation_err").fadeIn().html("Required").css('color','red');
+		setTimeout(function(){$("#edit_designation_err").html("&nbsp;");},3000);
+		$("#edit_designation").focus();
 		return false;
 	}
 
@@ -89,8 +107,9 @@ function update_featured_service() {
 	}
 
 	var form_data= new FormData();
-	form_data.append('title',title);
-	form_data.append('featuredservice_image',featuredservice_image);
+	form_data.append('fname',fname);
+	form_data.append('designation',designation);
+	form_data.append('testimonial_image',testimonial_image);
 	form_data.append('old_image',old_image);
 	form_data.append('description',description);
 
@@ -100,13 +119,13 @@ function update_featured_service() {
 		cache:false,
 		contentType: false,
 		processData:false,
-		url:admin_url+'Featured_services/update_action',
+		url:admin_url+'Testimonial/update_action',
 		data:form_data,
 		success:function(returndata) {
 			if(returndata==1) {
 				location.reload();
 			} else {
-				$("#edit_title_err").fadeIn().html("This title already exits").css('color','red');
+				$("#edit_title_err").fadeIn().html("This Name already exits").css('color','red');
 				setTimeout(function(){$("#edit_title_err").html("&nbsp;");},3000);
 				$("#edit_title").focus();
 				return false;
@@ -115,7 +134,7 @@ function update_featured_service() {
 	})
 }
 
-function ourfeaturedServicesDelete(obj,cid) {
+function testimonialDelete(obj,cid) {
 	var admin_url=$('#admin_url').val();
 	$.confirm({
 	    title: 'Confirm!',
@@ -126,7 +145,7 @@ function ourfeaturedServicesDelete(obj,cid) {
 				var datastring="cid="+cid;
 				$.ajax({
 					type:"POST",
-					url:admin_url+'featured_services/delete',
+					url:admin_url+'Testimonial/delete',
 					data:datastring,
 					cache:false,
 					success:function(returndata) {

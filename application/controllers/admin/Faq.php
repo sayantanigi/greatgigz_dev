@@ -1,28 +1,26 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Featured_services extends MY_Controller {
+class Faq extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Featured_services_model');
+        $this->load->model('Faq_model');
     }
 
     function index() {
-		$get_category=$this->Crud_model->GetData('category',"id,category_name");
-		$header = array('title' => 'our service');
+		$header = array('title' => 'Faq');
 		$data = array(
-			'heading' => 'Our Services',
-			'get_category' => $get_category,
+			'heading' => 'FAQ'
 		);
 		$this->load->view('admin/header', $header);
 		$this->load->view('admin/sidebar');
-		$this->load->view('admin/featured_service/list',$data);
+		$this->load->view('admin/faq/list',$data);
 		$this->load->view('admin/footer');
 	}
 
 	public function ajax_manage_page() {
-		$get_data = $this->Featured_services_model->get_datatables();
+		$get_data = $this->Faq_model->get_datatables();
 		if(empty($_POST['start'])) {
 			$no=0;
 		} else {
@@ -31,8 +29,8 @@ class Featured_services extends MY_Controller {
 
 		$data = array();
 		foreach ($get_data as $row) {
-			$btn = '<span class="btn btn-sm bg-success-light mr-2" data-toggle="modal" data-target="#editModal" onclick="getfeaturedValue('.$row->id.')" data-placement="right"><i class="far fa-edit mr-1"></i> Edit</span>';
-			$btn .= ' | '.'<span data-placement="right" class="btn btn-sm btn-danger mr-2" onclick="ourfeaturedServicesDelete(this,'.$row->id.')" style="margin-left: 8px;">Delete</span>';
+			$btn = '<span class="btn btn-sm bg-success-light mr-2" data-toggle="modal" data-target="#editModal" onclick="getfaqValue('.$row->id.')" data-placement="right"><i class="far fa-edit mr-1"></i> Edit</span>';
+			$btn .= ' | '.'<span data-placement="right" class="btn btn-sm btn-danger mr-2" onclick="faqsDelete(this,'.$row->id.')" style="margin-left: 8px;">Delete</span>';
 
 			if(strlen($row->description)>50) {
 				$desc=substr($row->description,0,50).'...';
@@ -41,10 +39,10 @@ class Featured_services extends MY_Controller {
 			}
 
 			if(!empty($row->image)) {
-				if(!file_exists("uploads/featured_services/".$row->image)) {
+				if(!file_exists("uploads/faq/".$row->image)) {
 					$img ='<img class="rounded service-img mr-1" src="'.base_url('uploads/no_image.png').'">';
 				} else {
-					$img ='<a href="'.base_url('uploads/featured_services/'.$row->image).'" data-lightbox="roadtrip"><img class="rounded service-img mr-1"src="'.base_url('uploads/featured_services/'.$row->image).'"><a>';
+					$img ='<a href="'.base_url('uploads/faq/'.$row->image).'" data-lightbox="roadtrip"><img class="rounded service-img mr-1"src="'.base_url('uploads/faq/'.$row->image).'"><a>';
 				}
 			} else {
 				$img ='<img class="rounded service-img mr-1" src="'.base_url('uploads/no_image.png').'">';
@@ -62,8 +60,8 @@ class Featured_services extends MY_Controller {
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->Featured_services_model->count_all(),
-			"recordsFiltered" => $this->Featured_services_model->count_filtered(),
+			"recordsTotal" => $this->Faq_model->count_all(),
+			"recordsFiltered" => $this->Faq_model->count_filtered(),
 			"data" => $data,
 		);
 
@@ -71,13 +69,13 @@ class Featured_services extends MY_Controller {
 	}
 
 	public function create_action() {
-		$get_data=$this->Crud_model->get_single('featured_service',"title LIKE '%".$_POST['category_id']."%'");
-		if(isset($_FILES['service_image']['name'])!='' ) {
-			$_POST['service_image']= rand(0000,9999)."_".$_FILES['service_image']['name'];
+		$get_data=$this->Crud_model->get_single('faqs',"title LIKE '%".$_POST['title']."%'");
+		if(isset($_FILES['faq_image']['name'])!='' ) {
+			$_POST['faq_image']= rand(0000,9999)."_".$_FILES['faq_image']['name'];
 			$config2['image_library'] = 'gd2';
-			$config2['source_image'] =  $_FILES['service_image']['tmp_name'];
-			$config2['new_image'] =   getcwd().'/uploads/featured_services/'.$_POST['service_image'];
-			$config2['upload_path'] =  getcwd().'/uploads/featured_services/';
+			$config2['source_image'] =  $_FILES['faq_image']['tmp_name'];
+			$config2['new_image'] =   getcwd().'/uploads/faq/'.$_POST['faq_image'];
+			$config2['upload_path'] =  getcwd().'/uploads/faq/';
 			$config2['allowed_types'] = 'JPG|PNG|JPEG|jpg|png|jpeg';
 			$config2['maintain_ratio'] = FALSE;
 			$this->image_lib->initialize($config2);
@@ -86,7 +84,7 @@ class Featured_services extends MY_Controller {
 				echo ($this->image_lib->display_errors());
 				exit;
 			} else {
-				$image  = $_POST['service_image'];
+				$image  = $_POST['faq_image'];
 			}
 		} else {
 			$image  = "";
@@ -97,11 +95,10 @@ class Featured_services extends MY_Controller {
 				'title'=>$_POST['title'],
 				'description'=>$_POST['description'],
 				'image'=>$image,
-				'created_date'=>date('Y-m-d H:i:s'),
+				'created_at'=>date('Y-m-d H:i:s'),
 			);
-			//echo "<pre>"; print_r($data); die;
-			$this->db->insert('featured_service',$data);
-			$this->session->set_flashdata('message', 'Featured service created successfully');
+			$this->db->insert('faqs',$data);
+			$this->session->set_flashdata('message', 'Faq created successfully');
 			echo "1"; exit;
 		} else {
 			$this->session->set_flashdata('message', 'Something went wrong. Please try again later!');
@@ -110,12 +107,12 @@ class Featured_services extends MY_Controller {
 	}
 
 	public function get_value() {
-		$get_data=$this->Crud_model->get_single('featured_service',"id='".$_POST['id']."'");
+		$get_data=$this->Crud_model->get_single('faqs',"id='".$_POST['id']."'");
 		if(!empty($get_data->image)) {
-			if(!file_exists("uploads/featured_services/".$get_data->image)) {
+			if(!file_exists("uploads/faq/".$get_data->image)) {
 				$img ='<img class="rounded service-img mr-1" src="'.base_url('category/no_image.png').'">';
 			} else {
-				$img ='<img  class="rounded service-img mr-1" src="'.base_url('uploads/featured_services/'.$get_data->image).'" style="width: 100px">';
+				$img ='<img  class="rounded service-img mr-1" src="'.base_url('uploads/faq/'.$get_data->image).'" style="width: 100px">';
 			}
 		} else {
 			$img ='<img class="rounded service-img mr-1" src="'.base_url('uploads/no_image.png').'">';
@@ -131,12 +128,12 @@ class Featured_services extends MY_Controller {
 	}
 
 	function update_action() {
-		if(isset($_FILES['featuredservice_image']['name'])!='' ) {
-			$_POST['featuredservice_image']= rand(0000,9999)."_".$_FILES['featuredservice_image']['name'];
+		if(isset($_FILES['faq_image']['name'])!='' ) {
+			$_POST['faq_image']= rand(0000,9999)."_".$_FILES['faq_image']['name'];
 			$config2['image_library'] = 'gd2';
-			$config2['source_image'] =  $_FILES['featuredservice_image']['tmp_name'];
-			$config2['new_image'] =   getcwd().'/uploads/featured_services/'.$_POST['featuredservice_image'];
-			$config2['upload_path'] =  getcwd().'/uploads/featured_services/';
+			$config2['source_image'] =  $_FILES['faq_image']['tmp_name'];
+			$config2['new_image'] =   getcwd().'/uploads/faq/'.$_POST['faq_image'];
+			$config2['upload_path'] =  getcwd().'/uploads/faq/';
 			$config2['allowed_types'] = 'JPG|PNG|JPEG|jpg|png|jpeg';
 			$config2['maintain_ratio'] = FALSE;
 			$this->image_lib->initialize($config2);
@@ -145,22 +142,22 @@ class Featured_services extends MY_Controller {
 				echo ($this->image_lib->display_errors());
 				exit;
 			} else {
-				$image  = $_POST['featuredservice_image'];
-				@unlink('uploads/featured_services/'.$_POST['old_image']);
+				$image = $_POST['faq_image'];
+				@unlink('uploads/faq/'.$_POST['old_image']);
 			}
 		} else {
 			$image  = $_POST['old_image'];
 		}
 
-		$get_data=$this->Crud_model->get_single_record('featured_service',"title='".$_POST['title']."' and id !='".$_POST['id']."'");
+		$get_data=$this->Crud_model->get_single_record('faqs',"title='".$_POST['title']."' and id !='".$_POST['id']."'");
 		if(empty($get_data)) {
 			$data = array(
 				'title'=>$_POST['title'],
 				'description'=>$_POST['description'],
 				'image'=>$image,
 			);
-			$this->Crud_model->SaveData('featured_service',$data,"id='".$_POST['id']."'");
-			$this->session->set_flashdata('message', 'Features service updated successfully');
+			$this->Crud_model->SaveData('faqs',$data,"id='".$_POST['id']."'");
+			$this->session->set_flashdata('message', 'Faq updated successfully');
 			echo 1; exit;
 		} else {
 			$this->session->set_flashdata('message', 'Something went wrong. Please try again later!');
@@ -170,8 +167,8 @@ class Featured_services extends MY_Controller {
 
 	public function delete() {
         if(isset($_POST['cid'])) {
-			$this->Crud_model->DeleteData('featured_service',"id='".$_POST['cid']."'");
-			$this->session->set_flashdata('message', 'Our service deleted successfully');
+			$this->Crud_model->DeleteData('faqs',"id='".$_POST['cid']."'");
+			$this->session->set_flashdata('message', 'Faq deleted successfully');
 			echo 1; exit;
         }
     }

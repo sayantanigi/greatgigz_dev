@@ -6,40 +6,37 @@
                     <h3 class="page-title"><?= $heading;?></h3>
                 </div>
                 <div class="col-auto text-right">
-                    <!--  <a class="btn btn-white filter-btn" href="javascript:void(0);" id="filter_search">
-                    <i class="fas fa-filter"></i>
-                </a> -->
-                <a href="#" class="btn btn-primary add-button ml-3" data-toggle="modal" data-target="#createModal">
-                    <i class="fas fa-plus"></i>
-                </a>
+                    <a href="#" class="btn btn-primary add-button ml-3" data-toggle="modal" data-target="#createModal">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <table id="table" class="table table-hover table-center mb-0 example_datatable" >
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Title</th>
-                                    <th>Image</th>
-                                    <th>Description</th>
-                                    <th>Manage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <table id="table" class="table table-hover table-center mb-0 example_datatable" >
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Image</th>
+                                        <th>Description</th>
+                                        <th>Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </div>
 
@@ -48,7 +45,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Featured Services</h4>
+                <h4 class="modal-title">Add FAQ</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -60,32 +57,33 @@
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label>Title <span style="color:red;">*</span> <span id="title_err"></span></label>
-                                            <input type="text" class="form-control" name="title" id="title" placeholder="Enter Featured Title">
+                                            <input type="text" class="form-control" name="title" id="title" placeholder="Enter Faq Title">
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-md-6">
-                                <div class="form-group">
-                                <label>Image <span style="color:red;"></span> <span id="image_err"></span></label>
-                                <input class="form-control" type="file" name="fservice_image" id="fservice_image">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Image <span style="color:red;"></span> <span id="image_err"></span></label>
+                                        <input class="form-control" type="file" name="faq_image" id="faq_image">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Description <span style="color:red;">*</span> <span id="description_err"></span></label>
+                                        <textarea class="form-control" name="description" id="description" placeholder="Enter Description"></textarea>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Description <span style="color:red;">*</span> <span id="description_err"></span></label>
-                                <textarea class="form-control" name="description" id="description" placeholder="Enter Description"></textarea>
+                            <div class="mt-4">
+                                <button class="btn btn-primary" type="button" onclick="return create_faq();">Submit</button>
+                                <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
                             </div>
-                        </div></div>
-                    <div class="mt-4">
-                        <button class="btn btn-primary" type="button" onclick="return create_service();">Submit</button>
-                        <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 <!--  end add modal -->
 
@@ -94,7 +92,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Featured Services</h4>
+                <h4 class="modal-title">Edit Faq</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -110,7 +108,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
-                                    <input class="form-control" type="file" name="featuredservice_image" id="edit_featuredservice_image">
+                                    <input class="form-control" type="file" name="faq_image" id="edit_faq_image">
                                     <div id="show_img" style="margin-top: 12px;"></div>
                                 </div>
 
@@ -124,7 +122,7 @@
                             </div>
                             <input type="hidden" name="id" id="id">
                             <div class="mt-4">
-                                <button class="btn btn-primary" type="button" onclick="return update_featured_service();">Save Changes</button>
+                                <button class="btn btn-primary" type="button" onclick="return update_faq_service();">Save Changes</button>
                                 <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
                             </div>
                         </form>
@@ -136,11 +134,11 @@
 </div>
 <!--  end edit modal -->
 <script>
-var url = '<?= admin_url('Featured_services/ajax_manage_page')?>';
+var url = '<?= admin_url('Faq/ajax_manage_page')?>';
 var actioncolumn=4;
 </script>
 
-<script type="text/javascript" src="<?= base_url('dist/assets/custom_js/featured_service.js')?>"></script>
+<script type="text/javascript" src="<?= base_url('dist/assets/custom_js/faq.js')?>"></script>
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('description');

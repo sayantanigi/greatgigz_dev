@@ -62,7 +62,7 @@
 			<li <?php if ($seg2 =='faq') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/'); ?>faq"><i class="fa fa-question-circle"></i> <span>FAQ</span></a>
 			</li>
-			<li <?php if ($seg2 =='career') {?>class="active"<?php }?>>
+			<li <?php if ($seg2 =='testimonial') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/'); ?>testimonial"><i class="fa fa-comments"></i> <span>Testimonial</span></a>
 			</li>
 			<li <?php if ($seg2 =='setting') {?>class="active"<?php }?>>
