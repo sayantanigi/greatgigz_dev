@@ -137,3 +137,4 @@ $route['admin/our-services'] = 'admin/manage_home/Our_services/index';
 $route['admin/company-logo'] = 'admin/manage_home/Company_logo/index';
 $route['admin/career'] = 'admin/manage_home/Career_tips/index';
 $route['admin/email-template'] = 'admin/Email_template/index';
+$route['admin/contacts'] = 'admin/Contact/index';

@@ -23,9 +23,9 @@
 			<li <?php if ($seg2 =='specialist') {?>class="active"<?php }?>>
 				<a href="<?= base_url('admin/specialist')?>"><i class="fa fa-puzzle-piece"></i> <span>List of skills</span></a>
 			</li>
-			<li <?php if ($seg2 =='featured_services') {?>class="active"<?php }?>>
+			<!-- <li <?php if ($seg2 =='featured_services') {?>class="active"<?php }?>>
 				<a href="<?= base_url('admin/featured_services')?>"><i class="fa fa-puzzle-piece"></i> <span>Featured Services</span></a>
-			</li>
+			</li> -->
 			<li <?php if ($seg2 =='banner') {?>class="active"<?php }?>>
 				<a href="<?= base_url('admin/banner')?>"><i class="fas fa-image"></i> <span>Sliders and Banners</span></a>
 			</li>
@@ -50,9 +50,9 @@
 			<li <?php if ($seg2 =='users') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/'); ?>users"><i class="fas fa-user"></i> <span>Users</span></a>
 			</li>
-			<li <?php if ($seg2 =='our-services') {?>class="active"<?php }?>>
+			<!-- <li <?php if ($seg2 =='our-services') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/'); ?>our-services"><i class="fas fa-bullhorn"></i> <span>Our Services</span></a>
-			</li>
+			</li> -->
 			<li <?php if ($seg2 =='company-logo') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/'); ?>company-logo"><i class="fas fa-image"></i> <span>Partner Companies</span></a>
 			</li>
@@ -77,8 +77,8 @@
               		</span>
             	</a>
 				<ul class="treeview-menu">
-					<li class="<?=($seg2=='members')?'active':'' ;?>"><a href="<?=admin_url('members')?>"><i class="fa fa-circle"></i> Provider Lists</a></li>
-					<li class="<?=($seg2=='srch_msg' || $seg2=='add_srchmsg')?'active':'' ;?>"><a href="<?=admin_url('searchmsg')?>"><i class="fa fa-circle"></i>Set Search Message & Time</a></li>
+					<li class="<?=($seg2=='members')?'active':'' ;?>"><a href="<?=admin_url('members')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i> Provider Lists</a></li>
+					<li class="<?=($seg2=='srch_msg' || $seg2=='add_srchmsg')?'active':'' ;?>"><a href="<?=admin_url('searchmsg')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>Set Message & Time</a></li>
 				</ul>
           	</li>
 			<li class="treeview <?=($seg2=='add_service' || $seg2=='service'|| $seg2=='add_sub_service'|| $seg2=='sub_service')?'active':'' ;?>">
@@ -90,8 +90,8 @@
 					</span>
 				</a>
 				<ul class="treeview-menu">
-					<li class="<?=($seg2=='sub_service')?'active':'' ;?>"><a href="<?=admin_url('subservice')?>"><i class="fa fa-circle"></i> Sub-Service List</a></li>
-					<li class="<?=($seg2=='service')?'active':'' ;?>"><a href="<?=admin_url('service')?>"><i class="fa fa-circle"></i> Service List</a></li>
+					<li class="<?=($seg2=='featured_services')?'active':'' ;?>"><a href="<?= base_url('admin/featured_services')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>Featured Services</a></li>
+					<li class="<?=($seg2=='our-services')?'active':'' ;?>"><a href="<?=base_url('admin/our-services'); ?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>Our Services</a></li>
 				</ul>
 			</li>
 			<li class="<?=($seg2=='enquiry')?'active':'' ;?> ">
@@ -99,14 +99,14 @@
 					<i class="fa fa-question-circle"></i> <span>Enquiry Management</span>
 				</a>
 			</li>
-			<li class="<?=($seg2=='contacts')?'active':'' ;?> ">
+			<!-- <li class="<?=($seg2=='contacts')?'active':'' ;?> ">
 				<a href="<?=admin_url('contacts/number_list')?>">
 					<i class="fa fa-question-circle"></i> <span>Authenticated Number</span>
 				</a>
 			</li>
 			<li class="<?=($seg2=='option')?'active':'' ;?>">
 				<a href="<?=admin_url('option')?>"><i class="fa fa-bolt"></i> How It Works</a>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 </div>
