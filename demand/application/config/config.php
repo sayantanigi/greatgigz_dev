@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/greatgigz_dev/demand';
-$config['admin_url'] = 'http://localhost/greatgigz_dev/demand/admin';
+$config['base_url'] = 'https://dev.igiapp.com/greatgigz/demand';
+$config['admin_url'] = 'https://dev.igiapp.com/greatgigz/admin';
 /*
 |--------------------------------------------------------------------------
 | Index File

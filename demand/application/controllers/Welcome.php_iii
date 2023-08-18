@@ -2,11 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends AI_Controller {
+
     function __construct() {
         parent::__construct();
         $this->data['title'] = '';
         $this->load->model('Master_model'); 
-        $this->load->library('Twilio_lib'); 
+       $this->load->library('Twilio_lib'); 
+        
+
     }
 
     public function index() {
@@ -22,7 +25,6 @@ class Welcome extends AI_Controller {
         $this->data['testimonial'] = $this->db->limit(4)->get_where('testimonials',array('status'=>1))->result();
         $this->load->front_view('default', $this->data);
     }
-
     public function search_provider(){
         $this->data['title'] = 'Prosearchghana'; 
         $this->data['load'] = 'error_auth';
