@@ -287,7 +287,7 @@ class Welcome extends AI_Controller {
         $this->load->front_view('default', $this->data);
     }
     
-    public function edit_profile(){
+    public function edit_profile() {
          if(!isprologin()){
             redirect(site_url(),'refresh');
         }
@@ -297,63 +297,45 @@ class Welcome extends AI_Controller {
         }
         $this->data['title'] = 'Prosearchghana | Edit Profile';
         $this->data['load'] = 'edit_profile';
-        //$this->data['city'] = $this->db->get_where('city',array('parent_city'=>0,'status'=>1))->result();
         $this->data['city'] = $this->db->query("SELECT id, name FROM city")->result();
-        //$this->data['neigh'] = $this->db->get_where('states')->result();
         $this->data['neigh'] = $this->db->get_where('states')->result();
         //print_r($_POST);die;
         $this->form_validation->set_rules('frm[owner_type]', '"Do you own a business or are you a service provider/Artisan"', 'required');
         $this->form_validation->set_rules('frm[service_type]', 'Business/Service type', 'required');
-    //    $this->form_validation->set_rules('frm[company_name]', 'Company Name', 'required');
-//        $this->form_validation->set_rules('image', 'Government issued ID', 'required');
         $this->form_validation->set_rules('frm[firstname]', 'Contact Person First Name', 'required');
         $this->form_validation->set_rules('frm[lastname]', 'Contact Person Last Name', 'required');
         $this->form_validation->set_rules('frm[address]', 'Company Address', 'required');
         $this->form_validation->set_rules('frm[city]', 'City', 'required');
-        $this->form_validation->set_rules('neihborhood', 'Neighborhood', 'required');
-       
-        
-        $this->form_validation->set_rules('password', 'New Password', 'required');
-        $this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
-       //print_r($_POST);die;
+        $this->form_validation->set_rules('state', 'Neighborhood', 'required');
+        //$this->form_validation->set_rules('password', 'New Password', 'required');
+        //$this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
+        //print_r($_POST);die;
 
         if ($this->form_validation->run() === TRUE) {
             $frm = $this->input->post('frm');
-/*
-            $config['upload_path']          = 'assets/images/profile/';
+            /*$config['upload_path'] = 'assets/images/profile/';
             $config['overwrite'] = FALSE;
-            $config['allowed_types']        = 'gif|jpg|png|jpeg';
-
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
-        
-
-
-            if($this->upload->do_upload('image'))
-            {
+            if($this->upload->do_upload('image')) {
                 $data = $this->upload->data();
                 $frm['image'] = $data['file_name'];
-            }
-            else
-            {
+            } else {
                 //print_r('image upload problem2: '.$this->upload->display_errors());  die; 
-            }            
-*/
+            }*/
 
-            $frm['neihborhood']=$this->input->post('neihborhood');
+            $frm['state']=$this->input->post('state');
             $frm['password'] = base64_encode($this->input->post('password'));  //was base64_encode()
-            $res = $this->db->update('provider_list',$frm,array('id' => $user));
+            $res = $this->db->update('users',$frm,array('userId' => $user));
             //echo $this->db->last_query();die;
             if($res == true){
                 $this->session->set_flashdata('success', 'Your Profile updated successfully !');
-                 redirect(site_url('edit-profile'));
-            }
-            else{
+                redirect(site_url('edit-profile'));
+            } else {
                 $this->session->set_flashdata('error', 'Some error is occured');
                 redirect(site_url('edit-profile'));
             }
         }
-
-
         $this->load->front_view('default', $this->data);
     }
 
@@ -559,7 +541,7 @@ public function login_ajax()
     $mobile = $words[1];
     $password = md5($this->input->post('password')); //was base64_encode()
     //$sql = "SELECT * FROM `users` WHERE (mobile = '$uname') AND password = '$password' AND status = 1 AND admin_status=1";
-    $sql = "SELECT * FROM `users` WHERE mobile = '$mobile' AND password = '$password' AND status = 1 AND email_verified=1";
+    $sql = "SELECT * FROM `users` WHERE email = '$uname' AND password = '$password' AND status = 1 AND email_verified=1";
     $check = $this->db->query($sql)->num_rows();
     $user = $this->db->query($sql)->row();
     //echo $this->db->last_query();

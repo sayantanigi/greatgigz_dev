@@ -122,7 +122,7 @@
                   </div>
 
                   <div class="form-group">
-                    <input type="tel" class="form-control" placeholder="Enter your Mobile"  id="login_username" autocomplete="off" />
+                    <input type="email" class="form-control" placeholder="Enter your Mobile"  id="login_username" autocomplete="off" />
                   </div>
 
                   <div class="form-group">
