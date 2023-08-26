@@ -276,7 +276,7 @@ class Dashboard extends CI_Controller {
     }
 
     function my_jobs() {
-        $data['get_postjob'] = $this->Crud_model->GetData('postjob', '', "user_id='" . $_SESSION['commonUser']['userId']."'",'','(id)desc','');
+        $data['get_postjob'] = $this->Crud_model->GetData('postjob', '', "user_id='".$_SESSION['commonUser']['userId']."' AND posted_from = 'Job Portal'",'','(id)desc','');
         $this->load->view('common/header');
         $this->load->view('user/postjob/job_list',$data);
         $this->load->view('common/footer');

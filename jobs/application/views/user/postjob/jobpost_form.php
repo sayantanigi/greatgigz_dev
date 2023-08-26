@@ -132,40 +132,28 @@
 									<label>Application Email/URL</label>
 									<input type="text" class="form-control" name="application_email_url" placeholder="Enter your email address or website URL" value="<?= @$get_postjob->application_email_url?>"/>
 								</div>
-							
-								
-                                <div class="form-group col-md-12 p-l">
-               		<div class="form-group col-md-4 p-l">
-									<label>Featured Job</label>
-									<div class="row">
-													<div class="col-md-3">
-													<input type="radio" name="featured_job" value="no" <?= (@$get_postjob->featured_job=='no')?'checked':'';?>>
-													No
-													</div>
-													<div class="col-md-3">
-													<input type="radio" name="featured_job" value="yes"  <?= (@$get_postjob->featured_job=='yes')?'checked':'';?>>
-													Yes
-													</div>
-
-												</div>
+								<div class="form-group col-md-12 p-l">
+									<div class="form-group col-md-4 p-l">
+										<label>Featured Job</label>
+										<div class="row">
+											<div class="col-md-3">
+												<input type="radio" name="featured_job" value="no" <?= (@$get_postjob->featured_job=='no')?'checked':'';?>>No
 											</div>
-											<div class="form-group col-md-2">
+											<div class="col-md-3">
+												<input type="radio" name="featured_job" value="yes"  <?= (@$get_postjob->featured_job=='yes')?'checked':'';?>>Yes
 											</div>
-											<div class="form-group col-md-6 p-r">
+										</div>
+									</div>
+									<div class="form-group col-md-2"></div>
+									<div class="form-group col-md-6 p-r">
 										<label>Skills <span class="text-danger">*</span></label>
-									<select class="form-control selectpicker" name="skill_id[]" multiple data-live-search="true" required>
-										<?php  $skill_id = explode(",", $get_postjob->skill_id);?>
-											 <?php if(!empty($get_skills)){ foreach($get_skills as $key){?>
-											 <option value="<?= $key->id?>" style="color:black;"
-											 	 <?php if(in_array($key->id, $skill_id))
-	                                   {
-	                                    echo "selected";
-	                                   }?>
-											 	><?= ucfirst($key->skill)?></option>
-											<?php } }?>
+										<select class="form-control selectpicker" name="key_skills[]" multiple data-live-search="true" required>
+										<?php $skill_id = explode(",", $get_postjob->required_key_skills);?>
+										<?php if(!empty($get_skills)){ foreach($get_skills as $key){?>
+											<option value="<?= $key->skill?>" style="color:black;" <?php if(in_array($key->skill, $skill_id)) { echo "selected"; } ?> ><?= ucfirst($key->skill)?></option>
+										<?php } }?>
 										</select>
-									
-											</div>
+									</div>
 								</div>
 							<div class="borderfull-width"></div>
 							<div class="panel-heading">Company Information</div>
@@ -193,14 +181,12 @@
 							<div class="form-group col-md-6 p-r">
 								<label>Company Logo <span>(Optional)</span> <span>(max. file size 3MB)</span></label>
 								<input type="file" name="company_logo" class="form-control">
-							
-              
-                <?php if(!empty($get_postjob->company_logo) && file_exists('uploads/company_logo/'.@$get_postjob->company_logo)){?>
+								<?php if(!empty($get_postjob->company_logo) && file_exists('uploads/company_logo/'.@$get_postjob->company_logo)){?>
 									<img src="<?= base_url('uploads/company_logo/'.@$get_postjob->company_logo)?>" class="img-responsive" style="max-width:100%; height:100px;">
 								<?php } else{?>
 									<img src="<?= base_url('uploads/no_image.png')?>" class="img-responsive"style="max-width:100%; height:100px;">
 								<?php } ?>
-                <input type="hidden" name="old_logo" value="<?= @$get_postjob->company_logo ?>">
+								<input type="hidden" name="old_logo" value="<?= @$get_postjob->company_logo ?>">
 							</div>
 							<div class="form-group social_icon col-md-6 p-l">
 								<label>Facebook <span>(Optional)</span></label>
@@ -222,8 +208,8 @@
 								<input type="text" class="form-control" name="google" placeholder="Enter page URL" value="<?= @$get_postjob->google ?>" />
 								<a href="javascript:void(0)"><i class="fa fa-google"></i></a>
 							</div>
-              <input type="hidden" name="id" value="<?= @$get_postjob->id?>">
-               <input type="hidden" name="employer_subscription_id" value="<?= @$get_postjob->employer_subscription_id?>">
+							<input type="hidden" name="id" value="<?= @$get_postjob->id?>">
+							<input type="hidden" name="employer_subscription_id" value="<?= @$get_postjob->employer_subscription_id?>">
        
 							<div class="col-md-12 p-l">
 								<!--<a href="javascript:void(0)" class="btn btn-default">Preview Your Resume</a>-->

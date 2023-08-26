@@ -33,8 +33,8 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                 <div class="col-lg-12">
                     <div class="inner-header text-center">
                         <h3 style="text-transform: uppercase;">
-                            <?php if (!empty($post_data->post_title)) {
-                                echo $post_data->post_title;
+                            <?php if (!empty($post_data->job_title)) {
+                                echo $post_data->job_title;
                             } ?>
                         </h3>
                     </div>
@@ -68,8 +68,8 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                     <li>
                                         <span>Job Title </span>
                                         <a href="<?= base_url('projects/postdetail/' . base64_encode($post_data->id)) ?>" style="text-transform: uppercase;">
-                                        <?php if (!empty($post_data->post_title)) {
-                                            echo $post_data->post_title;
+                                        <?php if (!empty($post_data->job_title)) {
+                                            echo $post_data->job_title;
                                         } ?>
                                         </a>
                                     </li>

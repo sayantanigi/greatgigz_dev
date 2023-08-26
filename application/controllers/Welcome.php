@@ -182,7 +182,7 @@ class Welcome extends CI_Controller {
 		$data = array(
 			'button' => 'update',
 			'action' => base_url('welcome/edit_post_job'),
-			'post_title' => $update_data->post_title,
+			'job_title' => $update_data->job_title,
 			'description' => $update_data->description,
 			//'duration' => $update_data->duration,
 			'key_skills' => $update_data->required_key_skills,
@@ -225,7 +225,7 @@ class Welcome extends CI_Controller {
 			'required_key_skills'=>implode(", ",$this->input->post('key_skills',TRUE)),
 			'category_id'=>$this->input->post('category_id',TRUE),
 			'subcategory_id'=>$this->input->post('subcategory_id',TRUE),
-			'post_title'=>$this->input->post('post_title',TRUE),
+			'job_title'=>$this->input->post('job_title',TRUE),
 			'description'=>$this->input->post('description',TRUE),
 			'duration'=>$this->input->post('duration',TRUE),
 			'charges'=>$this->input->post('charges',TRUE),
@@ -242,7 +242,7 @@ class Welcome extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('postjob', $data, "id='" . $id . "'");
 		$this->session->set_flashdata('message', 'Post Job Updated Successfully !');
-		redirect(base_url('myjob'));
+		redirect(base_url('projects/myjob'));
 		// if(!empty($_SESSION['afrebay_admin'])) {
 		// 	redirect(base_url('admin/post_job'));
 		// } else {
@@ -273,12 +273,20 @@ class Welcome extends CI_Controller {
 				$this->db->insert('specialist',$insrt);
 			}
 		}
+
+		$job_title = $this->input->post('job_title',TRUE);
+        if (empty($job_title) || $job_title == '') {
+            $job_title =$this->input->post('job_title');
+        }
+        $slug = strtolower(url_title($job_title));
+        $slug_url =$this->post_job_model->get_unique_url($slug);
+
 		$data=array(
 			'user_id'=>$_SESSION['commonUser']['userId'],
 			'required_key_skills'=>implode(", ",$this->input->post('key_skills',TRUE)),
 			'category_id'=>$this->input->post('category_id',TRUE),
 			'subcategory_id'=>$this->input->post('subcategory_id',TRUE),
-			'post_title'=>$this->input->post('post_title',TRUE),
+			'job_title'=>$job_title,
 			'description'=>$this->input->post('description',TRUE),
 			'duration'=>$this->input->post('duration',TRUE),
 			'charges'=>$this->input->post('charges',TRUE),
@@ -291,7 +299,9 @@ class Welcome extends CI_Controller {
 			'state'=>$this->input->post('state-dropdown',TRUE),
 			'city'=>$this->input->post('city-dropdown',TRUE),
 			'appli_deadeline'=>$this->input->post('appli_deadeline',TRUE),
+			'post_slug_url'=>$slug_url,
 			'created_date'=>date('Y-m-d H:i:s'),
+			'posted_from'=>'Projects',
 		);
 		//echo "<pre>"; print_r($data); die;
 		$this->Crud_model->SaveData('postjob',$data);
@@ -339,7 +349,7 @@ class Welcome extends CI_Controller {
 	public function filter_job() {
 		$con="postjob.is_delete='0' AND postjob.status = 'Active'";
 		if(isset($_POST['title_keyword'])&& !empty($_POST['title_keyword'])) {
-			$con .=" and postjob.post_title like '%".$_POST['title_keyword']."%'";
+			$con .=" and postjob.job_title like '%".$_POST['title_keyword']."%'";
 		}
 
 		if(isset($_POST['search_location'])&& !empty($_POST['search_location'])) {

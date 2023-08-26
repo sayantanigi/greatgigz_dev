@@ -9,19 +9,20 @@ class Post_job_model extends My_Model {
     }
 
 	private function _get_datatables_query() {
-		$this->db->select('postjob.*,category.category_name,CONCAT(users.firstname,"",users.lastname) as fullname,sub_category.sub_category_name' );
+		$this->db->select('postjob.*,category.category_name,CONCAT(users.firstname,"",users.lastname) as fullname');
         $this->db->from('postjob');
         $this->db->join('category','category.id=postjob.category_id');
         $this->db->join('users','users.userId=postjob.user_id');
-        $this->db->join('sub_category','sub_category.id=postjob.subcategory_id');
+        //$this->db->join('sub_category','sub_category.id=postjob.subcategory_id');
         // $this->db->where($cond);
+        //echo $this->db->last_query();
 		$i = 0;
 
         if($_POST['search']['value']) {
             $explode_string = explode(' ', $_POST['search']['value']);
             foreach ($explode_string as $show_string) {
                 $cond  = " ";
-                $cond.=" (  postjob.job_title LIKE '%".trim($show_string)."%' ";
+                $cond.=" (postjob.job_title LIKE '%".trim($show_string)."%' ";
                 $cond.=" OR  category.category_name LIKE '%".trim($show_string)."%' ";
                 $cond.=" OR  postjob.duration LIKE '%".trim($show_string)."%' ";
                 $cond.=" OR  postjob.charges LIKE '%".trim($show_string)."%' ";
@@ -271,5 +272,22 @@ class Post_job_model extends My_Model {
             $data = $this->db->query($query);
         }
         return $data->result_array();
+    }
+
+    function get_unique_url($url, $id = false) {
+        $this->db->select('post_slug_url, id');
+        $this->db->where('post_slug_url', $url);
+        $rest = $this->db->get('postjob');
+        if ($rest->num_rows() == 0) {
+            return $url;
+        } else {
+            $cr = $rest->first_row();
+            if ($cr->id == $id) {
+                return $url;
+            } else {
+                $url = $url . '1';
+                return $this->get_unique_url($url, $id);
+            }
+        }
     }
 }

@@ -30,14 +30,14 @@ class Post_job extends MY_Controller {
         }
         $data = array();
         foreach ($GetData as $row) {
-			$string = strip_tags($row->post_title);
+			$string = strip_tags($row->job_title);
 			if (strlen($string) > 100) {
 				$stringCut = substr($string, 0, 50);
 				$endPoint = strrpos($stringCut, ' ');
 				$string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
 				$string .= '...';
 			}
-			if($row->status=="Active"){
+			if($row->status=="1"){
                 $status='<div class="status-toggle">
                 <input id="rating_\''.$row->id.'\'" class="check" type="checkbox" checked onClick="status('.$row->id.');">
                 <label for="rating_\''.$row->id.'\'" class="checktoggle">checkbox</label>
@@ -60,8 +60,9 @@ class Post_job extends MY_Controller {
 			$nestedData[] = $no;
 			$nestedData[] = ucwords($string);
 			$nestedData[] = ucwords($row->category_name);
-			$nestedData[] = $row->duration;
-			$nestedData[] = "USD"." ".$row->charges;
+			$nestedData[] = $row->job_type;
+			$nestedData[] = "USD"." ".$row->minimum_rate;
+			$nestedData[] = "USD"." ".$row->maximum_rate;
 			$nestedData[] = $status."<input type='hidden' id='status".$row->id."' value='".$row->status."' />";
 			$nestedData[] = $btn;
 			$data[] = $nestedData;
@@ -100,7 +101,7 @@ class Post_job extends MY_Controller {
 		$data = array(
 			'button' => 'update',
 			'action' => base_url('admin/Post_job/edit_post_job'),
-			'post_title' => $update_data->post_title,
+			'job_title' => $update_data->job_title,
 			'description' => $update_data->description,
 			//'duration' => $update_data->duration,
 			'key_skills' => $update_data->required_key_skills,
@@ -147,7 +148,7 @@ class Post_job extends MY_Controller {
 			'required_key_skills'=>implode(", ",$this->input->post('key_skills',TRUE)),
 			'category_id'=>$this->input->post('category_id',TRUE),
 			'subcategory_id'=>$this->input->post('subcategory_id',TRUE),
-			'post_title'=>$this->input->post('post_title',TRUE),
+			'job_title'=>$this->input->post('job_title',TRUE),
 			'description'=>$this->input->post('description',TRUE),
 			'duration'=>$this->input->post('duration',TRUE),
 			'charges'=>$this->input->post('charges',TRUE),

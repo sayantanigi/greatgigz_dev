@@ -26,8 +26,9 @@
                                     <th>#</th>
                                     <th style="width: 165px">Post Title</th>
                                     <th>Job Category</th>
-                                    <th>Duration</th>
-                                    <th style="width: 95px;">Budget</th>
+                                    <th>Job Type</th>
+                                    <th>Minimum Rate</th>
+                                    <th style="width: 95px;">Maximum Rate</th>
                                     <th>Status</th>
                                     <th>Manage</th>
                                 </tr>

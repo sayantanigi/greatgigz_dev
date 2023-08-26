@@ -1,7 +1,7 @@
 <?php 
 $settings=$this->Crud_model->get_single('settingss');
 $total_users=$this->Crud_model->GetData('users','',"status='1'");
-$total_jobs=$this->Crud_model->GetData('postjob','',"");
+$total_jobs=$this->Crud_model->GetData('postjob','',"posted_from = 'Job Portal'");
 ?>
 
 <footer id="footer">

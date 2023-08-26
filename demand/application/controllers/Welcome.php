@@ -325,9 +325,9 @@ class Welcome extends AI_Controller {
             }*/
 
             $frm['state']=$this->input->post('state');
-            $frm['password'] = base64_encode($this->input->post('password'));  //was base64_encode()
+            //$frm['password'] = base64_encode($this->input->post('password'));  //was base64_encode()
             $res = $this->db->update('users',$frm,array('userId' => $user));
-            //echo $this->db->last_query();die;
+            // echo $this->db->last_query();die;
             if($res == true){
                 $this->session->set_flashdata('success', 'Your Profile updated successfully !');
                 redirect(site_url('edit-profile'));

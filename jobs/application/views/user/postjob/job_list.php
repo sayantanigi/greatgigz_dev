@@ -28,12 +28,9 @@
 									</tr>
 								</thead>
 								<tbody>
-                  <?php
-
-                      if(!empty($get_postjob)){
-                         $i=1;
-                        foreach ($get_postjob as $key)
-                   {?>
+								<?php if(!empty($get_postjob)) {
+								$i=1;
+								foreach ($get_postjob as $key) { ?>
 									<tr>
 										<td><a href="<?= base_url('update-post/'.$key->post_slug_url)?>">#FED<?= $key->id?></a></td>
 										<td><?= ucfirst($key->job_title)?></td>
@@ -41,20 +38,22 @@
 										<td>24 Jan 2017</td>
 										<td>18 Feb 2017</td> -->
 										<td>
-											<?php if($key->is_delete==0){?>
-                      <span class="text-success">Open</span>
+										<?php if($key->is_delete==0){?>
+											<span class="text-success">Open</span>
 										<?php } else{?>
 											<span class="text-danger">Closed</span>
 										<?php } ?>
-                    </td>
-									 <td><a href="<?= base_url('update-post/'.$key->post_slug_url)?>" class="btn"><i class="fa fa-edit"></i></a>
-										 <a href="<?= base_url('user/user_dashboard/delete_post/'.$key->id);?>" class="btn" onclick="if(confirm('Are you sure you want to Delete?')) commentDelete(1); return false"><i class="fa fa-trash"></i></a></td>
+                    					</td>
+									 	<td>
+											<a href="<?= base_url('update-post/'.$key->post_slug_url)?>" class="btn"><i class="fa fa-edit"></i></a>
+											<a href="<?= base_url('user/user_dashboard/delete_post/'.$key->id);?>" class="btn" onclick="if(confirm('Are you sure you want to Delete?')) commentDelete(1); return false"><i class="fa fa-trash"></i></a>
+										</td>
 									</tr>
-                <?php } } else{?>
-                  <tr>
-                    <td colspan="4"><center>No Data Found</center></td>
-                  </tr>
-                <?php } ?>
+                				<?php } } else{?>
+								<tr>
+									<td colspan="4"><center>No Data Found</center></td>
+								</tr>
+                				<?php } ?>
 								</tbody>
 							</table>
 						</div>

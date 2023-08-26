@@ -42,7 +42,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                             </span>
                         </div>
                         <div class="profile-form-edit post-job-page">
-                            <?php $seg1=$this->uri->segment(1);
+                            <?php $seg1=$this->uri->segment(2);
                             if($seg1 == 'update-postjob') { ?>
                             <form method="post" action="<?php echo base_url('Welcome/edit_post_job')?>" enctype="multipart/form-data" style="padding: 0 !important;" >
                             <?php } else { ?>
@@ -52,7 +52,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                     <div class="col-lg-12">
                                         <span class="pf-title">Job Title <span style="color:red;">*</span></span>
                                         <div class="pf-field">
-                                            <input type="text" placeholder="Enter Job Title" name="post_title" id="post_title" class="form-control " value="<?= @$post_title; ?>" data-role="tagsinput" required/>
+                                            <input type="text" placeholder="Enter Job Title" name="job_title" id="job_title" class="form-control " value="<?= @$job_title; ?>" data-role="tagsinput" required/>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">

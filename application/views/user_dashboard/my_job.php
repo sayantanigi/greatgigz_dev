@@ -53,7 +53,7 @@
                                         <tr>
                                             <td class="heading">
                                             <?php
-                                            $string = strip_tags($key->post_title);
+                                            $string = strip_tags($key->job_title);
                                             if (strlen($string) > 100) {
                                                 $stringCut = substr($string, 0, 100);
                                                 $endPoint = strrpos($stringCut, ' ');

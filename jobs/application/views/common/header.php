@@ -95,16 +95,13 @@ $total_notification=$this->Crud_model->GetData('notification','',"user_id='".@$_
                         </div>
                     </nav>
                 </div>
+                <?php //echo "<pre>"; print_r($_SESSION['commonUser']);?>
                 <div class="col-md-2 col-sm-9 col-xs-9 col-9 text-right">
                     <div class="right-menu">
-                          <?php if(@$_SESSION['commonUser']['userType']==2){?>
+                        <?php if(@$_SESSION['commonUser']['userType']==2){?>
                         <a href="<?= base_url('post-job')?>" class="signup">Post a Job</a>
-                    <?php } elseif(@$_SESSION['commonUser']['userType']!=1){?>
-                         <a href="<?= base_url('login')?>" class="signup">Post a Job</a>
-                    <?php } ?>
-                        <a href="javascript:void(0);" onclick="openNav()" class="signup mobile-menu">
-                            &#9776;
-                        </a>
+                        <?php } ?>
+                        <a href="javascript:void(0);" onclick="openNav()" class="signup mobile-menu">&#9776;</a>
                     </div>
                 </div>
                 <div id="mySidenav" class="sidenav">

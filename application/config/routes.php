@@ -72,6 +72,7 @@ $route['projects/workers-list'] = "home/workers_list";
 $route['projects/worker-detail/(:any)'] = "home/worker_detail/$1";
 $route['projects/ourjobs'] = "home/our_jobs";
 $route['projects/postdetail/(:any)'] = "home/post_bidding/$1";
+$route['projects/update-postjob/(:any)'] = "welcome/update_post_job/$1";
 $route['stripe/(:any)'] = "Stripe/index/$1";
 $route['projects/career-tip/(:any)'] = "home/career_tip/$1";
 $route['save'] = "user/login/reg";
