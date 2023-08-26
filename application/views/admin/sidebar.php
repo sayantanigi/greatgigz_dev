@@ -32,9 +32,22 @@
 			<li <?php if ($seg2 =='manage_cms') {?>class="active"<?php }?>>
 				<a href="<?= base_url('admin/manage_cms')?>"><i class="fas fa-circle"></i> <span>Content Management</span></a>
 			</li>
-			<li <?php if ($seg2 =='post_job') {?>class="active"<?php }?>>
+			<!-- <li <?php if ($seg2 =='post_job') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/post_job'); ?>"><i class="fas fa-star"></i> <span>Job Posts</span></a>
-			</li>
+			</li> -->
+			<li class="treeview <?=($seg2=='srch_msg' || $seg2=='members' || $seg2=='add_srchmsg')?'active':'' ;?>">
+            	<a href="#">
+              		<i class="fa fa-users"></i>
+              		<span>Job Posts Management</span>
+              		<span class="pull-right-container">
+                		<span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span>
+              		</span>
+            	</a>
+				<ul class="treeview-menu">
+					<li class="<?=($seg2=='members')?'active':'' ;?>"><a href="<?=admin_url('members')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>From Job Portal</a></li>
+					<li class="<?=($seg2=='srch_msg' || $seg2=='add_srchmsg')?'active':'' ;?>"><a href="<?=admin_url('searchmsg')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>From Project Portal</a></li>
+				</ul>
+          	</li>
 			<li <?php if ($seg2 =='chat') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/chat'); ?>"><i class="fab fa-rocketchat"></i> <span>Messages</span></a>
 			</li>

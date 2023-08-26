@@ -62,7 +62,7 @@
 							<?php if(!empty($get_skills)){ foreach($get_skills as $row){?>
 						<div class="category">
 							<div class="col-md-1 p-l p-r">
-							   <input type="checkbox" id="PHP<?= $row->id?>" class="common_selector skill" name="skill" value="<?= $row->id?>"> 
+							   <input type="checkbox" id="PHP<?= $row->id?>" class="common_selector skill" name="skill" value="<?= $row->skill?>"> 
 							</div>
 							<div class="col-md-11 p-l p-r">
 								 <label for="PHP<?= $row->id?>"><?= ucwords($row->skill)?></label> 
@@ -94,7 +94,7 @@
 							   <input type="checkbox" id="cb_7" class="common_selector jobtype" name="jobtype" value="Part Time">
 							</div>
 							<div class="col-md-11 p-l p-r">
-								 <label for="cb_7">part Time</label>
+								 <label for="cb_7">Part Time</label>
 							</div>
 						</div>
 						<div class="category">
@@ -155,184 +155,155 @@
 	</main>
 
  <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+ <script>
+$(document).ready(function() {
+	filter_data(1);
+	function filter_data(page) {
+		var base_url = $("#base_url").val();
+    	$('#joblist').html(createSkeleton(5));
+     	function createSkeleton(limit){
+			var skeletonHTML = '';
+			for(var i = 0; i < limit; i++){
+				skeletonHTML += '<div class="ph-item">';
+				skeletonHTML += '<div class="ph-col-4">';
+				skeletonHTML += '<div class="ph-picture"></div>';
+				skeletonHTML += '</div>';
+				skeletonHTML += '<div>';
+				skeletonHTML += '<div class="ph-row">';
+				skeletonHTML += '<div class="ph-col-12 big"></div>';
+				skeletonHTML += '<div class="ph-col-12"></div>';
+				skeletonHTML += '<div class="ph-col-12"></div>';
+				skeletonHTML += '<div class="ph-col-12"></div>';
+				skeletonHTML += '<div class="ph-col-12"></div>';
+				skeletonHTML += '</div>';
+				skeletonHTML += '</div>';
+				skeletonHTML += '</div>';
+			}
+ 			return skeletonHTML;
+		}
+		var action = 'fetch_data';
+		var title_keyword = $('#title_keyword').val();
+		var category_id = get_filter('category');
+		var location = $('#location').val();
+		var jobtype = get_filter('jobtype');   
+		// console.log(jobtype); return false;
+		var search_title = $('#search_title').val();
+		var search_location = $('#search_location').val();
+		var category_url = $('#category_url').val();
+		var company_url = $('#company_url').val();
+		var location_url = $('#location_url').val();
+		var sort_by=$('#sort_by').val();
+		var skill_id = get_filter('skill');
+		//alert(skill_id);
+		$.ajax({
+			url:base_url+"home/fetch_data/"+page,
+			method:"POST",
+			dataType:"JSON",
+			data:{action:action, title_keyword:title_keyword,category_id:category_id, location:location,search_title:search_title,search_location:search_location,
+			jobtype:jobtype,category_url:category_url,company_url:company_url,location_url:location_url,sort_by:sort_by,skill_id:skill_id},
+			success:function(data) {
+				//$('#title_keyword').val(data.keyword);
+				//$('#location').val(data.keyword_location);
+				$('#joblist').html(data.joblist);
+				$('#pagination_link').html(data.pagination_link);
+			}
+		})
+	}
 
-
-           <script>
-     $(document).ready(function(){
-
-         filter_data(1);
-
-         function filter_data(page)
-         {
-              var base_url = $("#base_url").val();
-    $('#joblist').html(createSkeleton(5));
-     function createSkeleton(limit){
- var skeletonHTML = '';
- for(var i = 0; i < limit; i++){
- skeletonHTML += '<div class="ph-item">';
- skeletonHTML += '<div class="ph-col-4">';
- skeletonHTML += '<div class="ph-picture"></div>';
- skeletonHTML += '</div>';
- skeletonHTML += '<div>';
- skeletonHTML += '<div class="ph-row">';
- skeletonHTML += '<div class="ph-col-12 big"></div>';
- skeletonHTML += '<div class="ph-col-12"></div>';
- skeletonHTML += '<div class="ph-col-12"></div>';
- skeletonHTML += '<div class="ph-col-12"></div>';
- skeletonHTML += '<div class="ph-col-12"></div>';
- skeletonHTML += '</div>';
- skeletonHTML += '</div>';
- skeletonHTML += '</div>';
- }
- return skeletonHTML;
-}
-             var action = 'fetch_data';
-             var title_keyword = $('#title_keyword').val();
-             var category_id = get_filter('category');
-             var location = $('#location').val();
-              var jobtype = get_filter('jobtype');
-             
-             // console.log(jobtype); return false;
-               var search_title = $('#search_title').val();
-             var search_location = $('#search_location').val();
-             var category_url = $('#category_url').val();
-             var company_url = $('#company_url').val();
-             var location_url = $('#location_url').val();
-             var sort_by=$('#sort_by').val();
-              var skill_id = get_filter('skill');
-             $.ajax({
-                 url:base_url+"home/fetch_data/"+page,
-                 method:"POST",
-                 dataType:"JSON",
-                 data:{action:action, title_keyword:title_keyword,category_id:category_id, location:location,search_title:search_title,search_location:search_location,
-                 jobtype:jobtype,category_url:category_url,company_url:company_url,location_url:location_url,sort_by:sort_by,skill_id:skill_id},
-                 success:function(data)
-                 {
-                     //$('#title_keyword').val(data.keyword);
-                      //$('#location').val(data.keyword_location);
-                     $('#joblist').html(data.joblist);
-                     $('#pagination_link').html(data.pagination_link);
-                 }
-             })
-         }
-
-          function get_filter(class_name)
-    {
+	function get_filter(class_name) {
         var filter = [];
-        $('.'+class_name+':checked').each(function(){
+        $('.'+class_name+':checked').each(function() {
+			//alert($(this).val());
             filter.push($(this).val());
         });
         return filter;
     }
 
-         $(document).on('click', '.pagination li a', function(event){
-             event.preventDefault();
-             var page = $(this).data('ci-pagination-page');
-             filter_data(page);
-         });
+	$(document).on('click', '.pagination li a', function(event){
+		event.preventDefault();
+		var page = $(this).data('ci-pagination-page');
+		filter_data(page);
+	});
 
-        $('.common_selector').click(function(){
-
+	$('.common_selector').click(function(){
         filter_data(1);
     });
 
+	$('#title_keyword').keydown(function(){
+		filter_data(1);
+	});
 
-         $('#title_keyword').keydown(function(){
-           filter_data(1);
-       });
-       $('#location').on('change', function(){
-         filter_data(1);
-     });
-     
-     	$('#sort_by').on('change', function(){
-     filter_data(1);
- });
+	$('#location').on('change', function(){
+		filter_data(1);
+	});
+	
+	$('#sort_by').on('change', function(){
+		filter_data(1);
+	});
 
-     });
-
-     </script>
-		 <script type="text/javascript">
-		 function favorite_job(postid)
-		 {
-			 var base_url=$('#base_url').val();
-				<?php if(!empty($_SESSION['commonUser']['userId']) && $_SESSION['commonUser']['userType']==1)
-				{
-				 $session_value=$_SESSION['commonUser']['userType'];
-				}else{
-				 $session_value='';
-				}?>
-			var checkSession='<?= $session_value ?>';
-
-			if(checkSession =='')
-			{
-				swal({
-					 title: "Only for Jobseeker!",
-					 type: "warning",
-					 showCancelButton: true,
-					 confirmButtonColor: '#A5DC86',
-					 cancelButtonColor: '#0bc2f3',
-					 confirmButtonText: 'Yes, Login!',
-					 cancelButtonText: 'Ok, cancel',
-					 closeOnConfirm: false,
-					 closeOnCancel: true
-			 }, function(isConfirm){
-					 if (isConfirm) {
-							 swal.close();
-
-							 window.location.href =base_url+"login";
-					 }
-			 });
-
-			}
-
-			else{
-				$.ajax({
-				 type:"post",
-				 url:base_url+"welcome/add_favoritejob",
-				 cache:false,
-
-				 data:{postid:postid},
-				 success:function(returndata)
-				 {
-						if(returndata==1)
-				 {
-
-					 swal({
-									title: "Added successfully!",
-									type: "success",
-									confirmButtonColor: '#A5DC86',
-									confirmButtonText: 'ok',
-									closeOnConfirm: false,
-							}, function(isConfirm){
-									if (isConfirm) {
-											swal.close();
-
-									}
-							});
-				 }
-
-					else if(returndata==0){
-				 swal({
-									title: "This Job already exits!",
-									type: "warning",
-									confirmButtonColor: '#A5DC86',
-									confirmButtonText: 'ok',
-									closeOnConfirm: false,
-							}, function(isConfirm){
-									if (isConfirm) {
-											swal.close();
-
-									}
-							});
-								 return false;
-				 }
-
-				 }
-
-					 });
-
-	 }
-
-
-		 }
-		</script>
+});
+</script>
+<script type="text/javascript">
+	function favorite_job(postid) {
+		var base_url=$('#base_url').val();
+		<?php if(!empty($_SESSION['commonUser']['userId']) && $_SESSION['commonUser']['userType']==1) {
+		$session_value=$_SESSION['commonUser']['userType'];
+		} else {
+			$session_value='';
+		} ?>
+		var checkSession='<?= $session_value ?>';
+		if(checkSession =='') {
+			swal({
+				title: "Only for Jobseeker!",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: '#A5DC86',
+				cancelButtonColor: '#0bc2f3',
+				confirmButtonText: 'Yes, Login!',
+				cancelButtonText: 'Ok, cancel',
+				closeOnConfirm: false,
+				closeOnCancel: true
+			}, function(isConfirm){
+				if (isConfirm) {
+					swal.close();
+					window.location.href =base_url+"login";
+				}
+			});
+		} else {
+			$.ajax({
+				type:"post",
+				url:base_url+"welcome/add_favoritejob",
+				cache:false,
+				data:{postid:postid},
+				success:function(returndata) {
+					if(returndata==1) {
+						swal({
+							title: "Added successfully!",
+							type: "success",
+							confirmButtonColor: '#A5DC86',
+							confirmButtonText: 'ok',
+							closeOnConfirm: false,
+						}, function(isConfirm){
+							if (isConfirm) {
+								swal.close();
+							}
+						});
+					} else if(returndata==0){
+				 		swal({
+							title: "This Job already exits!",
+							type: "warning",
+							confirmButtonColor: '#A5DC86',
+							confirmButtonText: 'ok',
+							closeOnConfirm: false,
+						}, function(isConfirm){
+							if (isConfirm) {
+								swal.close();
+							}
+						});
+						return false;
+				 	}
+				}
+			});
+		}
+	}
+</script>

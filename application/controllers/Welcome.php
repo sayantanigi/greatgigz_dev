@@ -53,7 +53,7 @@ class Welcome extends CI_Controller {
 		if(isset($category_id) && !empty($category_id) || isset($title) && !empty($title) || isset($days) && !empty($days)||isset($subcategory_id) && !empty($subcategory_id)|| isset($location) && !empty($location) || isset($search_title) && !empty($search_title) || isset($search_location) && !empty($search_location) || isset($country) && !empty($country) || isset($state) && !empty($state) || isset($city) && !empty($city)) {
 			$total_count=$this->post_job_model->subcategory_getcount($title, $location,$days,$category_id,$subcategory_id,$search_title,$search_location,$country,$state,$city);
 		} else {
-			$get_product=$this->Crud_model->GetData('postjob','',"subcategory_id='".$post_id."' and is_delete='0' AND status = 'Active'");
+			$get_product=$this->Crud_model->GetData('postjob','',"subcategory_id='".$post_id."' AND posted_from = 'Projects' and is_delete='0' AND status = 'Active'");
 			$total_count=count($get_product);
 		}
 
@@ -115,7 +115,7 @@ class Welcome extends CI_Controller {
 		}
 		$userid=base64_decode($user_id);
 		$data['userdata']=$this->Crud_model->get_single('users',"userId='".$userid."'");
-		$data['get_post']=$this->Crud_model->GetData('postjob','',"user_id='".$userid."' AND is_delete = '0'");
+		$data['get_post']=$this->Crud_model->GetData('postjob','',"user_id='".$userid."' AND posted_from = 'Projects' AND is_delete = '0'");
 		$data['prod_list']=$this->db->query("SELECT user_product.id, user_product.prod_name, user_product.prod_description, user_product_image.prod_image FROM user_product_image JOIN user_product ON user_product.id = user_product_image.prod_id WHERE user_product.status = 1 AND user_product.is_delete = 1 AND user_id='".$userid."' group by user_product.id")->result_array();
 		$data['get_banner']=$this->Crud_model->get_single('banner',"id='15'");
 		$viewcount=$data['userdata']->view_count+1;

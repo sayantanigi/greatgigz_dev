@@ -130,239 +130,142 @@ var $column_order = array(null,null,'postjob.post_title','postjob.status',null);
 
 
 
- /////////////// pagination joblist start///////////////////
+    /////////////// pagination joblist start///////////////////
+    function make_query($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id) {
+        $query = "SELECT * FROM postjob WHERE `is_delete` = '0' AND `posted_from` = 'Job Portal'";
+        if(isset($title) && !empty($title)) {
+            $query .= " AND job_title like '%".$title."%'";
+        }
+        if(isset($location) && !empty($location)) {
+            $query .= " AND location like '%".$location."%'";
 
-  function make_query($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id)
-{
-
- $query = "SELECT * FROM postjob WHERE is_delete = '0'";
-
- if(isset($title) && !empty($title))
- {
-
-  $query .= " AND job_title like '%".$title."%'";
-
- }
- if(isset($location) && !empty($location))
- {
-
-  $query .= "
-   AND location like '%".$location."%'";
-
- }
-
- if(isset($category_id) && !empty($category_id))
- {
-
-     		$query.=" and (";
-
-     		foreach ($category_id as $key => $value) {
-     			if($key==0){
-     			$query.="  category_id ='".$value."'";
-     		}
-     		else
-     		{
-     			$query.="or  category_id ='".$value."'";
-     		}
-
-     		}
-     		$query.=")";
- }
-
-   if(isset($skill_id) && !empty($skill_id))
-   {
-    $skill_filter = implode(",", $skill_id);
-    $query .= " AND skill_id IN(".$skill_filter.")";
-   }
-
-   if(isset($jobtype) && !empty($jobtype))
- {
-
-   $query.=" and (";
-
-    foreach ($jobtype as $key => $value) {
-      if($value=='All')
-      {
-         $query.="  job_type ='Full Time' or job_type ='Part Time' or job_type ='Freelancer'";
-      }
-      else{
-      if($key==0){
-      $query.="  job_type ='".$value."'";
-    }
-    else
-    {
-      $query.="or  job_type ='".$value."'";
-    }
-  }
-    }
-    $query.=")";
- }
-  
-         if(!empty($search_title) && !empty($search_location))
-  {
-     $query .= " AND job_title like '%".$search_title."%' and location like '%".$search_location."%'";
-  }
- 
-    if(isset($sort_by)&& !empty($sort_by))
-          {
-
-             if($sort_by=='')
-            {
-              $query.=" ORDER BY id desc";
+        }
+        if(isset($category_id) && !empty($category_id)) {
+            $query.=" and (";
+            foreach ($category_id as $key => $value) {
+                if($key==0) {
+                    $query.=" category_id ='".$value."'";
+                } else {
+                    $query.="or category_id ='".$value."'";
+                }
             }
-            else if($sort_by=='latest_job')
-            {
-              $query.=" ORDER BY id desc";
+            $query.=")";
+        }
+
+        if(isset($skill_id) && !empty($skill_id)) {
+            $skill_filter = implode(",", $skill_id);
+            $query .= " AND required_key_skills IN('".$skill_filter."')";
+        }
+
+        if(isset($jobtype) && !empty($jobtype)) {
+            $query.=" and (";
+            foreach ($jobtype as $key => $value) {
+                if($value=='All') {
+                    $query.=" job_type ='Full Time' or job_type ='Part Time' or job_type ='Freelancer'";
+                } else {
+                    if($key==0){
+                        $query.=" job_type ='".$value."'";
+                    } else {
+                        $query.="or  job_type ='".$value."'";
+                    }
+                }
             }
-            else if($sort_by=='oldest_job')
-            {
-              $query.=" ORDER BY id ASC";
+            $query.=")";
+        }
+
+        if(!empty($search_title) && !empty($search_location)) {
+            $query .= " AND job_title like '%".$search_title."%' and location like '%".$search_location."%'";
+        }
+
+        if(isset($sort_by)&& !empty($sort_by)) {
+            if($sort_by=='') {
+                $query.=" ORDER BY id desc";
+            } else if($sort_by=='latest_job') {
+                $query.=" ORDER BY id desc";
+            } else if($sort_by=='oldest_job') {
+                $query.=" ORDER BY id ASC";
+            } else {
+                $query.="ORDER BY id desc";
             }
-            else{
-              $query.="ORDER BY id desc";
-             }
-
-          }
-
- return $query;
-
-
-}
-  function getcount($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id)
-{
- $query = $this->make_query($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id);
- $data = $this->db->query($query);
- return $data->num_rows();
-}
-  function fetchdata($limit, $start, $title, $location,$category_id,$search_title,$search_location,$jobtype,$category_url,$company_url,$location_url,$sort_by,$skill_id)
-{
-   if(!empty($category_id) || !empty($title) || !empty($location)|| !empty($search_title) || !empty($search_location) || !empty($jobtype) || !empty($sort_by)|| !empty($skill_id) )
-    {
- $query = $this->make_query($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id);
-
- $query .= ' LIMIT '.$start.', ' . $limit;
-
- $data = $this->db->query($query);
-  }
-  elseif(!empty($category_url)){
-     $query = "SELECT * FROM postjob WHERE is_delete = '0' AND category_id='".$category_url."'";
-
-   $query .= ' LIMIT '.$start.', ' . $limit;
-
-   $data = $this->db->query($query);
-
- }
- elseif(!empty($company_url)){
-     $query = "SELECT * FROM postjob WHERE is_delete = '0' AND company_name='".$company_url."'";
-
-   $query .= ' LIMIT '.$start.', ' . $limit;
-
-   $data = $this->db->query($query);
-
- }
-    elseif(!empty($location_url)){
-     $query = "SELECT * FROM postjob WHERE is_delete = '0' AND location='".$location_url."'";
-
-   $query .= ' LIMIT '.$start.', ' . $limit;
-
-   $data = $this->db->query($query);
-
- }
-
- else{
-   $query = $this->make_query($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id);
-
- $query .= ' LIMIT '.$start.', ' . $limit;
-
- $data = $this->db->query($query);
- }
- $output = '';
- if($data->num_rows() > 0)
- {
-  foreach($data->result() as $row)
-  {
-   //$row=$this->Crud_model->get_single('users',"userId='".$row['user_id']."'");
-   $get_category=$this->Crud_model->get_single('category',"id='".$row->category_id."'");
-    if(!empty($row->skill_id))
-    {
-     $skillid=$row->skill_id;
+        }
+        return $query;
     }
-    else
-    {
-     $skillid=0;
-    }
-     $skill_id=$this->Crud_model->GetData('skills','',"id IN (".$skillid.")");
-   if(!empty($row->company_logo) && file_exists('uploads/company_logo/'.$row->company_logo)){
-    $companylogo= '<img src="'.base_url('uploads/company_logo/'.$row->company_logo).'" class="img-responsive" alt="" style="max-width: 100%;height: 80px;"/>';
-   }
-   else{
-     $companylogo= '<img src="'.base_url('uploads/no_image.png').'" class="img-responsive" alt="" style="max-width: 100%;height: 80px;"/>';
-   }
-   if($row->job_type=='Full Time')
-   {
-    $jobtype='<div class="work-time text-center col-md-2">'.ucfirst($row->job_type).'</div>';
-   }
-   if($row->job_type=='Part Time')
-   {
-    $jobtype='<div class="work-time part text-center col-md-2">'.ucfirst($row->job_type).'</div>';
-   }
-   if($row->job_type=='Freelancer')
-   {
-    $jobtype='<div class="work-time Free text-center col-md-2">'.ucfirst($row->job_type).'</div>';
-   }
-   if(strlen($row->description)>170)
-   {
-     $desc=substr($row->description, 0,170).'...';
-   }
-   else{
-     $desc=$row->description;
-   }
-    $data_array='';
-     if(!empty($skill_id)){
 
-      foreach($skill_id as $value)
-      {
-       $data_array.=$value->skill.', ';
-      }
-     }
- 
-     else{
-       $data_array.='';
-     }
-   $output .= ' <div class="sorting_content">
-                 <div class="tab-image">'.$companylogo.'</div>
-                 <div class="overflow">
-                   <div class="text-shorting">
-                      <h1 class="col-md-10 col-sm-10"><a href="'.base_url('job-detail/'.$row->post_slug_url).'">'.ucfirst($row->job_title).'</a><br/><span>'.ucfirst(@$get_category->category_name).'</span></h1>
-                    '.$jobtype.'
-                   </div>
-                <div class="bottom_text">
-                  <div class="contact_details col-md-8 col-sm-8">
-                    <span><strong>Location: <i class="fa fa-globe"></i></strong> '.$row->location.'</span>
-                  </div>
-                  <div class="contact_apply col-md-4 col-sm-4">
-                   <span><button class="btn btn-warning btn-sm" onclick="return favorite_job('.$row->id.');">Favorite Job</button>
-                   <strong ><a href="'.base_url('job-detail/'.$row->post_slug_url).'" class="btn btn-primary btn-sm">View Job</a></strong>
-                   </span>
-                   
-                  </div>
-                  <p class="col-md-12">'.ucwords($data_array).'</p>
-                  <p class="col-md-12">'.ucfirst($desc).'</p>
-                </div>
-                </div>
-              </div> ';
-  }
- }
- else
- {
-  $output .= '<div class="sorting_content">
-                <div class="overflow">
-                          <h2><center>Sorry,No Data Found</center></h2>
-                           </div>
-                          </div>';
- }
- return $output;
-}
+    function getcount($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id) {
+        $query = $this->make_query($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id);
+        $data = $this->db->query($query);
+        return $data->num_rows();
+    }
+
+    function fetchdata($limit, $start, $title, $location,$category_id,$search_title,$search_location,$jobtype,$category_url,$company_url,$location_url,$sort_by,$skill_id) {
+        if(!empty($category_id) || !empty($title) || !empty($location) || !empty($search_title) || !empty($search_location) || !empty($jobtype) || !empty($sort_by) || !empty($skill_id)) {
+            //echo "inside if";
+            $query = $this->make_query($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id);
+            $query .= ' LIMIT '.$start.', ' . $limit;
+            $data = $this->db->query($query);
+        } elseif(!empty($category_url)) {
+            $query = "SELECT * FROM postjob WHERE `is_delete` = '0' AND `posted_from` = 'Job Portal' AND `category_id` ='".$category_url."'";
+            $query .= ' LIMIT '.$start.', ' . $limit;
+            $data = $this->db->query($query);
+        } elseif(!empty($company_url)) {
+            $query = "SELECT * FROM postjob WHERE `is_delete` = '0' AND `posted_from` = 'Job Portal' AND `company_name` ='".$company_url."'";
+            $query .= ' LIMIT '.$start.', ' . $limit;
+            $data = $this->db->query($query);
+        } elseif(!empty($location_url)) {
+            $query = "SELECT * FROM postjob WHERE `is_delete` = '0' AND `posted_from` = 'Job Portal' AND `location` ='".$location_url."'";
+            $query .= ' LIMIT '.$start.', ' . $limit;
+            $data = $this->db->query($query);
+        } else {
+            //echo "inside else";
+            $query = $this->make_query($title, $location,$category_id,$search_title,$search_location,$jobtype,$sort_by,$skill_id);
+            $query .= ' LIMIT '.$start.', ' . $limit;
+            $data = $this->db->query($query);
+        }
+        $output = '';
+        if($data->num_rows() > 0) {
+            foreach($data->result() as $row) {
+            //$row=$this->Crud_model->get_single('users',"userId='".$row['user_id']."'");
+                $get_category=$this->Crud_model->get_single('category',"id='".$row->category_id."'");
+                if(!empty($row->skill_id)) {
+                    $skillid=$row->skill_id;
+                } else {
+                    $skillid=0;
+                }
+                $skill_id=$this->Crud_model->GetData('skills','',"id IN (".$skillid.")");
+                if(!empty($row->company_logo) && file_exists('uploads/company_logo/'.$row->company_logo)){
+                    $companylogo= '<img src="'.base_url('uploads/company_logo/'.$row->company_logo).'" class="img-responsive" alt="" style="max-width: 100%;height: 80px;"/>';
+                } else {
+                    $companylogo= '<img src="'.base_url('uploads/no_image.png').'" class="img-responsive" alt="" style="max-width: 100%;height: 80px;"/>';
+                }
+                if($row->job_type=='Full Time') {
+                    $jobtype='<div class="work-time text-center col-md-2">'.ucfirst($row->job_type).'</div>';
+                }
+                if($row->job_type=='Part Time') {
+                    $jobtype='<div class="work-time part text-center col-md-2">'.ucfirst($row->job_type).'</div>';
+                }
+                if($row->job_type=='Freelancer') {
+                    $jobtype='<div class="work-time Free text-center col-md-2">'.ucfirst($row->job_type).'</div>';
+                }
+                if(strlen($row->description)>170) {
+                    $desc=substr($row->description, 0,170).'...';
+                } else {
+                    $desc=$row->description;
+                }
+                $data_array='';
+                if(!empty($skill_id)) {
+                    foreach($skill_id as $value) {
+                        $data_array.=$value->skill.', ';
+                    }
+                } else {
+                    $data_array.='';
+                }
+                $output .= '<div class="sorting_content"> <div class="tab-image">'.$companylogo.'</div> <div class="overflow"> <div class="text-shorting"> <h1 class="col-md-10 col-sm-10"><a href="'.base_url('job-detail/'.$row->post_slug_url).'">'.ucfirst($row->job_title).'</a><br/><span>'.ucfirst(@$get_category->category_name).'</span></h1> '.$jobtype.' </div> <div class="bottom_text"> <div class="contact_details col-md-8 col-sm-8"> <span><strong>Location: <i class="fa fa-globe"></i></strong> '.$row->location.'</span> </div> <div class="contact_apply col-md-4 col-sm-4"> <span><button class="btn btn-warning btn-sm" onclick="return favorite_job('.$row->id.');">Favorite Job</button> <strong ><a href="'.base_url('job-detail/'.$row->post_slug_url).'" class="btn btn-primary btn-sm">View Job</a></strong> </span> </div> <p class="col-md-12">'.ucwords($data_array).'</p> <p class="col-md-12">'.ucfirst($desc).'</p> </div> </div> </div>';
+            }
+        } else {
+            $output .= '<div class="sorting_content"><div class="overflow"><h2><center>Sorry,No Data Found</center></h2></div></div>';
+        }
+        return $output;
+    }
 
   ///////////// end pagination joblist///////////////////////
 

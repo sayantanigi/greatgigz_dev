@@ -113,7 +113,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                                 ?>
                                                 <div class="job-listing wtabs noimg">
                                                     <div class="job-title-sec">
-                                                        <h3 style="text-transform: uppercase;"><a href="<?php echo base_url()?>postdetail/<?php echo base64_encode($key->id)?>" title=""><?= $key->post_title; ?></a></h3>
+                                                        <h3 style="text-transform: uppercase;"><a href="<?php echo base_url()?>postdetail/<?php echo base64_encode($key->id)?>" title=""><?= $key->job_title; ?></a></h3>
                                                         <span><?php echo $key->required_key_skills; ?></span>
                                                         <div class="job-lctn"><i class="la la-map-marker"></i><?= ucwords($key->location); ?></div>
                                                     </div>
