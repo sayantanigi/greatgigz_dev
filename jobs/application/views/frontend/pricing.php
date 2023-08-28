@@ -28,103 +28,110 @@
 				<!--	</div>-->
 				<!--</div>-->
 				<div class="row">
-					<?php if(!empty($get_pricing)){ foreach($get_pricing as $key){
+					<?php if(!empty($get_pricing)) { foreach($get_pricing as $key) {
 					$list_service=$this->Crud_model->GetData('subscription_service','',"subscription_id='".$key->id."'");
 					$get_employer=$this->Crud_model->get_single('employer_subscription',"subscription_id='".$key->id."' and employer_id='".@$_SESSION['commonUser']['userId']."'");
 					// print_r($get_employer->employer_id); exit;
-					if($key->subscription_name=='free' && @$_SESSION['commonUser']['userId']==@$get_employer->employer_id)
-					{
+					if($key->subscription_name=='free' && @$_SESSION['commonUser']['userId']==@$get_employer->employer_id) {
 						$freeplan_hide="none";
-					}
-					else{
+					} else {
 						$freeplan_hide="";
-					}
-					?>
+					} ?>
 					<div class="col-md-4 text-center" style="display: <?= $freeplan_hide?>;">
 						<div class="panel-pricing">
 							<div class="panel-heading">
 								<h3><?= ucwords($key->subscription_name)?></h3>
-								<h5><?= $key->subscription_duration ?> Month</h5>
-									<h5><?= $key->no_of_post ?> Job Posting</h5>
+								<h5><?= $key->subscription_duration ?></h5>
+								<!-- <h5><?= $key->no_of_post ?> Job Posting</h5> -->
 							</div>
-							<ul class="list-group text-center">
+							<!-- <ul class="list-group text-center">
 								<?php if(!empty($list_service)){ foreach($list_service as $row){?>
 								<li class="list-group-item"> <?= ucwords($row->service)?></li>
 								<?php }}?>
-							</ul>
+							</ul> -->
+							<div class="list-group text-center" style="margin-top: 20px;"><?= $key->subscription_description ?></div>
+							<?php $checkUserSubscription = $this->db->query('SELECT * FROM employer_subscription WHERE employer_id = "'.@$_SESSION['commonUser']['userId'].'"')->result_array(); 
+							if (empty($checkUserSubscription)) { ?>
 							<div class="panel-footer">
 								<div class="display-2">
 									<h3><span class="currency">$</span><?= $key->subscription_amount?><span class="period">/Member</span></h3>
 									<a class="btn btn-lg btn-block btn-default" href="javascript:void(0)" onclick="return buysubscription('<?= $key->id?>')">Get Started</a>
 								</div>
 							</div>
+							<?php } else { ?>
+								<div class="panel-footer">
+								<div class="display-2">
+									<h3><span class="currency">$</span><?= $key->subscription_amount?><span class="period">/Member</span></h3>
+									<a class="btn btn-lg btn-block btn-default" href="javascript:void(0)" onclick="return subscriptionpaid()">Get Started</a>
+								</div>
+							</div>
+							<?php } ?>
 						</div>
 					</div>
-					<?php }}?>
-
+					<?php }} ?>
 				</div>
 			</div>
 		</section>
 	</main>
+	<style>
+		.list-group ul {list-style-type: circle; text-align: justify;}
+	</style>
 	<script type="text/javascript">
-		 function buysubscription(subscription_id)
-		 {
-			 var base_url=$('#base_url').val();
-			 <?php if(!empty($_SESSION['commonUser']['userId']) && $_SESSION['commonUser']['userType']==2)
-				{
-				 $session_value=$_SESSION['commonUser']['userType'];
-				}else{
-				 $session_value='';
-				}?>
+		function buysubscription(subscription_id) {
+			var base_url=$('#base_url').val();
+			<?php if(!empty($_SESSION['commonUser']['userId']) && $_SESSION['commonUser']['userType']==2) {
+				$session_value=$_SESSION['commonUser']['userType'];
+			}else{
+				$session_value='';
+			}?>
 			var checkSession='<?= $session_value ?>';
-			if(checkSession =='')
-			{
-			 swal({
-					 title: "Only for Employer!",
-					 type: "warning",
-					 showCancelButton: true,
-					 confirmButtonColor: '#A5DC86',
-					 cancelButtonColor: '#0bc2f3',
-					 confirmButtonText: 'Yes, Login!',
-					 cancelButtonText: 'Ok, cancel',
-					 closeOnConfirm: false,
-					 closeOnCancel: true
-			 }, function(isConfirm){
-					 if (isConfirm) {
-							 window.location.href =base_url+"login";
-					 }
-			 });
-
-			}
-			else{
-			 $.ajax({
-				 type:"post",
-				 url:base_url+"user/user_dashboard/purchase_subscription",
-				 cache:false,
-
-				 data:{subscription_id:subscription_id},
-				 success:function(returndata)
-				 {
-						if(returndata==1)
-				 {
-
-					 swal({
-									title: "Thank you! Subscription Successfully",
-									type: "success",
-									confirmButtonColor: '#A5DC86',
-									confirmButtonText: 'ok',
-									closeOnConfirm: false,
+			if(checkSession =='') {
+			 	swal({
+					title: "Only for Employer!",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: '#A5DC86',
+					cancelButtonColor: '#0bc2f3',
+					confirmButtonText: 'Yes, Login!',
+					cancelButtonText: 'Ok, cancel',
+					closeOnConfirm: false,
+					closeOnCancel: true
+			 	}, function(isConfirm){
+					if (isConfirm) {
+						window.location.href =base_url+"login";
+					}
+			 	});
+			} else {
+			 	$.ajax({
+					type:"post",
+					url:base_url+"user/user_dashboard/purchase_subscription",
+					cache:false,
+					data:{subscription_id:subscription_id},
+				 	success:function(returndata) {
+						if(returndata==1) {
+							swal({
+								title: "Thank you! Subscription Successfully",
+								type: "success",
+								confirmButtonColor: '#A5DC86',
+								confirmButtonText: 'ok',
+								closeOnConfirm: false,
 							}, function(isConfirm){
-									if (isConfirm) {
-
-										window.location.href =base_url+"subscription";
-									}
+								if (isConfirm) {
+									window.location.href =base_url+"subscription";
+								}
 							});
-				 }
-
-				 }
-
-					 });
-	 }
-		 }
-		</script>
+				 		}
+					}
+				});
+	 		}
+		}
+		function subscriptionpaid () {
+			swal({
+				title: "You have already subscribed.",
+				type: "warning",
+				confirmButtonColor: '#A5DC86',
+				confirmButtonText: 'ok',
+				closeOnConfirm: false,
+			});
+		}
+	</script>

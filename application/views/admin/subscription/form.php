@@ -21,6 +21,15 @@
 								<input class="form-control" type="text" placeholder="Example: Basic" name="subscription_name" value="<?= $subscription_name;?>" required>
 							</div>
 							<div class="form-group">
+								<label>Subscription Plan for Specific Job Portal</label>
+								<select class="form-control" name="posted_for" id="posted_for" required>
+									<option value="">Choose an option</option>
+									<option value="Job Portal" <?php if($posted_for == 'Job Portal') { echo "selected"; } ?>>Job Portal</option>
+									<option value="Project Portal" <?php if($posted_for == 'Project Portal') { echo "selected"; } ?>>Project Portal</option>
+									<option value="Demand Portal" <?php if($posted_for == 'Demand Portal') { echo "selected"; } ?>>Demand Portal</option>
+								</select>
+							</div>
+							<div class="form-group">
 								<label>Subscription Plan for Specific User Type</label>
 								<select class="form-control" name="subscription_user_type" id="subscription_user_type" required>
 									<option value="">Choose an option</option>
@@ -37,12 +46,13 @@
 								</select>
 							</div>
 							<div class="form-group subscription_country">
-								<label>Subscription Country</label>
+								<input type="hidden" name="subscription_country" id="subscription_country" value="Global">
+								<!-- <label>Subscription Country</label>
 								<select class="form-control" name="subscription_country" id="subscription_country" required onclick="showpaystackField()">
 									<option value="">Choose an option</option>
-									<option value="Nigeria" <?php if($subscription_country == 'Nigeria') { echo "selected"; } ?>>Nigeria</option>
-									<option value="Global" <?php if($subscription_country == 'Global') { echo "selected"; } ?>>Global</option>
-								</select>
+									<option value="Nigeria" <?php //if($subscription_country == 'Nigeria') { echo "selected"; } ?>>Nigeria</option>
+									<option value="Global" <?php //if($subscription_country == 'Global') { echo "selected"; } ?>>Global</option>
+								</select> -->
 							</div>
 							<div class="form-group showSubPrice" >
 								<label>Subscription Amount ($)</label>
@@ -61,8 +71,23 @@
 								<input class="form-control" type="text" placeholder="Example: PLN_XXXXXXXXXXXXXXX" id="plan_code" name="plan_code" value="<?= $plan_code;?>">
 							</div>
 							<div class="form-group subscription_duration">
-								<label>Subscription Duration (in days)</label>
-								<input class="form-control" type="text" placeholder="Example: 30" name="subscription_duration" value="<?= $subscription_duration;?>" required onkeypress="only_numbers(event)">
+								<label>Subscription Duration (in month)</label>
+								<!-- <input class="form-control" type="text" placeholder="Example: 30" name="subscription_duration" value="<?= $subscription_duration;?>" required onkeypress="only_numbers(event)"> -->
+								<select class="form-control" name="subscription_duration" required>
+									<option value="">--Select Duration--</option>
+									<option value="1 Month" <?= (@$subscription_duration=='1 Month')?'selected':'';?>>1 Month</option>
+									<option value="2 Month" <?= (@$subscription_duration=='2 Month')?'selected':'';?>>2 Month</option>
+									<option value="3 Month" <?= (@$subscription_duration=='3 Month')?'selected':'';?>>3 Month</option>
+									<option value="4 Month" <?= (@$subscription_duration=='4 Month')?'selected':'';?>>4 Month</option>
+									<option value="5 Month" <?= (@$subscription_duration=='5 Month')?'selected':'';?>>5 Month</option>
+									<option value="6 Month" <?= (@$subscription_duration=='6 Month')?'selected':'';?>>6 Month</option>
+									<option value="7 Month" <?= (@$subscription_duration=='7 Month')?'selected':'';?>>7 Month</option>
+									<option value="8 Month" <?= (@$subscription_duration=='8 Month')?'selected':'';?>>8 Month</option>
+									<option value="9 Month" <?= (@$subscription_duration=='9 Month')?'selected':'';?>>9 Month</option>
+									<option value="10 Month" <?= (@$subscription_duration=='10 Month')?'selected':'';?>>10 Month</option>
+									<option value="11 Month" <?= (@$subscription_duration=='11 Month')?'selected':'';?>>11 Month</option>
+									<option value="12 Month" <?= (@$subscription_duration=='12 Month')?'selected':'';?>>12 Month</option>
+								</select>
 							</div>
 							<div class="form-group">
 								<label>Subscription Description</label>
@@ -114,7 +139,7 @@ function remove(row) {
 		document.getElementById('purchaseTableclone1').deleteRow(i);
 	}
 }*/
-$(document).ready(function(){
+$(document).ready(function() {
 	var selectedOption = $('#subscription_type').val();
 	var selectedcountry = $('#subscription_country').val();
 	if(selectedOption == 'free') {
@@ -143,7 +168,7 @@ $(document).ready(function(){
 			$('.showPriceKey').hide();
 			$('.showPaystackField').hide();
 		}
-	} else if(selectedOption == 'paid'){
+	} else if(selectedOption == 'paid') {
 		if(selectedcountry == 'Nigeria') {
 			$('.showSubPrice').show();
 			$('.showSubPrice label').text('Subscription Amount (₦)');

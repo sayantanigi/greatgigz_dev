@@ -162,9 +162,9 @@ class Home extends MY_Controller {
 
 		$countryName = $ipdat->geoplugin_countryName;
 		if($countryName == 'Nigeria') {
-			$cond = " WHERE subscription_country = 'Nigeria' AND subscription_user_type = 'Vendor'";
+			$cond = " WHERE subscription_country = 'Nigeria' AND subscription_user_type = 'Vendor' AND posted_for = 'Project Portal'";
 		} else {
-			$cond = " WHERE subscription_country = 'Global' AND subscription_user_type = 'Vendor'";
+			$cond = " WHERE subscription_country = 'Global' AND subscription_user_type = 'Vendor' AND posted_for = 'Project Portal'";
 		}
 
 		//$data['get_subscription'] = $this->Crud_model->GetData('subscription');
@@ -182,9 +182,9 @@ class Home extends MY_Controller {
 
 		$countryName = $ipdat->geoplugin_countryName;
 		if($countryName == 'Nigeria') {
-			$cond = " WHERE subscription_country = 'Nigeria' AND subscription_user_type = 'Freelancer'";
+			$cond = " WHERE subscription_country = 'Nigeria' AND subscription_user_type = 'Freelancer' AND posted_for = 'Project Portal'";
 		} else {
-			$cond = " WHERE subscription_country = 'Global' AND subscription_user_type = 'Freelancer'";
+			$cond = " WHERE subscription_country = 'Global' AND subscription_user_type = 'Freelancer' AND posted_for = 'Project Portal'";
 		}
 
 		//$data['get_subscription'] = $this->Crud_model->GetData('subscription');

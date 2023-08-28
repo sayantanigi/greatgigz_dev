@@ -14,8 +14,8 @@ class Home extends MY_Controller {
         $data['list_featuredjob']=$this->Crud_model->GetData('postjob',"","is_delete='0' and featured_job='yes'",'','(id)desc','8');
         $data['list_services']=$this->Crud_model->GetData('featured_service');
         $data['list_category']=$this->Crud_model->GetData('category','',"status='1'",'',"(category_name) asc");
-        //$data['list_company']=$this->Crud_model->GetData('postjob','id,post_slug_url,company_name',"is_delete='0'","company_name",'(company_name) asc');
-        $data['list_company']=$this->db->query("SELECT users.companyname as companyname, postjob.post_slug_url FROM postjob JOIN users ON users.userId = postjob.user_id WHERE postjob.posted_from = 'Job Portal' AND postjob.is_delete = 0 ORDER BY postjob.id ASC")->result_array();
+        $data['list_company']=$this->Crud_model->GetData('postjob','id,post_slug_url,company_name',"is_delete='0' AND posted_from = 'Job Portal'","company_name",'(company_name) asc');
+        //$data['list_company']=$this->db->query("SELECT users.companyname as companyname, postjob.post_slug_url FROM postjob JOIN users ON users.userId = postjob.user_id WHERE postjob.posted_from = 'Job Portal' AND postjob.is_delete = 0 ORDER BY postjob.id ASC")->result_array();
         $data['list_location']=$this->mymodel->get_location();
         //print_r($this->db->last_query()); exit;
         $data['cms_featuredservices']=$this->Crud_model->get_single('manage_cms',"id='5'");
@@ -170,7 +170,6 @@ class Home extends MY_Controller {
     }
     ////////////////////// end ajax job list //////////////////////
 
-
     function job_detail($slug_url) {
         $data['jobdetail']=$this->Crud_model->get_single('postjob',"post_slug_url='".$slug_url."'");
         $data['get_users']=$this->Crud_model->get_single('users',"userId='".@$_SESSION['commonUser']['userId']."' and userType='1' and status='1'");
@@ -234,7 +233,7 @@ class Home extends MY_Controller {
     ////////////////// end candidadate lisitng /////////////////////
 
     function pricing() {
-        $data['get_pricing']=$this->Crud_model->GetData('subscription','','','','','');
+        $data['get_pricing']=$this->Crud_model->GetData('subscription','',"posted_for='Job Portal'",'',"(id) DESC");
         $data['cms_pricing']=$this->Crud_model->get_single('manage_cms',"id='4'");
         $this->load->view('common/header');
         $this->load->view('frontend/pricing',$data);
@@ -267,7 +266,7 @@ class Home extends MY_Controller {
         }
     }
     /*=========== end emmployer listing and detail============= */
-  
+
     function faq() {
         $data['list_faq']=$this->Crud_model->GetData('faq');
         $data['get_cms']=$this->Crud_model->get_single('manage_cms',"id='8'");
@@ -275,7 +274,7 @@ class Home extends MY_Controller {
         $this->load->view('frontend/faq',$data);
         $this->load->view('common/footer');
     }
-  
+
     public function unsubscribe($myemail) {
         $decodeEmail=base64_decode($myemail);
         if(!empty($decodeEmail)) {

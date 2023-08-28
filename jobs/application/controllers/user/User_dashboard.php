@@ -167,20 +167,32 @@ class User_dashboard extends CI_Controller {
     }
 
     function purchase_subscription() {
+        $paymentDate = date('Y-m-d H:i:s');
         $get_subscription=$this->Crud_model->get_single('subscription',"id='".$_POST['subscription_id']."'");
-        $effectiveDate = strtotime("+".$get_subscription->subscription_duration." months", strtotime(date("Y-m-d")));
+        $effectiveDate = strtotime("+".$get_subscription->subscription_duration."", strtotime(date("Y-m-d")));
         $end_date = date("Y-m-d", $effectiveDate); 
+        $n=24;
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$randomString = '';
+		for ($i = 0; $i < $n; $i++) {
+			$index = rand(0, strlen($characters) - 1);
+			$randomString .= $characters[$index];
+		}
         $data=array(
-            'employer_id'=>$_SESSION['commonUser']['userId'],
-            'subscription_id'=>$_POST['subscription_id'],
-            'no_of_post'=>$get_subscription->no_of_post,
-            'start_date'=>$get_subscription->subscription_duration,
-            'end_date'=>$end_date,
-            'payment_status'=>'succeeded',
-            'amount'=>$get_subscription->subscription_amount,
-            'payment_date'=>date('Y-m-d h:i:s'),
-            'created_date'=>date('Y-m-d h:i:s'),
+            'employer_id' => $_SESSION['commonUser']['userId'],
+            'subscription_id' => $_POST['subscription_id'],
+            //'no_of_post' => $get_subscription->no_of_post,
+            'name_of_card' => $get_subscription->subscription_name,
+            'email' => $_SESSION['commonUser']['userEmail'],
+            'amount' => $get_subscription->subscription_amount,
+            'payment_status' => 'succeeded',
+            'transaction_id' => "sub_".$randomString,
+            'payment_date' => $paymentDate,
+            'created_date' => date('Y-m-d h:i:s'),
+            'expiry_date' => $end_date,
+            'duration' => $get_subscription->subscription_duration,
         );
+        //print_r($data); die;
         $this->Crud_model->SaveData('employer_subscription',$data);
         $get_user=$this->Crud_model->GetData('users','userId,firstname,lastname,email',"userId='".$_SESSION['commonUser']['userId']."' and status='1'",'','','','1');
         $this->load->library('email');

@@ -58,7 +58,7 @@
                                 <div class="col-md-12 padding-left">
                                     <ul class="unstyled">
 										<?php if(!empty($list_company)){ foreach($list_company as $key){?>
-                                        <li><a href="<?= base_url('job-listing/company/'.$key['post_slug_url'])?>"><i class="fa fa-angle-right"></i> <?= ucwords($key['companyname']) ?></a></li>
+                                        <li><a href="<?= base_url('job-listing/company/'.$key->post_slug_url)?>"><i class="fa fa-angle-right"></i> <?= ucwords($key->company_name) ?></a></li>
 										<?php } }?>
                                     </ul>
                                 </div>

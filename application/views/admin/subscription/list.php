@@ -19,6 +19,7 @@
 				<div class="card" style="height:400px;">
 					<div class="card-body">
 						<div class="pricing-header">
+							<p style="text-align: center;"><?php echo "For ".ucwords($key->posted_for) ?></p>
 							<p style="text-align: center;"><?php echo "For ".ucwords($key->subscription_user_type) ?></p>
 							<p style="text-align: center;"><?php echo "Country: ".ucwords($key->subscription_country) ?></p>
 							<h2 style="text-align: center; margin-bottom: 12px;"><?php echo @$key->subscription_name; ?></h2>
@@ -36,7 +37,7 @@
 						</div>
 						<div class="pricing-card-price" style="text-align: center;">
 							<!-- <h3 class="heading2 price"><?php //echo 'USD'.' '.$key->subscription_amount; ?></h3> -->
-							<p>Duration: <span><?php echo $key->subscription_duration." days"; ?> </span></p>
+							<p>Duration: <span><?php echo $key->subscription_duration; ?> </span></p>
 						</div>
 						<div class="pricing-options" style="text-align: center;">
 							<?php echo $key->subscription_description;?>
