@@ -194,7 +194,7 @@
 										</div>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<div class="form-group">
-												<button type="submit" class="btn btn-larger"/>Update</button>
+												<button type="submit" class="btn btn-larger">Update</button>
 											</div>
 										</div>
 									</div>
