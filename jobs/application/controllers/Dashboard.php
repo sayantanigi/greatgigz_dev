@@ -94,9 +94,9 @@ class Dashboard extends CI_Controller {
                 'city' =>$this->input->post('city',TRUE),
                 'state' =>$this->input->post('state',TRUE),
                 'other' =>$this->input->post('other',TRUE),
-                'zipcode' =>$this->input->post('zipcode',TRUE),
+                'zip' =>$this->input->post('zipcode',TRUE),
                 'country' =>$this->input->post('country',TRUE),
-                    'profilePic' =>$profile,
+                'profilePic' =>$profile,
                 'short_bio' =>$this->input->post('short_bio',TRUE),
                 'slug_url' =>$slug_url,
             );
@@ -123,6 +123,7 @@ class Dashboard extends CI_Controller {
     }
 
     function update_jobseekerprofile() {
+        //print_r($_POST); die;
         $validate=$this->Crud_model->get_single_record('users',"mobile='".$_POST['mobile']."' and userId!='".$_SESSION['commonUser']['userId']."'");
         if(!empty($validate)) {
             $data=array(

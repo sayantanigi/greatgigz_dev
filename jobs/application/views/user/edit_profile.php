@@ -122,10 +122,10 @@
 											<div class="form-group">
 												<label>Country<span style="color:red">*</span></label>
 												<select id="country" name="country" class="form-control" required onchange="get_state(this.value)">
-												   <option value="">Select Country</option>
-												 <?php if(!empty($get_country)){ foreach($get_country as $row){?>
-											   <option value="<?= $row->id?>" <?php if($getuser->country==$row->id){ echo "selected";}?>><?= ucfirst($row->name)?></option>
-											  <?php } }?>
+												<option value="">Select Country</option>
+												<?php if(!empty($get_country)){ foreach($get_country as $row){?>
+											   	<option value="<?= $row->id?>" <?php if($getuser->country==$row->id){ echo "selected";}?>><?= ucfirst($row->name)?></option>
+											  	<?php } }?>
 
 												</select>
 												<div class="search_icon"><span class="ti-world"></span></div>
@@ -160,7 +160,7 @@
 										<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 											<div class="form-group">
 												<label>Zip / Postal Code<span style="color:red">*</span></label>
-												<input type="text" class="form-control" name="zipcode" id="zipcode" required autocomplete="off" value="<?= @$getuser->zipcode?>">
+												<input type="text" class="form-control" name="zipcode" id="zipcode" required autocomplete="off" value="<?= @$getuser->zip?>">
 												<div class="search_icon"><span class="ti-pin"></span></div>
 											</div>
 										</div>
@@ -172,19 +172,18 @@
 											</div>
 										</div>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+											<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding: 0 15px 0px 0px;">
+												<label>Company Logo <span style="color:red">*</span></label>
+												<input type="file" class="form-control" name="profilePic">
+												<input type="hidden" class="form-control" name="old_profile" value="<?= @$getuser->profilePic?>">
+											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-											<label>Company Logo <span style="color:red">*</span></label>
-											<input type="file" class="form-control" name="profilePic" required>
-											<input type="hidden" class="form-control" name="old_profile" value="<?= @$getuser->profilePic?>">
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-
-											<?php if(!empty($getuser->profilePic) && file_exists('uploads/users/'.@$getuser->profilePic)){?>
-													<img src="<?= base_url('uploads/users/'.@$getuser->profilePic)?>" width="80" height="80">
+												<?php if(!empty($getuser->profilePic) && file_exists('uploads/users/'.@$getuser->profilePic)){?>
+												<img src="<?= base_url('uploads/users/'.@$getuser->profilePic)?>" width="80" height="80">
 												<?php } else{?>
-													<img src="<?= base_url('uploads/no_image.png')?>" width="80" height="80">
+												<img src="<?= base_url('uploads/no_image.png')?>" width="80" height="80">
 												<?php } ?>
-										</div>
+											</div>
 										</div>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<div class="form-group">
