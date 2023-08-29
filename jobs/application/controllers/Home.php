@@ -32,7 +32,7 @@ class Home extends MY_Controller {
         $data['get_about2']=$this->Crud_model->get_single('about_us',"id='2'");
         $data['get_about3']=$this->Crud_model->get_single('about_us',"id='3'");
         $data['get_about4']=$this->Crud_model->get_single('about_us',"id='4'");
-        $data['list_testimonial']=$this->Crud_model->GetData('testimonials');
+        $data['list_testimonial']=$this->Crud_model->GetData('testimonial');
         $this->load->view('common/header');
         $this->load->view('frontend/about_us',$data);
         $this->load->view('common/footer');

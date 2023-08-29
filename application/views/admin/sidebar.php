@@ -72,6 +72,9 @@
 			<li <?php if ($seg2 =='career') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/'); ?>career"><i class="fa fa-graduation-cap"></i> <span>Career Tips</span></a>
 			</li>
+			<li <?php if ($seg2 =='about-us') {?>class="active"<?php }?>>
+				<a href="<?=base_url('admin/'); ?>about-us"><i class="fa fa-question-circle"></i> <span>About Us</span></a>
+			</li>
 			<li <?php if ($seg2 =='faq') {?>class="active"<?php }?>>
 				<a href="<?=base_url('admin/'); ?>faq"><i class="fa fa-question-circle"></i> <span>FAQ</span></a>
 			</li>

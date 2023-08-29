@@ -19,7 +19,6 @@
 							<hr>
 							<strong><?= ucwords(@$get_about2->title)?></strong>
 						</div>
-
 					</div>
 					<div class="col-md-8">
 						<div class="about_right">
@@ -32,25 +31,22 @@
 					<div class="col-md-6">
 						<div class="video-sec">
 							<div class="embed-responsive embed-responsive-16by9">
-								<!-- <iframe id="player_1" src="https://fast.wistia.com/embed/iframe/t4yniozocs?controlsVisibleOnLoad=true&amp;playerColor=474745&amp;version=v1&amp;videoHeight=366&amp;videoWidth=650&amp;volumeControl=true&amp;videoFoam=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="100%" height="350"></iframe> -->
-							<?php	 if(!empty($get_about3->video) && file_exists('uploads/video/'.$get_about3->video)){ ?>
-								<video width="200" controls>
-           <source src="<?= base_url('uploads/video/'.$get_about3->video)?>" style="width:50px;height:50px;" type="video/mp4"> </video>
-           <?php } ?>
-							</div>
+							<?php if(!empty($get_about3->video)){ ?>
+								<video width="200" controls><source src='/greatgigz_dev/uploads/video/<?= $get_about3->video?>' style="width:50px;height:50px;" type="video/mp4"></video>
+							<?php } ?>
 							</div>
 						</div>
+					</div>
 					<div class="col-md-6">
 						<div class="page-heading">
 							<h2><?= ucwords(@$get_about3->title)?></h2>
 							<hr>
 							<p><?= @$get_about3->description ?></p>
-							
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>
+		</div>
 		<section class="featured">
 			<div class="container">
 				<div class="row">
@@ -90,13 +86,12 @@
 								<?php if(!empty($list_testimonial)){ foreach($list_testimonial as $key){?>
 								<li>
 									<div class="testi-box clearfix text-center">
-										<?php if(!empty($key->image) && file_exists('uploads/testimonial/'.$key->image)){?>
+									<?php if(!empty($key->image) && file_exists('uploads/testimonial/'.$key->image)){?>
 										<img src="<?= base_url('uploads/testimonial/'.$key->image)?>" alt="" class="img-responsive">
 									<?php } ?>
-
-										<div class="content">
-											<p><?= ucfirst($key->description)?></p>
-											<div class="content-hr"></div>
+									<div class="content">
+										<p><?= ucfirst($key->description)?></p>
+										<div class="content-hr"></div>
 											<h4><?= ucwords($key->name)?></h4>
 											<span><?= ucwords($key->designation)?></span>
 										</div>
@@ -109,5 +104,4 @@
 				</div>
 			</div>
 		</section>
-		
 	</main>
