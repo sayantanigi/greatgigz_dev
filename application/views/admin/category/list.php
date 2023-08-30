@@ -198,5 +198,6 @@ $(window).scroll(function() {
 $('#refreshForm').click(function() {
     $('#categorySearch').trigger("reset");
     $('.filter_search_data6').val('').trigger('change');
+    $('.filter_search_data8').val('').trigger('change');
 })
 </script>
