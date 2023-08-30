@@ -9,11 +9,9 @@ class Post_job extends MY_Controller {
 	}
 
 	function index() {
-		//$get_category=$this->Crud_model->GetData('category');
-		$header = array('title' => 'Job Posts');
+		$header = array('title' => 'Job posts from job portal');
 		$data = array(
-			'heading' => 'Job Posts',
-            //'get_category' => $get_category
+			'heading' => 'Job posts from job portal',
         );
         $this->load->view('admin/header', $header);
         $this->load->view('admin/sidebar');
@@ -21,8 +19,20 @@ class Post_job extends MY_Controller {
         $this->load->view('admin/footer');
 	}
 
+	function freelancejobIndex() {
+		$header = array('title' => 'Job posts from freelance job posts');
+		$data = array(
+			'heading' => 'Job posts from freelance job posts',
+        );
+        $this->load->view('admin/header', $header);
+        $this->load->view('admin/sidebar');
+        $this->load->view('admin/post_job/freelancelist',$data);
+        $this->load->view('admin/footer');
+	}
+
 	function ajax_manage_page() {
-		$GetData = $this->Post_job_model->get_datatables();
+		$cond = 'Job Portal';
+		$GetData = $this->Post_job_model->get_datatables($cond);
         if(empty($_POST['start'])) {
     		$no=0;
        	} else {
@@ -42,9 +52,7 @@ class Post_job extends MY_Controller {
                 <input id="rating_\''.$row->id.'\'" class="check" type="checkbox" checked onClick="status('.$row->id.');">
                 <label for="rating_\''.$row->id.'\'" class="checktoggle">checkbox</label>
                 </div>';
-            }
-            else
-            {
+            } else {
                 $status='<div class="status-toggle">
                 <input id="rating_\''.$row->id.'\'" class="check" type="checkbox" onClick="status('.$row->id.');">
                 <label for="rating_\''.$row->id.'\'" class="checktoggle">checkbox</label>
@@ -70,8 +78,63 @@ class Post_job extends MY_Controller {
 
     	$output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->Post_job_model->count_all(),
-            "recordsFiltered" => $this->Post_job_model->count_filtered(),
+            "recordsTotal" => $this->Post_job_model->count_all($cond),
+            "recordsFiltered" => $this->Post_job_model->count_filtered($cond),
+            "data" => $data,
+        );
+    	echo json_encode($output);
+	}
+
+	function freelance_ajax_manage_page() {
+		$cond = 'Projects';
+		$GetData = $this->Post_job_model->get_datatables($cond);
+        if(empty($_POST['start'])) {
+    		$no=0;
+       	} else {
+            $no =$_POST['start'];
+        }
+        $data = array();
+        foreach ($GetData as $row) {
+			$string = strip_tags($row->job_title);
+			if (strlen($string) > 100) {
+				$stringCut = substr($string, 0, 50);
+				$endPoint = strrpos($stringCut, ' ');
+				$string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+				$string .= '...';
+			}
+			if($row->status=="1"){
+                $status='<div class="status-toggle">
+                <input id="rating_\''.$row->id.'\'" class="check" type="checkbox" checked onClick="status('.$row->id.');">
+                <label for="rating_\''.$row->id.'\'" class="checktoggle">checkbox</label>
+                </div>';
+            } else {
+                $status='<div class="status-toggle">
+                <input id="rating_\''.$row->id.'\'" class="check" type="checkbox" onClick="status('.$row->id.');">
+                <label for="rating_\''.$row->id.'\'" class="checktoggle">checkbox</label>
+                </div>';
+            }
+			$btn = ''.anchor(base_url('projects/postdetail/'.base64_encode($row->id)),'<span class="btn btn-sm bg-success-light mr-2" title="View"><i class="far fa-eye mr-1"></i></span>');
+			$btn .= ''.anchor(base_url('projects/admin/update-postjob/'.base64_encode($row->id)),'<span class="btn btn-sm bg-success-light mr-2" title="Edit"><i class="far fa-edit mr-1"></i></span>');
+			// $btn .= ''.anchor(base_url('admin/deletepostdetail/'.base64_encode($row->id)),'<span class="btn btn-sm bg-danger-light mr-2" title="Delete" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash mr-1"></i></span>');
+			$btn .= '<span class="btn btn-sm bg-danger-light mr-2" title="Delete" onclick="deleteJobpost('.$row->id.');"><i class="fa fa-trash mr-1"></i></span>';
+
+			$no++;
+			$nestedData = array();
+			$nestedData[] = $no;
+			$nestedData[] = ucwords($string);
+			$nestedData[] = ucwords($row->category_name);
+			$nestedData[] = $row->required_key_skills;
+			$nestedData[] = $row->currency." ".$row->charges;
+			$nestedData[] = $row->duration;
+			$nestedData[] = $status."<input type='hidden' id='status".$row->id."' value='".$row->status."' />";
+			$nestedData[] = $btn;
+			$data[] = $nestedData;
+        }
+
+    	$output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Post_job_model->count_all($cond),
+            "recordsFiltered" => $this->Post_job_model->count_filtered($cond),
             "data" => $data,
         );
     	echo json_encode($output);
@@ -127,7 +190,6 @@ class Post_job extends MY_Controller {
         $this->load->view('admin/post_job/update_postjob', $data);
         $this->load->view('admin/footer');
 	}
-
 
 	public function edit_post_job() {
 		//echo "<pre>"; print_r($_SESSION); die();

@@ -44,8 +44,8 @@
 						<li class="<?=($seg2=='testimonial' || $seg2=='testimonial')?'active':'' ;?>"><a href="<?=admin_url('testimonial')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>Job Portal Testimonial</a></li>
 					</ul>
 				</li>
-				<li class="treeview <?=($seg2=='srch_msg' || $seg2=='members' || $seg2=='add_srchmsg')?'active':'' ;?>">
-					<a href="#">
+				<li class="treeview <?=($seg2=='job-post-job' || $seg2=='freelance-post-job')?'active1':'' ;?>">
+					<a href="javascript:void(0)" class="<?=($seg2=='job-post-job' || $seg2=='freelance-post-job')?'cstm_subdrop':'' ;?>">
 						<i class="fa fa-users"></i>
 						<span>Job Posts Management</span>
 						<span class="pull-right-container">
@@ -53,8 +53,8 @@
 						</span>
 					</a>
 					<ul class="treeview-menu">
-						<li class="<?=($seg2=='members')?'active':'' ;?>"><a href="<?=admin_url('members')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>From Job Portal</a></li>
-						<li class="<?=($seg2=='srch_msg' || $seg2=='add_srchmsg')?'active':'' ;?>"><a href="<?=admin_url('searchmsg')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>From Project Portal</a></li>
+						<li class="<?=($seg2=='job-post-job')?'active':'' ;?>"><a href="<?=admin_url('job-post-job')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>From Job Portal</a></li>
+						<li class="<?=($seg2=='freelance-post-job')?'active':'' ;?>"><a href="<?=admin_url('freelance-post-job')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>From Freelance Portal</a></li>
 					</ul>
 				</li>
 				<li <?php if ($seg2 =='chat') {?>class="active"<?php }?>>
@@ -80,19 +80,6 @@
 				</li>
 				<li <?php if ($seg2 =='setting') {?>class="active"<?php }?>>
 					<a href="<?= base_url('admin/setting')?>"><i class="fas fa-cog"></i> <span>Site Settings</span></a>
-				</li>
-				<li class="treeview <?=($seg2=='srch_msg' || $seg2=='members' || $seg2=='add_srchmsg')?'active':'' ;?>">
-					<a href="#">
-						<i class="fa fa-users"></i>
-						<span>Providers Management</span>
-						<span class="pull-right-container">
-							<span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span>
-						</span>
-					</a>
-					<ul class="treeview-menu">
-						<li class="<?=($seg2=='members')?'active':'' ;?>"><a href="<?=admin_url('members')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i> Provider Lists</a></li>
-						<li class="<?=($seg2=='srch_msg' || $seg2=='add_srchmsg')?'active':'' ;?>"><a href="<?=admin_url('searchmsg')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>Set Message & Time</a></li>
-					</ul>
 				</li>
 				<li class="treeview <?=($seg2=='add_service' || $seg2=='service'|| $seg2=='add_sub_service'|| $seg2=='sub_service')?'active':'' ;?>">
 					<a href="#">
@@ -140,6 +127,19 @@
 				</li>
 				<li class="<?=($seg2=='option')?'active':'' ;?>">
 					<a href="<?=admin_url('option')?>"><i class="fa fa-bolt"></i> How It Works</a>
+				</li> 
+				<li class="treeview <?=($seg2=='srch_msg' || $seg2=='members' || $seg2=='add_srchmsg')?'active':'' ;?>">
+					<a href="#">
+						<i class="fa fa-users"></i>
+						<span>Providers Management</span>
+						<span class="pull-right-container">
+							<span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li class="<?=($seg2=='members')?'active':'' ;?>"><a href="<?=admin_url('members')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i> Provider Lists</a></li>
+						<li class="<?=($seg2=='srch_msg' || $seg2=='add_srchmsg')?'active':'' ;?>"><a href="<?=admin_url('searchmsg')?>"><i class="fa fa-circle" style="margin-right: 15px;"></i>Set Message & Time</a></li>
+					</ul>
 				</li> -->
 			</ul>
 		</div>

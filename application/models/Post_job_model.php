@@ -8,13 +8,13 @@ class Post_job_model extends My_Model {
         parent::__construct();
     }
 
-	private function _get_datatables_query() {
+	private function _get_datatables_query($cond) {
 		$this->db->select('postjob.*,category.category_name,CONCAT(users.firstname,"",users.lastname) as fullname');
         $this->db->from('postjob');
         $this->db->join('category','category.id=postjob.category_id');
         $this->db->join('users','users.userId=postjob.user_id');
         //$this->db->join('sub_category','sub_category.id=postjob.subcategory_id');
-        // $this->db->where($cond);
+        $this->db->where('posted_from',$cond);
         //echo $this->db->last_query();
 		$i = 0;
 
@@ -41,8 +41,8 @@ class Post_job_model extends My_Model {
         }
     }
 
-	function get_datatables() {
-        $this->_get_datatables_query();
+	function get_datatables($cond) {
+        $this->_get_datatables_query($cond);
         if($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
             $query = $this->db->get();
@@ -51,13 +51,13 @@ class Post_job_model extends My_Model {
         return $query->result();
     }
 
-	public function count_all() {
-        $this->_get_datatables_query();
+	public function count_all($cond) {
+        $this->_get_datatables_query($cond);
         return $this->db->count_all_results();
     }
 
-	function count_filtered() {
-        $this->_get_datatables_query();
+	function count_filtered($cond) {
+        $this->_get_datatables_query($cond);
         $query = $this->db->get();
         return $query->num_rows();
     }
