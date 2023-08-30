@@ -21,7 +21,7 @@
 				<a href="<?= base_url('admin/sub_category')?>"><i class="fab fa-buffer"></i> <span>Subcategories</span></a>
 			</li>
 			<li <?php if ($seg2 =='specialist') {?>class="active"<?php }?>>
-				<a href="<?= base_url('admin/specialist')?>"><i class="fa fa-puzzle-piece"></i> <span>List of skills</span></a>
+				<a href="<?= base_url('admin/specialist')?>"><i class="fa fa-puzzle-piece"></i> <span>List of Skills</span></a>
 			</li>
 			<!-- <li <?php if ($seg2 =='featured_services') {?>class="active"<?php }?>>
 				<a href="<?= base_url('admin/featured_services')?>"><i class="fa fa-puzzle-piece"></i> <span>Featured Services</span></a>

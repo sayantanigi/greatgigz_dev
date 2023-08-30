@@ -6,12 +6,8 @@
                     <h3 class="page-title"><?= $heading;?></h3>
                 </div>
                 <div class="col-auto text-right">
-                    <a class="btn btn-white filter-btn" href="javascript:void(0);" id="filter_search">
-                        <i class="fas fa-filter"></i>
-                    </a>
-                    <a href="#" class="btn btn-primary add-button ml-3" data-toggle="modal" data-target="#createModal">
-                        <i class="fas fa-plus"></i>
-                    </a>
+                    <a class="btn btn-white filter-btn" href="javascript:void(0);" id="filter_search"><i class="fas fa-filter"></i></a>
+                    <a href="#" class="btn btn-primary add-button ml-3" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         </div>
@@ -19,63 +15,63 @@
             <div class="card-body pb-0">
                 <form id="categorySearch" action="#" method="post">
                     <div class="row filter-row">
-                        <div class="col-sm-6 col-md-3">
+                        <div class="col-sm-3 col-md-3">
                             <div class="form-group">
                                 <label>Skill Set</label>
                                 <select class="form-control select filter_search_data6" name="">
                                     <option value="">Select Skill Set</option>
                                     <?php if(!empty($get_specialist)){
-                                        foreach($get_specialist as $item){ ?>
-                                        <option value="<?= $item->id?>"><?= ucfirst($item->specialist_name)?></option>
-                                        <?php } } ?>
-                                    </select>
-                                </div>
+                                    foreach($get_specialist as $item){ ?>
+                                    <option value="<?= $item->id?>"><?= ucfirst($item->specialist_name)?></option>
+                                    <?php } } ?>
+                                </select>
                             </div>
-                            <div class="col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <label>Created Date</label>
-                                    <div class="cal-icon">
-                                        <!--  datetimepicker -->
-                                        <input class="form-control filter_search_data5" type="date" name="from_date" value="">
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <label>Portal</label>
+                                <select class="form-control select filter_search_data8" name="">
+									<option value="">Select Portal</option>
+									<option value="Job Portal">Job Portal</option>
+									<option value="Freelancer Portal">Freelancer Portal</option>
+									<option value="On Demand Portal">On Demand Portal</option>
+								</select>
                             </div>
-                            <!-- <div class="col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <label>To Date</label>
-                                    <div class="cal-icon">
-                                        <input class="form-control  filter_search_data7" type="date" name="to_date" value="">
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <!-- <a class="btn btn-primary btn-block" href="<?= admin_url('Specialist')?>">Refresh</a> -->
-                                    <a class="btn btn-primary btn-block" id="refreshForm" href="javascript:void(0)" style="line-height: 35px;">Refresh</a>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <label>Created Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control filter_search_data5" type="date" name="from_date" value="">
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div>
-                                <table id="table" class="table table-hover table-center mb-0 example_datatable" >
-                                    <thead class="sticky">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Skill Set Name</th>
-                                            <th>Created Date</th>
-                                            <th>Manage</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <a class="btn btn-primary btn-block" id="refreshForm" href="javascript:void(0)" style="line-height: 35px;">Refresh</a>
                             </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <table id="table" class="table table-hover table-center mb-0 example_datatable" >
+                                <thead class="sticky">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Skill Set Name</th>
+                                        <th>Portal</th>
+                                        <th>Created Date</th>
+                                        <th>Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -103,6 +99,15 @@
                                 <label>Skill Set Image</label>
                                 <input class="form-control" type="file" name="specialist_image" id="specialist_image">
                             </div>
+                            <div class="form-group">
+                                <label>Job Portal <span style="color:red;">*</span> <span id="posted_for_err"></span></label>
+                                <select class="form-control" name="posted_for" id="posted_for" required>
+									<option value="">Choose an option</option>
+									<option value="Job Portal">Job Portal</option>
+									<option value="Freelancer Portal">Freelancer Portal</option>
+									<option value="On Demand Portal">On Demand Portal</option>
+								</select>
+                            </div>
                             <div class="mt-4">
                                 <button class="btn btn-primary" type="button" onclick="return create_specialist();">Add Skill Set</button>
                                 <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
@@ -111,15 +116,11 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-info" onclick="return getvalidation()">Submit</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div> -->
+        </div>
     </div>
 </div>
-</div>
-<!--  end add modal -->
-<!--  edit mmodal -->
+<!-- end add modal -->
+<!-- edit mmodal -->
 <div id="editModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -139,9 +140,18 @@
                                 <label>Skill Set Image</label>
                                 <input class="form-control" type="file" name="specialist_image" id="edit_specialist_image">
                             </div>
-                            <div id="show_img"> </div>
+                            <div id="show_img"></div>
                             <input type="hidden" name="old_image" id="old_image">
                             <input type="hidden" name="id" id="id">
+                            <div class="form-group">
+                                <label>Job Portal <span style="color:red;">*</span> <span id="edit_posted_for_err"></span></label>
+                                <select class="form-control" name="posted_for" id="edit_posted_for" required>
+									<option value="">Choose an option</option>
+									<option value="Job Portal">Job Portal</option>
+									<option value="Freelancer Portal">Freelancer Portal</option>
+									<option value="On Demand Portal">On Demand Portal</option>
+								</select>
+                            </div>
                             <div class="mt-4">
                                 <button class="btn btn-primary" type="button" onclick="return update_specialist();">Save Changes</button>
                                 <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
@@ -180,5 +190,6 @@ $(window).scroll(function(){
 $('#refreshForm').click(function(){
     $('#categorySearch').trigger("reset");
     $('.filter_search_data6').val('').trigger('change');
+    $('.filter_search_data8').val('').trigger('change');
 })
 </script>

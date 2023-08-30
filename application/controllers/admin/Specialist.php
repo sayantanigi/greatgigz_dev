@@ -24,21 +24,25 @@ class Specialist extends MY_Controller {
 	function ajax_manage_page() {
 	    $cond = "1=1";
 	    $specialist = $_POST['SearchData6'];
+		$portal = $_POST['SearchData8'];
         $from_date = $_POST['SearchData5'];
-        //print_r($from_date); exit;
         //$to_date = $_POST['SearchData7'];
 
-		if($specialist!='') {
-            $cond .=" and specialist.id  = '".$specialist."' ";
+		if($specialist != '') {
+            $cond .=" and specialist.id = '".$specialist."' ";
         }
 
-        if($from_date!='') {
-            $cond .=" and specialist.created_date  >= '".date('Y-m-d',strtotime($from_date))."' ";
+        if($from_date != '') {
+            $cond .=" and specialist.created_date >= '".date('Y-m-d',strtotime($from_date))."' ";
         }
 
-        // if($to_date!='') {
-        //     $cond .=" and specialist.created_date  <= '".date('Y-m-d',strtotime($to_date))."' ";
-        // }
+		if($portal != '') {
+            $cond .=" and specialist.posted_for = '".$portal."' ";
+        }
+
+        /*if($to_date!='') {
+            $cond .=" and specialist.created_date  <= '".date('Y-m-d',strtotime($to_date))."' ";
+        }*/
 
 		$GetData = $this->Specialistmodel->get_datatables($cond);
 
@@ -65,6 +69,7 @@ class Specialist extends MY_Controller {
 			$nestedData = array();
 			$nestedData[] = $no;
 			$nestedData[] = $img.' '.ucwords($row->specialist_name);
+			$nestedData[] = $row->posted_for;
 			$nestedData[] = date('d-m-Y',strtotime($row->created_date));
 			$nestedData[] = $btn;
 			$data[] = $nestedData;
@@ -105,6 +110,7 @@ class Specialist extends MY_Controller {
 			$data=array(
 				'specialist_name'=>$_POST['specialist_name'],
 				'specialist_image'=>$image,
+				'posted_for'=>$_POST['posted_for'],
 				'created_date'=>date('Y-m-d H:i:s'),
 			);
 			$this->db->insert('specialist',$data);
@@ -132,6 +138,7 @@ class Specialist extends MY_Controller {
 			'specialist_name'=>$specialist_data->specialist_name,
 			'image'=>$img,
 			'old_image'=>$specialist_data->specialist_image,
+			'posted_for'=>$specialist_data->posted_for,
 		);
 		echo json_encode($data);exit;
   	}
@@ -162,6 +169,7 @@ class Specialist extends MY_Controller {
 			$data = array(
 				'specialist_name'=> $_POST['specialist_name'],
 				'specialist_image'=>$image,
+				'posted_for'=>$_POST['posted_for'],
 				'update_date'=>date('Y-m-d H:i:s'),
 			);
        		$this->Crud_model->SaveData('specialist',$data,"id='".$_POST['id']."'");
