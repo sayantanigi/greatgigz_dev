@@ -73,7 +73,7 @@
 									<span><?= $key->year.' '.'Year'?></span>
 									<span><?= $key->marks.' '.'Marks'?></span>
 								</div>
-							<?php } } ?>
+								<?php } } ?>
 								<!-- <div class="contact_details col-md-6 p-l">
 									<span><strong>Graphic Design Institute, Canada</strong></span>
 									<span>UI/UX Graphic Designer</span>

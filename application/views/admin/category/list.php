@@ -19,64 +19,63 @@
             <div class="card-body pb-0">
                 <form id="categorySearch" action="#" method="post">
                     <div class="row filter-row">
-                        <div class="col-sm-6 col-md-4">
+                        <div class="col-sm-3 col-md-3">
                             <div class="form-group">
                                 <label>Category</label>
                                 <select class="form-control select filter_search_data6" name="">
                                     <option value="">Select Category</option>
-                                    <?php
-                                    if(!empty($get_category)){
-                                        foreach($get_category as $item){ ?>
-                                            <option value="<?= $item->id?>"><?= ucfirst($item->category_name)?></option>
-                                        <?php } } ?>
-                                    </select>
-                                </div>
+                                    <?php if(!empty($get_category)){
+                                    foreach($get_category as $item){ ?>
+                                    <option value="<?= $item->id?>"><?= ucfirst($item->category_name)?></option>
+                                    <?php } } ?>
+                                </select>
                             </div>
-                            <div class="col-sm-6 col-md-4">
-                                <div class="form-group">
-                                    <label>Created Date</label>
-                                    <div class="cal-icon2">
-                                        <!--  datetimepicker -->
-                                        <input class="form-control  filter_search_data5" type="date" name="from_date" value="">
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <label>Portal</label>
+                                <select class="form-control select filter_search_data8" name="">
+									<option value="">Select Portal</option>
+									<option value="Job Portal">Job Portal</option>
+									<option value="Freelancer Portal">Freelancer Portal</option>
+									<option value="On Demand Portal">On Demand Portal</option>
+								</select>
                             </div>
-                            <!-- <div class="col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <label>To Date</label>
-                                    <div class="cal-icon2">
-                                        <input class="form-control  filter_search_data7" type="date" name="to_date" value="">
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="col-sm-6 col-md-4">
-                                <div class="form-group">
-                                    <!-- <a class="btn btn-primary btn-block" href="<?= admin_url('Category')?>" style="line-height: 35px;">Refresh</a> -->
-                                    <a class="btn btn-primary btn-block" id="refreshForm" href="javascript:void(0)" style="line-height: 35px;">Refresh</a>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <label>Created Date</label>
+                                <div class="cal-icon2">
+                                    <input class="form-control  filter_search_data5" type="date" name="from_date" value="">
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div>
-                                <table id="table" class="table table-hover table-center mb-0 example_datatable" >
-                                    <thead class="sticky ">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Category Name</th>
-                                            <th>Created Date</th>
-                                            <th>Manage</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <a class="btn btn-primary btn-block" id="refreshForm" href="javascript:void(0)" style="line-height: 35px;">Refresh</a>
                             </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <table id="table" class="table table-hover table-center mb-0 example_datatable" >
+                                <thead class="sticky ">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Category Name</th>
+                                        <th>Portal</th>
+                                        <th>Created Date</th>
+                                        <th>Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -103,6 +102,15 @@
                             <div class="form-group">
                                 <label>Category Image</label>
                                 <input class="form-control" type="file" name="category_image" id="category_image">
+                            </div>
+                            <div class="form-group">
+                                <label>For Specific Job Portal <span style="color:red;">*</span> <span id="posted_for_err"></span></label>
+                                <select class="form-control" name="posted_for" id="posted_for" required>
+									<option value="">Choose an option</option>
+									<option value="Job Portal">Job Portal</option>
+									<option value="Freelancer Portal">Freelancer Portal</option>
+									<option value="On Demand Portal">On Demand Portal</option>
+								</select>
                             </div>
                             <div class="mt-4">
                                 <button class="btn btn-primary" type="button" onclick="return create_category();">Add Category</button>
@@ -143,6 +151,15 @@
                             <div id="show_img"> </div>
                             <input type="hidden" name="old_image" id="old_image">
                             <input type="hidden" name="id" id="id">
+                            <div class="form-group">
+                                <label>For Specific Job Portal <span style="color:red;">*</span> <span id="edit_posted_for_err"></span></label>
+                                <select class="form-control" name="edit_posted_for" id="edit_posted_for" required>
+									<option value="">Choose an option</option>
+									<option value="Job Portal">Job Portal</option>
+									<option value="Freelancer Portal">Freelancer Portal</option>
+									<option value="On Demand Portal">On Demand Portal</option>
+								</select>
+                            </div>
                             <div class="mt-4">
                                 <button class="btn btn-primary" type="button" onclick="return update_category();">Save Changes</button>
                                 <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
@@ -162,7 +179,7 @@ var actioncolumn=3;
 <script type="text/javascript" src="<?= base_url('dist/assets/custom_js/category.js')?>"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
-$(window).scroll(function(){
+$(window).scroll(function() {
     var filter_inputs = $('#filter_inputs');
     var table_wrapper = $('#table_wrapper .row:nth-child(1)');
     var table_header = $('#table thead');
@@ -178,7 +195,7 @@ $(window).scroll(function(){
     }
 });
 
-$('#refreshForm').click(function(){
+$('#refreshForm').click(function() {
     $('#categorySearch').trigger("reset");
     $('.filter_search_data6').val('').trigger('change');
 })

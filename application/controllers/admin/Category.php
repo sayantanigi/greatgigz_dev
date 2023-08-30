@@ -24,16 +24,21 @@ class Category extends MY_Controller {
 	function ajax_manage_page() {
 		$cond = "1=1";
 		$category = $_POST['SearchData6'];
+		$portal = $_POST['SearchData8'];
 		$from_date = $_POST['SearchData5'];
 		//print_r($from_date); exit;
 		//$to_date = $_POST['SearchData7'];
 
 		if($category!='') {
-			$cond .=" and category.id  = '".$category."' ";
+			$cond .=" and category.id = '".$category."'";
 		}
 
 		if($from_date!='') {
-			$cond .=" and category.created_date  >= '".date('Y-m-d',strtotime($from_date))."' ";
+			$cond .=" and category.created_date >= '".date('Y-m-d',strtotime($from_date))."'";
+		}
+
+		if($portal!='') {
+			$cond .=" and category.posted_for = '".$portal."'";
 		}
 
 		// if($to_date!='') {
@@ -64,6 +69,7 @@ class Category extends MY_Controller {
 			$nestedData = array();
 			$nestedData[] = $no;
 			$nestedData[] = $img.' '.ucwords($row->category_name);
+			$nestedData[] = ucwords($row->posted_for);
 			$nestedData[] = date('d-m-Y',strtotime($row->created_date));
 			$nestedData[] = $btn;
 			$data[] = $nestedData;
@@ -103,6 +109,7 @@ class Category extends MY_Controller {
 			$data=array(
 				'category_name'=>$_POST['category_name'],
 				'category_image'=>$image,
+				'posted_for'=>$_POST['posted_for'],
 				'created_date'=>date('Y-m-d H:i:s'),
 			);
 			$this->db->insert('category',$data);
@@ -129,6 +136,7 @@ class Category extends MY_Controller {
 			'id'=>$category_data->id,
 			'category_name'=>$category_data->category_name,
 			'image'=>$img,
+			'posted_for'=>$category_data->posted_for,
 			'old_image'=>$category_data->category_image,
 		);
 		echo json_encode($data);exit;
@@ -160,6 +168,7 @@ class Category extends MY_Controller {
 			$data = array(
 				'category_name'=> $_POST['category_name'],
 				'category_image'=>$image,
+				'posted_for'=> $_POST['posted_for'],
 				'update_date'=>date('Y-m-d H:i:s'),
 
 			);

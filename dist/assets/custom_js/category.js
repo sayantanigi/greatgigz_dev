@@ -1,16 +1,24 @@
 function create_category() {
 	var admin_url=$('#admin_url').val();
 	var category_name=$('#category_name').val();
+	var posted_for=$('#posted_for').val();
 	if(category_name=="") {
 		$("#category_err").fadeIn().html("Please Enter Category Name").css("color","red");
 		setTimeout(function(){$("#category_err").fadeOut("&nbsp;");},2000)
 		$("#category_name").focus();
 		return false;
 	}
+	if(posted_for=="") {
+		$("#posted_for_err").fadeIn().html("Please select an option").css("color","red");
+		setTimeout(function(){$("#posted_for_err").fadeOut("&nbsp;");},2000)
+		$("#posted_for").focus();
+		return false;
+	}
 	var form_data= new FormData();
 	var category_image=$('#category_image')[0].files[0];
 	form_data.append('category_image',category_image);
 	form_data.append('category_name',category_name);
+	form_data.append('posted_for',posted_for);
 	$.ajax({
 		type:"post",
 		url:admin_url+"Category/create_action",
@@ -47,6 +55,7 @@ function getValue(id) {
 			$("#id").val(obj.id);
 			$("#show_img").html(obj.image);
 			$("#old_image").val(obj.old_image);
+			$("#edit_posted_for").val(obj.posted_for);
 		}
 	});
 }
@@ -54,6 +63,7 @@ function getValue(id) {
 function update_category() {
 	var admin_url=$('#admin_url').val();
 	var category_name=$('#edit_category_name').val();
+	var posted_for=$('#edit_posted_for').val();
 	var old_image=$("#old_image").val();
 	var id=$("#id").val();
 	if(category_name=="") {
@@ -62,11 +72,18 @@ function update_category() {
 		$("#edit_category_name").focus();
 		return false;
 	}
+	if(posted_for=="") {
+		$("#edit_posted_for_err").fadeIn().html("Please Enter Category Name").css("color","red");
+		setTimeout(function(){$("#edit_posted_for_err").fadeOut("&nbsp;");},2000)
+		$("#edit_posted_for_name").focus();
+		return false;
+	}
 	var form_data= new FormData();
 	var category_image=$('#edit_category_image')[0].files[0];
 	form_data.append('category_image',category_image);
 	form_data.append('category_name',category_name);
 	form_data.append('old_image',old_image);
+	form_data.append('posted_for',posted_for);
 	form_data.append('id',id);
 	$.ajax({
 		type:"post",
