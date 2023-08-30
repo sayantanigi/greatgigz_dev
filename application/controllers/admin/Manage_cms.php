@@ -39,6 +39,7 @@ class Manage_cms extends CI_Controller {
             $nestedData[] = $no;
             $nestedData[] = ucwords($row->title);
             $nestedData[] = $desc;
+            $nestedData[] = $row->posted_for;
             $nestedData[] = $btn;
             $data[] = $nestedData;
         }
@@ -58,6 +59,7 @@ class Manage_cms extends CI_Controller {
             $data = array(
                 'title'=> $_POST['title'],
                 'description'=>$_POST['description'],
+                'posted_for'=>$_POST['posted_for'],
                 'created_date'=> date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('manage_cms',$data);
@@ -75,6 +77,7 @@ class Manage_cms extends CI_Controller {
             'id'=>$get_data->id,
             'title'=>$get_data->title,
             'description'=>$get_data->description,
+            'posted_for'=>$get_data->posted_for,
         );
         echo json_encode($data);exit;
     }
@@ -85,6 +88,7 @@ class Manage_cms extends CI_Controller {
             $data=array(
                 'title'=>$_POST['title'],
                 'description'=>$_POST['description'],
+                'posted_for'=>$_POST['posted_for'],
             );
             $this->Crud_model->SaveData('manage_cms',$data,"id='".$_POST['id']."'");
             $this->session->set_flashdata('message', 'CMS updated successfully');
