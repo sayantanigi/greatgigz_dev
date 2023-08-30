@@ -1,15 +1,12 @@
 <div class="page-wrapper">
     <div class="content container-fluid">
-
         <div class="page-header">
             <div class="row">
                 <div class="col">
                     <h3 class="page-title"><?= $heading;?></h3>
                 </div>
                 <div class="col-auto text-right">
-                    <a href="#" class="btn btn-primary add-button ml-3" data-toggle="modal" data-target="#createModal">
-                      <i class="fas fa-plus"></i>
-                    </a>
+                    <a href="#" class="btn btn-primary add-button ml-3" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         </div>
@@ -25,12 +22,11 @@
                                         <th>#</th>
                                         <th>Page Name</th>
                                         <th>Banner Image</th>
+                                        <th>Portal</th>
                                         <th>Manage</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -38,7 +34,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <!--  Add mmodal -->
@@ -52,7 +47,6 @@
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body">
-
                         <form action="#" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Page Name</label>
@@ -86,16 +80,24 @@
                                 <input class="form-control" type="file" name="image" id="image">
                             </div>
 
+                            <div class="form-group">
+                                <label>Portal <span style="color:red;">*</span> <span id="posted_for_err"></span></label>
+                                <select class="form-control" name="posted_for" id="posted_for" required>
+									<option value="">Choose an option</option>
+									<option value="Job Portal">Job Portal</option>
+									<option value="Freelancer Portal">Freelancer Portal</option>
+									<option value="On Demand Portal">On Demand Portal</option>
+								</select>
+                            </div>
+
                             <div class="mt-4">
                                 <button class="btn btn-primary" type="button" onclick="return create_banner();">Submit</button>
                                 <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -145,25 +147,32 @@
                                 <label>Image <span style="color:red;">*</span> (size : 1900 X 800)<span id="edit_image_err"></span></label>
                                 <input class="form-control" type="file" name="image" id="edit_image">
                             </div>
+
                             <div id="show_img"> </div>
                             <input type="hidden" name="id" id="id">
                             <input type="hidden" name="old_image" id="old_image">
+
+                            <div class="form-group">
+                                <label>Portal <span style="color:red;">*</span> <span id="edit_posted_for_err"></span></label>
+                                <select class="form-control" name="posted_for" id="edit_posted_for" required>
+									<option value="">Choose an option</option>
+									<option value="Job Portal">Job Portal</option>
+									<option value="Freelancer Portal">Freelancer Portal</option>
+									<option value="On Demand Portal">On Demand Portal</option>
+								</select>
+                            </div>
                             <div class="mt-4">
                                 <button class="btn btn-primary" type="button" onclick="return update_banner();">Save Changes</button>
                                 <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 <!--  end edit modal -->
-
-
 
 <script>
 var url = '<?= admin_url('manage_home/Banner/ajax_manage_page')?>';
@@ -190,6 +199,7 @@ $(window).scroll(function(){
 $('#refreshForm').click(function(){
     $('#categorySearch').trigger("reset");
     $('.filter_search_data6').val('').trigger('change');
+    $('.filter_search_data8').val('').trigger('change');
 })
 </script>
 <style>
