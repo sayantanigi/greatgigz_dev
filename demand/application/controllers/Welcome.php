@@ -23,7 +23,7 @@ class Welcome extends AI_Controller {
         $this->data['testimonial'] = $this->db->limit(4)->get_where('testimonials',array('status'=>1))->result();
         $this->load->front_view('default', $this->data);
     }
-    
+
     public function search_provider(){
         $this->data['title'] = 'Prosearchghana'; 
         $this->data['load'] = 'error_auth';
@@ -47,63 +47,56 @@ class Welcome extends AI_Controller {
         $date2=date_create($cdate);
         $diff=date_diff($date2,$date1);
         $hrs=$diff->format("%H");
-        //echo $hrs;
-         $start = new DateTime($prvid->created);
-         $end = new DateTime($cu_date);
+        $start = new DateTime($prvid->created);
+        $end = new DateTime($cu_date);
         $interval = $start->diff($end);
         $hrs = $interval->d * 24 + $interval->h;
         //echo $hrs." hours "; 
-
         //$c=$this->db->get_where('search_attempt',array('ip' =>$sip))->num_rows();
         //echo $c;
         $query = $this->db->query("SELECT * FROM search_attempt WHERE `created` <= '$cu_date' AND `ip`='$sip'");
         $c=$query->num_rows();
         //echo $c;
-        if($c > $stime){
+        if($c > $stime) {
             $this->session->set_flashdata('error', $smsg);
-            if($hrs>24){
-            $this->db->query("DELETE FROM search_attempt WHERE `created`< '$cu_date' AND `ip`='$sip'");
-            //echo $this->db->last_query();
-        } }
-        else{
+            if($hrs>24) {
+                $this->db->query("DELETE FROM search_attempt WHERE `created`< '$cu_date' AND `ip`='$sip'");
+                //echo $this->db->last_query();
+            } 
+        } else {
+            if($councity > 0){
+                $this->session->set_userdata('service',$service);
+                $this->session->set_userdata('city',$city);
+                $this->session->set_userdata('neighborhood',$neighbor);
+                redirect(site_url('auth-number')); 
+            }
 
-        if($councity > 0){
-            $this->session->set_userdata('service',$service);
-            $this->session->set_userdata('city',$city);
-            $this->session->set_userdata('neighborhood',$neighbor);
-          redirect(site_url('auth-number')); 
+            if($counneigh >0){
+                $this->session->set_userdata('service',$service);
+                $this->session->set_userdata('city',$city);
+                $this->session->set_userdata('neighborhood',$neighbor);
+                redirect(site_url('auth-number'));  
+            } else {
+                $this->session->set_flashdata('error', '<p style="font-size:30px; font-style: normal;">'.'Sorry! </br> <p style="font-size:20px; font-style: italic;"> We did not find a match for your search criteria. ProSearch is working to include more businesses and services in your area. Please come back later.'.'</p></p>');
+            }
         }
-        if($counneigh >0){
-            $this->session->set_userdata('service',$service);
-            $this->session->set_userdata('city',$city);
-            $this->session->set_userdata('neighborhood',$neighbor);
-          redirect(site_url('auth-number'));  
-
-        }
-
-        else{
-             $this->session->set_flashdata('error', '<p style="font-size:30px; font-style: normal;">'.'Sorry! </br> <p style="font-size:20px; font-style: italic;"> We did not find a match for your search criteria. ProSearch is working to include more businesses and services in your area. Please come back later.'.'</p></p>');
-        }
-    }
         $this->load->front_view('default', $this->data);
-
     }
+
     public function auth_number(){
-         if(isprologin()){
+        if(isprologin()){
             redirect(site_url('edit-profile'),'refresh');
         }
-      $this->data['title'] = 'Prosearchghana | Authenticating Number';
-      $this->data['load'] = 'auth_number';  
-      $this->data['service'] = $this->db->get_where('service',array('status'=>1))->result();
-       
-      $this->load->front_view('default', $this->data);
+        $this->data['title'] = 'Prosearchghana | Authenticating Number';
+        $this->data['load'] = 'auth_number';  
+        $this->data['service'] = $this->db->get_where('service',array('status'=>1))->result();
+        $this->load->front_view('default', $this->data);
     }
  
 
-    public function provider_list()
-    {
-      $this->data['title'] = 'Prosearchghana  | Serch Provider List';
-      $this->data['load'] = 'provider_list';
+    public function provider_list() {
+        $this->data['title'] = 'Prosearchghana  | Serch Provider List';
+        $this->data['load'] = 'provider_list';
         $service = $this->input->get('ser');
         $city = $this->input->get('city');
         $neighbor = $this->input->get('neighbor');
@@ -111,78 +104,65 @@ class Welcome extends AI_Controller {
         $counneigh = $this->db->get_where('provider_list', array('service_type' =>$service,'city'=>$city,'neihborhood'=>$neighbor,'status'=>1,'admin_status'=>1))->num_rows();
         //echo $this->db->last_query();
         $councity = $this->db->get_where('provider_list', array('service_type' =>$service,'city'=>$city,'status'=>1,'admin_status'=>1))->num_rows();
-        if($counneigh >0)
-        {
-        $this->data['provider_detl'] = $this->db->get_where('provider_list',array('service_type'=>$service,'city'=>$city,'neihborhood'=>$neighbor,'status'=>1,'admin_status'=>1))->result();
-        
-        }
-         else if($councity >0) 
-         {
+        if($counneigh > 0) {
+            $this->data['provider_detl'] = $this->db->get_where('provider_list',array('service_type'=>$service,'city'=>$city,'neihborhood'=>$neighbor,'status'=>1,'admin_status'=>1))->result();
+        } else if ($councity > 0) {
             $this->session->set_flashdata('error','<p style="font-size:20px; color:blue; font-style: normal;">'.'The type of Business/Service Provider/Artisan you were looking for is not available in your selected Location. However, there are some available options in other parts of the city!'.'</p>');
-            
             $this->data['provider_detl'] = $this->db->get_where('provider_list',array('service_type'=>$service,'city'=>$city,'status'=>1,'admin_status'=>1))->result();
         }
-        
-    //echo $this->db->last_query();die;
-      $this->load->front_view('default', $this->data);
+        //echo $this->db->last_query();die;
+        $this->load->front_view('default', $this->data);
     }
-    public function profile_otp_send(){
+
+    public function profile_otp_send() {
         $phone = $this->input->post('phonep');
-            $sql = "SELECT * FROM `provider_list` WHERE (contact_prsn_mobile = '$phone') AND status = 1";
-            $check = $this->db->query($sql)->num_rows();
-           // echo $this->db->last_query();
-            if($check>0){
-                echo 0;
+        $sql = "SELECT * FROM `provider_list` WHERE (contact_prsn_mobile = '$phone') AND status = 1";
+        $check = $this->db->query($sql)->num_rows();
+        // echo $this->db->last_query();
+        if($check>0){
+            echo 0;
+        } else {
+            $otp = rand(100000, 999999);
+            //nosms  $otp=1;
+            $this->session->set_userdata('psession_otp',$otp);
+            $message = "Your One Time Password is " . $otp;
+            $from = '(202) 952-4499';
+            $to = $phone;
+            $response = $this->twilio_lib->sms($from, $to,$message);
+            //nosms  $response=1;
+            if($response){
+                echo 1;
             }
-            else{
-             $otp = rand(100000, 999999);
-//nosms  $otp=1;
-             $this->session->set_userdata('psession_otp',$otp);
-                $message = "Your One Time Password is " . $otp;
-                $from = '(202) 952-4499';
-                $to = $phone;
-/*yessms*/      $response = $this->twilio_lib->sms($from, $to,$message);
-//nosms  $response=1;
-                if($response){
-                    echo 1;
-                }
         }
     }
-     public function create_profile(){
-      $this->data['title'] = 'Prosearchghana  | Create Profile';
-      $this->data['load'] = 'create_profile';
-      $this->data['service'] = $this->db->get_where('service',array('status'=>1))->result();
-    $this->data['city'] = $this->db->get_where('city',array('parent_city'=>0,'status'=>1))->result();
-    $this->form_validation->set_rules('frm[owner_type]', 'Business/Service Provider', 'required');
-      $this->form_validation->set_rules('frm[service_type]', 'Business/Service type', 'required');
+
+    public function create_profile(){
+        $this->data['title'] = 'Prosearchghana  | Create Profile';
+        $this->data['load'] = 'create_profile';
+        $this->data['service'] = $this->db->get_where('service',array('status'=>1))->result();
+        $this->data['city'] = $this->db->get_where('city',array('parent_city'=>0,'status'=>1))->result();
+        $this->form_validation->set_rules('frm[owner_type]', 'Business/Service Provider', 'required');
+        $this->form_validation->set_rules('frm[service_type]', 'Business/Service type', 'required');
         //$s_type = $this->input->post('service_type');
         //$stringf =  implode(',',(array) $s_type);
-    //    $this->form_validation->set_rules('frm[company_name]', 'Company Name', 'required');
-
-//        $this->form_validation->set_rules('image', 'Government issued ID', 'required');
+        //$this->form_validation->set_rules('frm[company_name]', 'Company Name', 'required');
+        //$this->form_validation->set_rules('image', 'Government issued ID', 'required');
         $this->form_validation->set_rules('frm[contact_prsn_fname]', 'Contact Person First Name', 'required');
         $this->form_validation->set_rules('frm[contact_prsn_lname]', 'Contact Person Last Name', 'required');
         $this->form_validation->set_rules('frm[contact_prsn_mobile]', 'Contact Person mobile No', 'required|is_unique[provider_list.contact_prsn_mobile]');
-       
         $this->form_validation->set_rules('frm[company_addr]', 'Company Address', 'required');
         $this->form_validation->set_rules('frm[city]', 'City', 'required');
         $this->form_validation->set_rules('neihborhood', 'Neighborhood', 'required');
-       
-        
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('agreecheckbox', 'Agreeing to our T&C and Privacy Policy', 'trim|required|greater_than[0]');
         $this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
-
         if ($this->form_validation->run() === TRUE) {
             $frm = $this->input->post('frm');
-            $config['upload_path']          = 'assets/images/profile/';
+            $config['upload_path'] = 'assets/images/profile/';
             $config['overwrite'] = FALSE;
-            $config['allowed_types']        = 'gif|jpg|png|jpeg';
-            
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
-
-            if($this->upload->do_upload('image')) //if there is an image to be uploaded we check whether there is only 1 face on it
-            {
+            if($this->upload->do_upload('image')) {
                 $data = $this->upload->data();
                 $frm['image'] = $data['file_name'];            
                 $this->session->set_flashdata('error', "image name=".$frm['image']);
@@ -190,171 +170,135 @@ class Welcome extends AI_Controller {
                 $shellstring='~/detectface.sh '.$imagename;
                 $out = shell_exec($shellstring);
                 //$this->session->set_flashdata('error', 'number of faces on '.$imagename.'='.$out);
-                
-                if ($out != 1) //1 face?
-                {
+                if ($out != 1) {
                     $ret=mail('support@prosearchghana.com', 'suspicious ID submitted by the user '.$frm[contact_prsn_mobile], 'please check the image:'.$imagename);
-                    
-                    
                     if($ret ==true){
-                        //$this->session->set_flashdata('success', "Your Email Sent Successfully");
+                        $this->session->set_flashdata('success', "Your Email Sent Successfully");
                     }
                     else{
                         $this->session->set_flashdata('error', "email sending error");
                     }
                 }
-            }
-            else
-            {
-                //print_r('image upload problem2: '.$this->upload->display_errors());  die; 
-                if($frm['image']!='')
-                {
+            } else {
+                print_r('image upload problem2: '.$this->upload->display_errors());  die; 
+                if($frm['image']!='') {
                    $this->session->set_flashdata('error', $this->upload->display_errors());
                 }
             }
-            
             $otp = $this->input->post('profile_otp');
             $sessp_otp=$this->session->userdata('psession_otp');
             $frm['vcode'] = $sessp_otp;
             $frm['status'] = 1;
-
             $frm['neihborhood'] = $this->input->post('neihborhood');
             $frm['password'] = base64_encode($this->input->post('password')); //was base64_encode()
             $res = $this->db->insert('provider_list',$frm);
-            if($res == true){ 
+            if($res == true) { 
                 $uid=$this->db->insert_id();
                 $this->session->set_userdata('userids',$uid);
                 $this->session->set_flashdata('success', 'You have registered successfully');
                 redirect(site_url('edit-profile'));
-            }
-            else{
+            } else {
                 $this->session->set_flashdata('error', 'Some error is occured');
             }
-
+        } else {
+            print_r("error, frm[image]=".$frm['image']." data[file_name]=".$data['file_name']);
+            print_r('data: '.$this->data);
         }
-        else
-        {
-           // print_r("error, frm[image]=".$frm['image']." data[file_name]=".$data['file_name']);
-           //print_r('data: '.$this->data);
+        $this->load->front_view('default',$this->data);
+    }
+    
+    public function otpverify(){
+        $otp = $this->input->post('otpp');
+        $sessp_otp=$this->session->userdata('psession_otp');
+        if ($otp == $sessp_otp) {
+            echo 1;
+        } else {
+            echo 0;
         }
-    $this->load->front_view('default',$this->data);
     }
     
- public function otpverify(){
-
-    $otp = $this->input->post('otpp');
-    $sessp_otp=$this->session->userdata('psession_otp');
-    
-    if ($otp == $sessp_otp) {
-        echo 1;
-    } else {
-        echo 0;
-    }
-
-    }
-    
-     public function prov_auth() {
+    public function prov_auth() {
         $this->data['title'] = 'Prosearchghana';
         $this->data['load'] = 'provider_auth';
         $this->load->front_view('default', $this->data);
     }
     
-     public function forget_password() {
+    public function forget_password() {
         $this->data['title'] = 'Prosearchghana | Forgot Password';
         $this->data['load'] = 'forget_pass';
-       $this->form_validation->set_rules('contact_prsn_mobile', 'Phone Number', 'required');
-            if($this->form_validation->run() === TRUE) {
+        $this->form_validation->set_rules('contact_prsn_mobile', 'Phone Number', 'required');
+        if($this->form_validation->run() === TRUE) {
             $phone = $this->input->post('contact_prsn_mobile');
             //$frm['password'] = base64_encode($this->input->post('password'))  //was base64_encode()
             $sql = "SELECT * FROM `provider_list` WHERE (contact_prsn_mobile = '$phone') AND status = 1 AND admin_status = 1";
             $check = $this->db->query($sql)->num_rows();
-           // echo $this->db->last_query();
-            if($check>0){
-            $passw = rand(100000, 999999);
-            $bpass = base64_encode($passw);  //was base64_encode()
-            $frm= array('password'=>$bpass);
-            $res = $this->db->update('provider_list',$frm,array('contact_prsn_mobile' =>$phone,'admin_status'=>1));
+            //echo $this->db->last_query();
+            if($check > 0) {
+                $passw = rand(100000, 999999);
+                $bpass = base64_encode($passw);  //was base64_encode()
+                $frm= array('password'=>$bpass);
+                $res = $this->db->update('provider_list',$frm,array('contact_prsn_mobile' =>$phone,'admin_status'=>1));
                 $message = "Your New Password is " . $passw;
                 $from = '(202) 952-4499';
                 $to = $phone;
                 $response = $this->twilio_lib->sms($from, $to,$message);
                 $this->session->set_flashdata('success', 'New Password has been Sent to Your Phone Number.. ');
-            }
-         else{
+            } else {
                 $this->session->set_flashdata('error', 'Enter Valid Phone Number');
             }
-           
         }
         $this->load->front_view('default', $this->data);
     }
     
     public function edit_profile(){
-         if(!isprologin()){
+        if(!isprologin()){
             redirect(site_url(),'refresh');
         }
         if(isprologin()){
             $user = userid2();
-             $this->data['pdetail'] = $this->db->get_where('provider_list',array('id'=>$user))->row();
+            //$this->data['pdetail'] = $this->db->get_where('provider_list',array('id'=>$user))->row();
+            $this->data['pdetail'] = $this->db->get_where('users',array('userId'=>$user))->row();
         }
         $this->data['title'] = 'Prosearchghana | Edit Profile';
         $this->data['load'] = 'edit_profile';
-        $this->data['city'] = $this->db->get_where('city',array('parent_city'=>0,'status'=>1))->result();
-
-        $this->data['neigh'] = $this->db->get_where('city',array('status'=>1))->result();
-
-        //print_r($_POST);die;
+        $this->data['city'] = $this->db->query("SELECT id, name FROM city")->result();
+        $this->data['neigh'] = $this->db->get_where('states')->result();
         $this->form_validation->set_rules('frm[owner_type]', '"Do you own a business or are you a service provider/Artisan"', 'required');
         $this->form_validation->set_rules('frm[service_type]', 'Business/Service type', 'required');
-    //    $this->form_validation->set_rules('frm[company_name]', 'Company Name', 'required');
-//        $this->form_validation->set_rules('image', 'Government issued ID', 'required');
-        $this->form_validation->set_rules('frm[contact_prsn_fname]', 'Contact Person First Name', 'required');
-        $this->form_validation->set_rules('frm[contact_prsn_lname]', 'Contact Person Last Name', 'required');
-        $this->form_validation->set_rules('frm[company_addr]', 'Company Address', 'required');
+        $this->form_validation->set_rules('frm[firstname]', 'Contact Person First Name', 'required');
+        $this->form_validation->set_rules('frm[lastname]', 'Contact Person Last Name', 'required');
+        $this->form_validation->set_rules('frm[address]', 'Company Address', 'required');
         $this->form_validation->set_rules('frm[city]', 'City', 'required');
-        $this->form_validation->set_rules('neihborhood', 'Neighborhood', 'required');
-       
-        
-        $this->form_validation->set_rules('password', 'New Password', 'required');
-        $this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
-       //print_r($_POST);die;
+        $this->form_validation->set_rules('state', 'Neighborhood', 'required');
+        // $this->form_validation->set_rules('password', 'New Password', 'required');
+        // $this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
+        //print_r($_POST);die;
 
         if ($this->form_validation->run() === TRUE) {
             $frm = $this->input->post('frm');
-/*
-            $config['upload_path']          = 'assets/images/profile/';
+            /*$config['upload_path'] = 'assets/images/profile/';
             $config['overwrite'] = FALSE;
-            $config['allowed_types']        = 'gif|jpg|png|jpeg';
-
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
-        
-
-
-            if($this->upload->do_upload('image'))
-            {
+            if($this->upload->do_upload('image')) {
                 $data = $this->upload->data();
                 $frm['image'] = $data['file_name'];
-            }
-            else
-            {
+            } else {
                 //print_r('image upload problem2: '.$this->upload->display_errors());  die; 
-            }            
-*/
+            }*/
 
-            $frm['neihborhood']=$this->input->post('neihborhood');
-            $frm['password'] = base64_encode($this->input->post('password'));  //was base64_encode()
+            $frm['state']=$this->input->post('state');
+            //$frm['password'] = base64_encode($this->input->post('password'));  //was base64_encode()
             $res = $this->db->update('provider_list',$frm,array('id' => $user));
             //echo $this->db->last_query();die;
             if($res == true){
                 $this->session->set_flashdata('success', 'Your Profile updated successfully !');
-                 redirect(site_url('edit-profile'));
-            }
-            else{
+                redirect(site_url('edit-profile'));
+            } else {
                 $this->session->set_flashdata('error', 'Some error is occured');
                 redirect(site_url('edit-profile'));
             }
         }
-
-
         $this->load->front_view('default', $this->data);
     }
 

@@ -1,11 +1,11 @@
  <!-- Banner Section -->
-        <section id="banner1">
-      <div class="blue-overlay"></div>
-      <img src="<?=site_url()?>fassets/images/banner-img/abt-us-banner.jpg" alt=""/>
-      <div class="banner-text">
-        <h1>Provider Registration</h1>
-      </div>
-    </section>
+	<section id="banner1">
+	    <div class="blue-overlay"></div>
+	    <img src="<?=site_url()?>fassets/images/banner-img/abt-us-banner.jpg" alt=""/>
+		<div class="banner-text">
+			<h1>Provider Registration</h1>
+		</div>
+	</section>
         
         <!-- Content Start -->
         <div id="content">
