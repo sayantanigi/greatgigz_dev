@@ -12,7 +12,7 @@
   <!-- Title -->
   <title><?=theme_option('meta_title')?></title> 
   <!-- favicon icon -->
- <link rel="icon" href="http://localhost/greatgigz_dev/jobs/assets/images/home/favicon.ico">
+ <link rel="icon" href="https://igiapp.com/greatgigz/jobs/assets/images/home/favicon.ico">
   <!-- Icons -->
   <link href="<?=site_url()?>fassets/css/font-awesome.min.css" rel="stylesheet">
   <link href="<?=site_url()?>fassets/css/custom-icons.css" rel="stylesheet">
@@ -43,7 +43,7 @@
        <div class="row">
          <div class="col-lg-4 col-md-4 col-sm-4">
            <div class="navbar-header">
-            <a class="navbar-brand" href="http://localhost/greatgigz_dev/">
+            <a class="navbar-brand" href="https://igiapp.com/greatgigz/">
               <img src="<?=theme_option('logo')?>" alt="Logo" class="img-responsive" />
             </a>
             <button type="button" class="navbar-toggle">
@@ -122,7 +122,7 @@
                   </div>
 
                   <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Enter your Mobile"  id="login_username" autocomplete="off" />
+                    <input type="tel" class="form-control" placeholder="Enter your Mobile"  id="login_username" autocomplete="off" />
                   </div>
 
                   <div class="form-group">

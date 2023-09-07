@@ -83,10 +83,10 @@ class BookingProcess
 		$this->setMyParamValue($this->clientdata['title'], 'POST', 'title', true); 
 //		echo "<br>setMyRequestParams after setting title";	
 		
-		$this->setMyParamValue($this->clientdata['firstname'], 'POST', 'firstname', '', true);
-//		echo "<br>setMyRequestParams after setting firstname";		
+		$this->setMyParamValue($this->clientdata['fname'], 'POST', 'fname', '', true);
+//		echo "<br>setMyRequestParams after setting fname";		
 		
-		$this->setMyParamValue($this->clientdata['lastname'], 'POST', 'lastname', '', true);
+		$this->setMyParamValue($this->clientdata['lname'], 'POST', 'lname', '', true);
 		$this->setMyParamValue($this->clientdata['address'], 'POST', 'str_addr', '', true);
 		$this->setMyParamValue($this->clientdata['city'], 'POST', 'city', '', true);
 		$this->setMyParamValue($this->clientdata['state'], 'POST', 'state', '', true);
@@ -106,7 +106,7 @@ class BookingProcess
 		$this->expTime 			= intval($bsiCore->config['conf_booking_exptime']);	
 		$this->currencySymbol 	= $bsiCore->currency_symbol();
 		$this->taxPercent 		= $bsiCore->config['conf_tax_amount'];
-		$this->clientName 		= $this->clientdata['firstname']." ". $this->clientdata['lastname'];
+		$this->clientName 		= $this->clientdata['fname']." ". $this->clientdata['lname'];
 		$this->clientEmail		= $this->clientdata['email'];
 		$this->noOfRooms		= count(explode(",", $this->roomIdsOnly));
 		$this->taxWithPrice     = $bsiCore->config['conf_price_with_tax'];
@@ -210,9 +210,9 @@ class BookingProcess
 			$this->clientId = $clientrow["client_id"];	
 			$passworddt=($this->clientdata['password'] != "")? "password='".md5($this->clientdata['password'])."'," : "";
 			
-			$sql2 = $mysqli->query("UPDATE bsi_clients SET first_name = '".$this->clientdata['firstname']."', surname = '".$this->clientdata['lastname']."', title = '".$this->clientdata['title']."', street_addr = '".$this->clientdata['address']."', city = '".$this->clientdata['city']."' , province = '".$this->clientdata['state']."', zip = '".$this->clientdata['zipcode']."', country = '".$this->clientdata['country']."', phone = '".$this->clientdata['phone']."', fax = '".$this->clientdata['fax']."',  id_type = '".$this->clientdata['id_type']."',  id_number = '".$this->clientdata['id_number']."', ".$passworddt." additional_comments = '".$this->clientdata['message']."', ip = '".$this->clientdata['clientip']."' WHERE client_id = ".$this->clientId);			 	
+			$sql2 = $mysqli->query("UPDATE bsi_clients SET first_name = '".$this->clientdata['fname']."', surname = '".$this->clientdata['lname']."', title = '".$this->clientdata['title']."', street_addr = '".$this->clientdata['address']."', city = '".$this->clientdata['city']."' , province = '".$this->clientdata['state']."', zip = '".$this->clientdata['zipcode']."', country = '".$this->clientdata['country']."', phone = '".$this->clientdata['phone']."', fax = '".$this->clientdata['fax']."',  id_type = '".$this->clientdata['id_type']."',  id_number = '".$this->clientdata['id_number']."', ".$passworddt." additional_comments = '".$this->clientdata['message']."', ip = '".$this->clientdata['clientip']."' WHERE client_id = ".$this->clientId);			 	
 		}else{
-			$sql2 = $mysqli->query("INSERT INTO bsi_clients (first_name, surname, title, street_addr, city, province, zip, country, phone, fax, email, password,  id_type, id_number, additional_comments, ip) values('".$this->clientdata['firstname']."', '".$this->clientdata['lastname']."', '".$this->clientdata['title']."', '".$this->clientdata['address']."', '".$this->clientdata['city']."' , '".$this->clientdata['state']."', '".$this->clientdata['zipcode']."', '".$this->clientdata['country']."', '".$this->clientdata['phone']."', '".$this->clientdata['fax']."', '".$this->clientdata['email']."', '".md5($this->clientdata['password'])."', '".$this->clientdata['id_type']."', '".$this->clientdata['id_number']."', '".$this->clientdata['message']."', '".$this->clientdata['clientip']."')");
+			$sql2 = $mysqli->query("INSERT INTO bsi_clients (first_name, surname, title, street_addr, city, province, zip, country, phone, fax, email, password,  id_type, id_number, additional_comments, ip) values('".$this->clientdata['fname']."', '".$this->clientdata['lname']."', '".$this->clientdata['title']."', '".$this->clientdata['address']."', '".$this->clientdata['city']."' , '".$this->clientdata['state']."', '".$this->clientdata['zipcode']."', '".$this->clientdata['country']."', '".$this->clientdata['phone']."', '".$this->clientdata['fax']."', '".$this->clientdata['email']."', '".md5($this->clientdata['password'])."', '".$this->clientdata['id_type']."', '".$this->clientdata['id_number']."', '".$this->clientdata['message']."', '".$this->clientdata['clientip']."')");
 			//$this->clientId = mysql_insert_id();	
 			$this->clientId = $mysqli->insert_id;		
 		}

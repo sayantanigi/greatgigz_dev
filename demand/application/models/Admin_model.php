@@ -7,7 +7,7 @@ class Admin_model extends CI_Model {
 	}
 
 	public function authenticate ($u, $pw) {
-		$this->db->select ('userId, username, password');
+		$this->db->select ('id, username, password, role');
 		$this->db->where ('username', $u);
 		$this->db->where ('password', $pw);
 		$this->db->where ('status', 1);

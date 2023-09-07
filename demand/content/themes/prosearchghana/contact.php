@@ -45,13 +45,13 @@
                      <div class="col-md-6">
                          <div class="form-group">
                              <label>First Name<span class="star">*</span></label>
-                             <input type="text" name="frm[firstname]" class="form-control" />
+                             <input type="text" name="frm[fname]" class="form-control" />
                          </div>
                      </div>
                      <div class="col-md-6">
                          <div class="form-group">
                              <label>Last Name<span class="star">*</span></label>
-                             <input type="text" name="frm[lastname]" class="form-control" />
+                             <input type="text" name="frm[lname]" class="form-control" />
                          </div>
                      </div>
                  </div>

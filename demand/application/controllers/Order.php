@@ -36,9 +36,9 @@ class Order extends AI_Controller {
 	public function pay_pal($frm)
 	{
 		$user  = $this->db->get_where('users',array('id'=>userid2()))->row();
-		//print_r($user->firstname);die();
+		//print_r($user->fname);die();
 		
-		$name=$user->firstname.' '.$user->lastname;
+		$name=$user->fname.' '.$user->lname;
 		$email=$user->email;
 		$orderId=$frm['orderId'];
 		$price=$frm['amount'];

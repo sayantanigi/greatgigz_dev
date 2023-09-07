@@ -25,7 +25,7 @@
                       ?>
                       <tr>
                         <td><?=$i?></td>
-                        <td><?=$contacts_v->firstname.' '.$contacts_v->lastname?></td>
+                        <td><?=$contacts_v->fname.' '.$contacts_v->lname?></td>
                         <td><?=$contacts_v->email?></td>
                         <td><?=$contacts_v->phone?></td>
                         <td><?=date('d M Y',strtotime($contacts_v->crested_at))?></td>

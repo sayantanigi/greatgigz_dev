@@ -669,7 +669,7 @@ public function fetchClientBookingDetails($clientid){
 	public function updateCustomerLookup(){
 		global $mysqli;
 		$title = $mysqli->real_escape_string($_POST['titled']);
-		$fname = $mysqli->real_escape_string($_POST['firstname']);
+		$fname = $mysqli->real_escape_string($_POST['fname']);
 		$sname = $mysqli->real_escape_string($_POST['sname']);
 		$sadd = $mysqli->real_escape_string($_POST['sadd']);
 		$city = $mysqli->real_escape_string($_POST['city']);

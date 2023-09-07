@@ -60,7 +60,7 @@ function success(){
             <tbody>
             <tr>
             <td style='width:8px;'>&nbsp;</td>
-            <td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, " . $user->firstname . "</td>
+            <td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, " . $user->fname . "</td>
             </tr>
             <tr>
             <td valign='top' align='center' colspan='2'>

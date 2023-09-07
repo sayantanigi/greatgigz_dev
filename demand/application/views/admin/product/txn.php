@@ -32,7 +32,7 @@
                 <tr>
                   <td><?=$i?></td>
                   <td><?=$ord->title?></td>
-                  <td><?=$user->firstname?></td>
+                  <td><?=$user->fname?></td>
                   <td>$ <?=$ord->amount?></td>
                   <td><?=$txn->txn_id?></td>
                   <td><?= date('d-m-Y',strtotime($ord->c_date));?></td>

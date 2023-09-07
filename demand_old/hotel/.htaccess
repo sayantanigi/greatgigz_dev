@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^hotel\.prosearchghana\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.hotel\.prosearchghana\.com$
+RewriteRule ^/?$ "https\:\/\/www\.prosearchghana\.com\/hotel" [R=301,L]
+

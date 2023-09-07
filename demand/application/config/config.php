@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/greatgigz_dev/demand';
-$config['admin_url'] = 'http://localhost/greatgigz_dev/demand/admin';
+
 /*
 |--------------------------------------------------------------------------
 | Index File

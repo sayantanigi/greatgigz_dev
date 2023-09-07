@@ -60,7 +60,7 @@ if(isset($update)){
 
         <td align="left"><strong>First Name:</strong></td>
 
-        <td><input type="text" class="required" value="<?=$row['first_name']?>" style="width:200px;" name="firstname" id="fname"/></td>
+        <td><input type="text" class="required" value="<?=$row['first_name']?>" style="width:200px;" name="fname" id="fname"/></td>
 
       </tr>
 

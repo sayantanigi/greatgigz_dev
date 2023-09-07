@@ -1487,30 +1487,30 @@ class Api extends REST_Controller
 
 		} else {
 
-			$userData['firstname'] = $this->post('firstname');
-			$userData['lastname'] = $this->post('lastname');
+			$userData['fname'] = $this->post('fname');
+			$userData['lname'] = $this->post('lname');
 			$userData['email'] = $this->post('email');
 			$userData['mobile'] = $this->post('mobile');
 			$userData['message'] = $this->post('message');
 		}
 
-		$this->form_validation->set_rules('lastname', 'firstname', 'trim|required');
-		$this->form_validation->set_rules('lastname', 'lastname', 'trim|required');
+		$this->form_validation->set_rules('fname', 'fname', 'trim|required');
+		$this->form_validation->set_rules('lname', 'lname', 'trim|required');
 		$this->form_validation->set_rules('mobile', 'mobile', 'trim|required');	
 		$this->form_validation->set_rules('message', 'message', 'trim|required');
 
 		if ($this->form_validation->run() === false) 
 		{	
-			if(form_error('firstname')) {
+			if(form_error('fname')) {
 				$this->response([
 					'status' => "0",
-					'error' => strip_tags(form_error('firstname'))
+					'error' => strip_tags(form_error('fname'))
 				], 400);
 			}
-			if(form_error('lastname')) {
+			if(form_error('lname')) {
 				$this->response([
 					'status' => "0",
-					'error' => strip_tags(form_error('lastname'))
+					'error' => strip_tags(form_error('lname'))
 				], 400);
 			}
 
@@ -1532,8 +1532,8 @@ class Api extends REST_Controller
 		} else {
 
 			$mydata=array(
-				'firstname'=>$userData['firstname'],
-				'lastname'=>$userData['lastname'],
+				'fname'=>$userData['fname'],
+				'lname'=>$userData['lname'],
 				'email'=>$userData['email'],
 				'phone'=>$userData['mobile'],
 				'message'=>$userData['message'],

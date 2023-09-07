@@ -2,11 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends AI_Controller {
+
     function __construct() {
         parent::__construct();
         $this->data['title'] = '';
         $this->load->model('Master_model'); 
-        $this->load->library('Twilio_lib'); 
+        $this->load->library('Twilio_lib');
     }
 
     public function index() {
@@ -22,7 +23,7 @@ class Welcome extends AI_Controller {
         $this->data['testimonial'] = $this->db->limit(4)->get_where('testimonials',array('status'=>1))->result();
         $this->load->front_view('default', $this->data);
     }
-
+    
     public function search_provider(){
         $this->data['title'] = 'Prosearchghana'; 
         $this->data['load'] = 'error_auth';
@@ -287,55 +288,73 @@ class Welcome extends AI_Controller {
         $this->load->front_view('default', $this->data);
     }
     
-    public function edit_profile() {
+    public function edit_profile(){
          if(!isprologin()){
             redirect(site_url(),'refresh');
         }
         if(isprologin()){
             $user = userid2();
-             $this->data['pdetail'] = $this->db->get_where('users',array('userId'=>$user))->row();
+             $this->data['pdetail'] = $this->db->get_where('provider_list',array('id'=>$user))->row();
         }
         $this->data['title'] = 'Prosearchghana | Edit Profile';
         $this->data['load'] = 'edit_profile';
-        $this->data['city'] = $this->db->query("SELECT id, name FROM city")->result();
-        $this->data['neigh'] = $this->db->get_where('states')->result();
+        $this->data['city'] = $this->db->get_where('city',array('parent_city'=>0,'status'=>1))->result();
+
+        $this->data['neigh'] = $this->db->get_where('city',array('status'=>1))->result();
+
         //print_r($_POST);die;
         $this->form_validation->set_rules('frm[owner_type]', '"Do you own a business or are you a service provider/Artisan"', 'required');
         $this->form_validation->set_rules('frm[service_type]', 'Business/Service type', 'required');
-        $this->form_validation->set_rules('frm[firstname]', 'Contact Person First Name', 'required');
-        $this->form_validation->set_rules('frm[lastname]', 'Contact Person Last Name', 'required');
-        $this->form_validation->set_rules('frm[address]', 'Company Address', 'required');
+    //    $this->form_validation->set_rules('frm[company_name]', 'Company Name', 'required');
+//        $this->form_validation->set_rules('image', 'Government issued ID', 'required');
+        $this->form_validation->set_rules('frm[contact_prsn_fname]', 'Contact Person First Name', 'required');
+        $this->form_validation->set_rules('frm[contact_prsn_lname]', 'Contact Person Last Name', 'required');
+        $this->form_validation->set_rules('frm[company_addr]', 'Company Address', 'required');
         $this->form_validation->set_rules('frm[city]', 'City', 'required');
-        $this->form_validation->set_rules('state', 'Neighborhood', 'required');
-        //$this->form_validation->set_rules('password', 'New Password', 'required');
-        //$this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
-        //print_r($_POST);die;
+        $this->form_validation->set_rules('neihborhood', 'Neighborhood', 'required');
+       
+        
+        $this->form_validation->set_rules('password', 'New Password', 'required');
+        $this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
+       //print_r($_POST);die;
 
         if ($this->form_validation->run() === TRUE) {
             $frm = $this->input->post('frm');
-            /*$config['upload_path'] = 'assets/images/profile/';
+/*
+            $config['upload_path']          = 'assets/images/profile/';
             $config['overwrite'] = FALSE;
-            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['allowed_types']        = 'gif|jpg|png|jpeg';
+
             $this->load->library('upload', $config);
-            if($this->upload->do_upload('image')) {
+        
+
+
+            if($this->upload->do_upload('image'))
+            {
                 $data = $this->upload->data();
                 $frm['image'] = $data['file_name'];
-            } else {
+            }
+            else
+            {
                 //print_r('image upload problem2: '.$this->upload->display_errors());  die; 
-            }*/
+            }            
+*/
 
-            $frm['state']=$this->input->post('state');
-            //$frm['password'] = base64_encode($this->input->post('password'));  //was base64_encode()
-            $res = $this->db->update('users',$frm,array('userId' => $user));
-            // echo $this->db->last_query();die;
+            $frm['neihborhood']=$this->input->post('neihborhood');
+            $frm['password'] = base64_encode($this->input->post('password'));  //was base64_encode()
+            $res = $this->db->update('provider_list',$frm,array('id' => $user));
+            //echo $this->db->last_query();die;
             if($res == true){
                 $this->session->set_flashdata('success', 'Your Profile updated successfully !');
-                redirect(site_url('edit-profile'));
-            } else {
+                 redirect(site_url('edit-profile'));
+            }
+            else{
                 $this->session->set_flashdata('error', 'Some error is occured');
                 redirect(site_url('edit-profile'));
             }
         }
+
+
         $this->load->front_view('default', $this->data);
     }
 
@@ -392,8 +411,8 @@ function phone_check($phone_number)
 function contact(){
  $this->data['title'] = 'Prosearchghana| Contact Us';
  $this->data['load'] = 'contact';
- $this->form_validation->set_rules('frm[firstname]', 'First Name', 'required');
- $this->form_validation->set_rules('frm[lastname]', 'Last Name', 'required');
+ $this->form_validation->set_rules('frm[fname]', 'First Name', 'required');
+ $this->form_validation->set_rules('frm[lname]', 'Last Name', 'required');
  
 // $this->form_validation->set_rules('frm[email]', 'Email', 'required');
  $this->load->helper('email');
@@ -414,7 +433,7 @@ function contact(){
     $res = $this->db->insert('contacts',$frm);
 
         //mail t admin
-        // $name = $frm['firstname'];
+        // $name = $frm['fname'];
         // $email = $frm['email'];
         // $message = $frm['message'];
         // $htmlContent = "
@@ -537,32 +556,15 @@ else
 public function login_ajax()
 {
     $uname = $this->input->post('uname');
-    $words = explode(' ', $uname);
-    $mobile = $words[1];
-    $password = md5($this->input->post('password')); //was base64_encode()
-    //$sql = "SELECT * FROM `users` WHERE (mobile = '$uname') AND password = '$password' AND status = 1 AND admin_status=1";
-    $sql = "SELECT * FROM `users` WHERE email = '$uname' AND password = '$password' AND status = 1 AND email_verified=1";
+    $password = base64_encode($this->input->post('password')); //was base64_encode()
+    $sql = "SELECT * FROM `provider_list` WHERE (contact_prsn_mobile = '$uname') AND password = '$password' AND status = 1 AND admin_status=1";
     $check = $this->db->query($sql)->num_rows();
     $user = $this->db->query($sql)->row();
     //echo $this->db->last_query();
     //print_r($user->id);die;
     if($check>0){
         //$_SESSION['userid'] = $user->id;
-        //$this->session->set_userdata('userids',$user->id);
-        $sess['commonUser'] =array(
-            "userId"=>$user->userId,
-            "companyname"=>$user->companyname,
-            "firstname"=>$user->firstname,
-            "lastname"=>$user->lastname,
-            "userEmail"=>$user->email,
-            "userMobile"=>$user->mobile,
-            "UserLoggedIn"=>TRUE,
-            'userType'=>$user->userType,
-            //"name"=>$checkLoginUser->firstname.' '.$checkLoginUser->lastname,
-            //"email"=>$checkLoginUser->email,
-            //"userType"=>$checkLoginUser->userType,
-        );
-        $this->session->set_userdata($sess);
+        $this->session->set_userdata('userids',$user->id);
         echo 1;
 
     }else{
@@ -583,7 +585,7 @@ public function signup(){
     }
 
     $arr = array(
-        'firstname'=>$name,
+        'fname'=>$name,
         'email'=>$email,
         'mobile'=>$mobile,
         'password'=>md5($password),
@@ -725,8 +727,8 @@ public function sign_out()
 public function signup1()
 {
     $this->data['load'] = 'signup';
-    $this->form_validation->set_rules('frm[firstname]', 'First Name', 'required');
-    $this->form_validation->set_rules('frm[lastname]', 'Last Name', 'required');
+    $this->form_validation->set_rules('frm[fname]', 'First Name', 'required');
+    $this->form_validation->set_rules('frm[lname]', 'Last Name', 'required');
     $this->form_validation->set_rules('frm[phone]', 'Phone No', 'required|is_unique[users.phone]');
     $this->form_validation->set_rules('frm[gender]', 'Gender', 'required');
     $this->form_validation->set_rules('frm[email]', 'Email', 'required|is_unique[users.email]');
@@ -753,8 +755,8 @@ public function signup1()
 public function sendMessage()
 {
     $arr = array(
-        'firstname'=>$this->input->post('firstname'),
-        'lastname'=>$this->input->post('lastname'),
+        'fname'=>$this->input->post('firstname'),
+        'lname'=>$this->input->post('lastname'),
         'email'=>$this->input->post('email'),
         'phone'=>$this->input->post('phone'),
         'help'=>$this->input->post('help'),

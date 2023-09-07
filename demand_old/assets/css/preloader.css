@@ -1,0 +1,17 @@
+/******** Preloader ********/
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 10000;
+    height: 100%;
+}
+#status {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+#status img{ margin: -90px 0 0 -40px;}
