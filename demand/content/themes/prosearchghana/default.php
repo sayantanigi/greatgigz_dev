@@ -544,7 +544,7 @@
         }
     })
 */
-         $('#agreecheckbox').keyup(function(){
+         $('#agreecheckbox').click(function(){
         if($(this).val().length !=0){
              document.getElementById("myBtn").disabled = false;      
         }

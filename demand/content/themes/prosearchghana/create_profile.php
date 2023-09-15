@@ -74,7 +74,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-4 control-label">Contact Person Number:<span class="star">*</span></label>
                                     <div class="col-lg-8">
-                                        <input class="form-control" autocomplete="off" type="tel"  id="phoneNumber" minlength="9" name="frm[contact_prsn_mobile]" value="<?php echo set_value('frm[contact_prsn_mobile]'); ?>">
+                                        <input class="form-control" autocomplete="off" type="tel"  id="phoneNumber" minlength="9" name="frm[mobile]" value="<?php echo set_value('frm[mobile]'); ?>">
                                         <span class="phonealert"></span>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                     <label class="col-lg-4 control-label">Select State:<span class="star">*</span></label>
                                     <div class="col-lg-8">
                                         <div class="ui-select">
-                                            <select class="form-control" onchange="getval(this);"  name="frm[city]" id="citySelect">
+                                            <select class="form-control" onchange="getval(this);" name="frm[city]" id="citySelect">
                                                 <?php if(is_array($city) && count($city)>0) {
                                                 foreach ($city as $ct) { ?>
                                                 <option value="<?=$ct->id?>"><?=$ct->name?></option>
@@ -122,7 +122,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-4 control-label">Password:<span class="star">*</span></label>
                                     <div class="col-lg-8">
-                                        <input class="form-control" id="psd"  type="password" name="password" value="<?php echo set_value('password'); ?>">
+                                        <input class="form-control" id="psd" type="password" name="password" value="<?php echo set_value('password'); ?>">
                                     </div>
                                 </div>
 

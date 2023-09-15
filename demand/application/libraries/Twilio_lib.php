@@ -18,8 +18,7 @@
     */
  
  
-    class Twilio_lib
-    { 
+    class Twilio_lib { 
         protected $_ci;
         protected $_twilio;
         protected $mode;

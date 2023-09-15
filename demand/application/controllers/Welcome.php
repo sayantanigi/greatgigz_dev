@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+error_reporting(0);
 class Welcome extends AI_Controller {
 
     function __construct() {
@@ -93,7 +93,6 @@ class Welcome extends AI_Controller {
         $this->load->front_view('default', $this->data);
     }
  
-
     public function provider_list() {
         $this->data['title'] = 'Prosearchghana  | Serch Provider List';
         $this->data['load'] = 'provider_list';
@@ -122,14 +121,16 @@ class Welcome extends AI_Controller {
         if($check>0){
             echo 0;
         } else {
-            $otp = rand(100000, 999999);
-            //nosms  $otp=1;
+            // $otp = rand(100000, 999999);
+            // nosms  
+            $otp=1;
             $this->session->set_userdata('psession_otp',$otp);
             $message = "Your One Time Password is " . $otp;
             $from = '(202) 952-4499';
             $to = $phone;
             $response = $this->twilio_lib->sms($from, $to,$message);
-            //nosms  $response=1;
+            //nosms 
+            $response=1;
             if($response){
                 echo 1;
             }
@@ -141,68 +142,74 @@ class Welcome extends AI_Controller {
         $this->data['load'] = 'create_profile';
         $this->data['service'] = $this->db->get_where('service',array('status'=>1))->result();
         $this->data['city'] = $this->db->get_where('city',array('parent_city'=>0,'status'=>1))->result();
-        $this->form_validation->set_rules('frm[owner_type]', 'Business/Service Provider', 'required');
-        $this->form_validation->set_rules('frm[service_type]', 'Business/Service type', 'required');
-        //$s_type = $this->input->post('service_type');
-        //$stringf =  implode(',',(array) $s_type);
-        //$this->form_validation->set_rules('frm[company_name]', 'Company Name', 'required');
-        //$this->form_validation->set_rules('image', 'Government issued ID', 'required');
-        $this->form_validation->set_rules('frm[contact_prsn_fname]', 'Contact Person First Name', 'required');
-        $this->form_validation->set_rules('frm[contact_prsn_lname]', 'Contact Person Last Name', 'required');
-        $this->form_validation->set_rules('frm[contact_prsn_mobile]', 'Contact Person mobile No', 'required|is_unique[provider_list.contact_prsn_mobile]');
-        $this->form_validation->set_rules('frm[company_addr]', 'Company Address', 'required');
-        $this->form_validation->set_rules('frm[city]', 'City', 'required');
-        $this->form_validation->set_rules('neihborhood', 'Neighborhood', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('agreecheckbox', 'Agreeing to our T&C and Privacy Policy', 'trim|required|greater_than[0]');
-        $this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
-        if ($this->form_validation->run() === TRUE) {
-            $frm = $this->input->post('frm');
-            $config['upload_path'] = 'assets/images/profile/';
-            $config['overwrite'] = FALSE;
-            $config['allowed_types'] = 'gif|jpg|png|jpeg';
-            $this->load->library('upload', $config);
-            if($this->upload->do_upload('image')) {
-                $data = $this->upload->data();
-                $frm['image'] = $data['file_name'];            
-                $this->session->set_flashdata('error', "image name=".$frm['image']);
-                $imagename = '/home1/prosear5/public_html/'.$config['upload_path'].$frm['image'];
-                $shellstring='~/detectface.sh '.$imagename;
-                $out = shell_exec($shellstring);
-                //$this->session->set_flashdata('error', 'number of faces on '.$imagename.'='.$out);
-                if ($out != 1) {
-                    $ret=mail('support@prosearchghana.com', 'suspicious ID submitted by the user '.$frm[contact_prsn_mobile], 'please check the image:'.$imagename);
-                    if($ret ==true){
-                        $this->session->set_flashdata('success', "Your Email Sent Successfully");
-                    }
-                    else{
-                        $this->session->set_flashdata('error', "email sending error");
+        $frm = $this->input->post('frm');
+        if(!empty($frm)) {
+            // $this->form_validation->set_rules('frm[owner_type]', 'Business/Service Provider', 'required');
+            // $this->form_validation->set_rules('frm[service_type]', 'Business/Service type', 'required');
+            // //$s_type = $this->input->post('service_type');
+            // //$stringf =  implode(',',(array) $s_type);
+            // //$this->form_validation->set_rules('frm[company_name]', 'Company Name', 'required');
+            // //$this->form_validation->set_rules('image', 'Government issued ID', 'required');
+            // $this->form_validation->set_rules('frm[firstname]', 'Contact Person First Name', 'required');
+            // $this->form_validation->set_rules('frm[lastname]', 'Contact Person Last Name', 'required');
+            // $this->form_validation->set_rules('frm[mobile]', 'Contact Person mobile No', 'required|is_unique[provider_list.mobile]');
+            // $this->form_validation->set_rules('frm[address]', 'Company Address', 'required');
+            // $this->form_validation->set_rules('frm[city]', 'City', 'required');
+            // $this->form_validation->set_rules('neihborhood', 'Neighborhood', 'required');
+            // $this->form_validation->set_rules('password', 'Password', 'required');
+            // $this->form_validation->set_rules('agreecheckbox', 'Agreeing to our T&C and Privacy Policy', 'trim|required|greater_than[0]');
+            // $this->form_validation->set_rules('con_pass', 'Confirm password', 'required|matches[password]');
+            //if ($this->form_validation->run() === TRUE) {
+                //echo "string"; die;
+                $frm = $this->input->post('frm');
+                $config['upload_path'] = 'assets/images/profile/';
+                $config['overwrite'] = FALSE;
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $this->load->library('upload', $config);
+                if($this->upload->do_upload('image')) {
+                    $data = $this->upload->data();
+                    $frm['profilePic'] = $data['file_name'];            
+                    //$this->session->set_flashdata('error', "image name=".$frm['profilePic']);
+                    $imagename = '/uploads/users/'.$config['upload_path'].$frm['profilePic'];
+                    // $shellstring='~/detectface.sh '.$imagename;
+                    // $out = shell_exec($shellstring);
+                    // //$this->session->set_flashdata('error', 'number of faces on '.$imagename.'='.$out);
+                    // if ($out != 1) {
+                    //     $ret=mail('support@prosearchghana.com', 'suspicious ID submitted by the user '.$frm[contact_prsn_mobile], 'please check the image:'.$imagename);
+                    //     if($ret ==true){
+                    //         $this->session->set_flashdata('success', "Your Email Sent Successfully");
+                    //     }
+                    //     else{
+                    //         $this->session->set_flashdata('error', "email sending error");
+                    //     }
+                    // }
+                } else {
+                    print_r('image upload problem2: '.$this->upload->display_errors());  die; 
+                    if($frm['image']!='') {
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
                     }
                 }
-            } else {
-                print_r('image upload problem2: '.$this->upload->display_errors());  die; 
-                if($frm['image']!='') {
-                   $this->session->set_flashdata('error', $this->upload->display_errors());
+                $otp = $this->input->post('profile_otp');
+                $sessp_otp=$this->session->userdata('psession_otp');
+                $frm['vcode'] = $sessp_otp;
+                $frm['status'] = 1;
+                $frm['state'] = $this->input->post('neihborhood');
+                $frm['password'] = md5($this->input->post('password'));
+                //print_r($frm); die;
+                $res = $this->db->insert('users',$frm);
+                //echo $this->db->last_query(); die;
+                if($res == true) { 
+                    $uid=$this->db->insert_id();
+                    $this->session->set_userdata('commonUser',$uid);
+                    $this->session->set_flashdata('success', 'You have registered successfully');
+                    redirect(site_url('edit-profile'));
+                } else {
+                    $this->session->set_flashdata('error', 'Some error is occured');
                 }
-            }
-            $otp = $this->input->post('profile_otp');
-            $sessp_otp=$this->session->userdata('psession_otp');
-            $frm['vcode'] = $sessp_otp;
-            $frm['status'] = 1;
-            $frm['neihborhood'] = $this->input->post('neihborhood');
-            $frm['password'] = base64_encode($this->input->post('password')); //was base64_encode()
-            $res = $this->db->insert('provider_list',$frm);
-            if($res == true) { 
-                $uid=$this->db->insert_id();
-                $this->session->set_userdata('userids',$uid);
-                $this->session->set_flashdata('success', 'You have registered successfully');
-                redirect(site_url('edit-profile'));
-            } else {
-                $this->session->set_flashdata('error', 'Some error is occured');
-            }
-        } else {
-            print_r("error, frm[image]=".$frm['image']." data[file_name]=".$data['file_name']);
-            print_r('data: '.$this->data);
+            // } else {
+            //     print_r("error, frm[image]=".$frm['image']." data[file_name]=".$data['file_name']);
+            //     print_r('data: '.$this->data);
+            // }
         }
         $this->load->front_view('default',$this->data);
     }
@@ -497,24 +504,22 @@ else
 }
 
 
-public function login_ajax()
-{
+public function login_ajax() {
     $uname = $this->input->post('uname');
-    $password = base64_encode($this->input->post('password')); //was base64_encode()
-    $sql = "SELECT * FROM `provider_list` WHERE (contact_prsn_mobile = '$uname') AND password = '$password' AND status = 1 AND admin_status=1";
+    $uname = explode(' ', $uname);
+    $password = md5($this->input->post('password')); //was base64_encode()
+    $sql = "SELECT * FROM `users` WHERE (mobile = '$uname[1]') AND password = '$password' AND status = 1";
     $check = $this->db->query($sql)->num_rows();
     $user = $this->db->query($sql)->row();
     //echo $this->db->last_query();
     //print_r($user->id);die;
     if($check>0){
         //$_SESSION['userid'] = $user->id;
-        $this->session->set_userdata('userids',$user->id);
+        $this->session->set_userdata('commonUser',$user);
         echo 1;
-
-    }else{
+    } else {
         echo 2;
     }
-
 }
 
 public function signup(){
