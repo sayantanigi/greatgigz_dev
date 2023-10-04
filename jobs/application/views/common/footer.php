@@ -86,7 +86,7 @@ $total_jobs=$this->Crud_model->GetData('postjob','',"posted_from = 'Job Portal'"
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-6 padding-left">
-                    <span>&#169; <?= date('Y')?> Philly Hire. All Rights Reserved.<br/> phillyhire.com has no affiliation with any other job board or website.</span>
+                    <span>&#169; <?= date('Y')?> GreatGigz. All Rights Reserved.<br/> GreatGigz has no affiliation with any other job board or website.</span>
                 </div>
                 <div class="col-md-6 col-sm-6 text-right padding-left">
                     <ul class="bottom_link">

@@ -491,8 +491,8 @@ Footer-->
             <li><a href="#">About Us</a></li>
             <li><a href="#">Recruitment Portal </a></li>
             <li><a href="#">Project Posting Portal </a></li>
-            <li><a href="#">Service Providers Portal </a></li>
-            <li><a href="#">On-Demand Taxi Portal </a></li>
+            <!-- <li><a href="#">Service Providers Portal </a></li> -->
+            <li><a href="#">On-Demand Service Portal </a></li>
             <li><a href="#">Support</a></li>
           </ul>
         </div>
@@ -526,8 +526,7 @@ Footer-->
         <div class="footer-contact-info bg-holder" style="background-image: url(<?=base_url('frontend/')?>images/google-map.png);">
           <h5 class="text-dark mb-4">Contact Us</h5>
           <ul class="list-unstyled mb-0">
-            <li> <i class="fas fa-map-marker-alt text-primary"></i><span>500 Park Avenue New York,
-NY 00000 USA</span> </li>
+            <li> <i class="fas fa-map-marker-alt text-primary"></i><span>500 Park Avenue New York, NY 00000 USA</span> </li>
             <li> <i class="fas fa-mobile-alt text-primary"></i><span>+1 718.111.0000</span> </li>
             <li> <i class="far fa-envelope text-primary"></i><span>jobs@greatgigz.com</span> </li>
             <li> <i class="far fa-clock text-primary"></i><span>Mon-Fri 9am - 5pm</span> </li>
