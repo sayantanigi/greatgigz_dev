@@ -39,11 +39,15 @@ class Jobsbidding extends MY_Controller {
 
                $btn = ''.anchor(admin_url('users/view/'.base64_encode($row->userId)),'<span class="btn btn-sm bg-success-light mr-2"><i class="far fa-eye mr-1"></i>view</span>');
              // $btn .= ' | '.'<span data-placement="right" class="btn btn-sm btn-danger mr-2"  onclick="Delete(this,'.$row->userId.')">Delete</span>';
-
+                if(!empty($row->fullname)) { 
+                  $name = ucfirst($row->fullname);
+                } else {
+                  $name = $row->username;
+                }
   	            $no++;
   	            $nestedData = array();
   	          $nestedData[] = $no;
-  	            $nestedData[] = if(!empty($row->fullname)){ echo ucfirst($row->fullname);} else{ echo $row->username};
+  	            $nestedData[] = $name;
                 $nestedData[] = ucfirst($row->post_title);
                 $nestedData[] = $row->duration;
                 $nestedData[] = 'USD'.' '.$row->cost;

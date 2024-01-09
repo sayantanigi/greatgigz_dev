@@ -3,7 +3,7 @@ session_start();
 include("includes/db.conn.php");
 include("includes/conf.class.php");
 include("includes/mail.class.php");
-$sql=$mysqli->query(mysql_query("select * from bsi_language where `lang_default`=true");
+$sql=$mysqli->query(mysql_query("select * from bsi_language where `lang_default`=true"));
 $row_default_lang=$sql->fetch_assoc();
 include("languages/".$row_default_lang['lang_file']);
 $bsiMail = new bsiMail();
